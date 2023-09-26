@@ -6,7 +6,7 @@ This browser based web application to ...
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
-* My name is Joe Lin.  I'm ready to work on the project (maybe).
+* My name is Joe Lin.  I'm ready to work on the project (maybe). I live in Langley.
 * Will Liao. I'm exciting to do this project!
 * Hi! My name is Ryan. I can't wait to work on this application!
 
