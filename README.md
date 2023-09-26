@@ -8,7 +8,7 @@ This browser based web application to ...
 List team members and/or short bio's here... 
 * My name is Joe Lin.  I'm ready to work on the project (maybe).
 * Will Liao. I'm exciting to do this project!
-* Hi! My name is Ryan. I can't wait to work on this application!
+* Hi! My name is Ryan. I can't wait to work on this application! I like to play video games!
 
 	
 ## 3. Technologies and Resources Used
