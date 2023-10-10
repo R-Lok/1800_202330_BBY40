@@ -1,0 +1,22 @@
+{
+  "name": "1800_202330_bby40",
+  "version": "1.0.0",
+  "description": "Waterlog",
+  "main": "index.js",
+  "scripts": {
+    "local": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/R-Lok/1800_202330_BBY40.git"
+  },
+  "author": "Ryan Lok, Joe Lin, Will Liao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/R-Lok/1800_202330_BBY40/issues"
+  },
+  "homepage": "https://github.com/R-Lok/1800_202330_BBY40#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
