@@ -63,4 +63,4 @@ It has the following subfolders and files:
 npm install
 
 ## Launch backend
-node index.js
+npm run local
