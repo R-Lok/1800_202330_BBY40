@@ -59,4 +59,8 @@ It has the following subfolders and files:
 
 ```
 
+## Install node package
+npm install
 
+## Launch backend
+node index.js
