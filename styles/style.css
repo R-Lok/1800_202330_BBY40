@@ -1,1 +1,9 @@
+.nav-item > button {
+    width: 25vw;
+    border: none;
+    background: none;
+}
 
+.footer-button > img {
+    height: 50px;
+}
