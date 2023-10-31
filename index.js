@@ -6,11 +6,11 @@ const path = require('path')
 app.use('/', express.static(path.join(__dirname, '/public')))
 
 app.get('/health', (req, res) => {
-	return res.send({
-		'status': 'ok'
-	})
+    return res.send({
+        'status': 'ok',
+    })
 })
 
 app.listen(port, () => {
-	console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`)
 })
