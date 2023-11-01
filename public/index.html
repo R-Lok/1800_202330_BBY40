@@ -21,6 +21,16 @@
     <!-- Link to styles of your own -->
     <link rel="stylesheet" href="./styles/style.css">
 
+    <!-------------------------------------------------------->
+    <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
+    <!-------------------------------------------------------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script> 
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+
 </head>
 
 <body>
@@ -28,19 +38,7 @@
     <!-- Your HTML Layout go here -->
     <!------------------------------>
     <!-- Stuff for body goes here -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-        <a class="navbar-brand" href="#">WaterLog</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">About</a>
-            <a class="nav-item nav-link" href="#">Water Tips</a>
-            <a class="nav-item nav-link" href="#">Log Out</a>
-          </div>
-        </div>
-      </nav>
+      <nav class="navplaceholder"></nav>
       <div class="px-4 py-5 my-5 text-center">
         <img class="d-block mx-auto mb-4" src="images/drink1.jpg" alt="" width="72" height="57">
         <h1 class="display-5 fw-bold">Welcome to Waterlog!</h1>
@@ -52,19 +50,16 @@
           </div>
         </div>
       </div>
-      <footer class="fixed-bottom bg-primary">
-        <ul class="nav justify-content-center border-top">
-          <li class="nav-item"><button class="footer-button"><img src="./images/icons/homeicon.svg" alt=""></button></li>
-          <li class="nav-item"><button class="footer-button"><img src="./images/icons/graphicon.svg" alt=""></button></li>
-          <li class="nav-item"><button class="footer-button"><img src="./images/icons/settingsicon.svg" alt=""></button></li>
-        </ul>
-      </footer>
+      <footer class="footerplaceholder"></footer>
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
     <!---------------------------------------------->
 
     <!-- Link to scripts of your own -->
+    <script src="./scripts/firebaseAPI_BBY40.js"></script>
     <script src="./scripts/script.js"></script>
+    <script src="./scripts/skeleton.js"></script>
+    
 
 </body>
 

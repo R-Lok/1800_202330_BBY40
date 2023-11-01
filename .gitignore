@@ -2,3 +2,4 @@
 *.logs
 node_modules/
 package-lock.json
+public/scripts/firebaseAPI_BBY40.js
