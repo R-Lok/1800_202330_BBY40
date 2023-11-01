@@ -63,5 +63,8 @@ It has the following subfolders and files:
 ## Install node package
 npm install
 
+## Install nodemon globally
+npm install -g nodemon
+
 ## Launch backend
 npm run local
