@@ -3,7 +3,7 @@ const ui = new firebaseui.auth.AuthUI(firebase.auth())
 
 const uiConfig = {
     callbacks: {
-        signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+        signInSuccessWithAuthResult: function(authResult, redirectUrl) {
             const user = authResult.user // get the user object from the Firebase authentication database
             if (authResult.additionalUserInfo.isNewUser) { // if new user
                 db.collection('users').doc(user.uid).set({ // write to firestore. We are using the UID for the ID in users collection
