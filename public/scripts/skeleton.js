@@ -8,8 +8,8 @@ function loadSkeleton() {
             console.log($('.footerplaceholder').load('./text/footer.html'));
         } else {
             // No user is signed in.
-            console.log($('.navplaceholder').load('../text/navbar.html'));
-            console.log($('.footerplaceholder').load('../text/footerbeforelogin.html'));
+            console.log($('.navplaceholder').load('./text/navbar.html'));
+            console.log($('.footerplaceholder').load('./text/footerbeforelogin.html'));
         }
     });
     
