@@ -11,3 +11,14 @@ const loginFunction = () => {
     alert('redirecting...')
     return window.location.href = 'http://localhost:3000/main.html'
 }
+
+function logout() {
+    firebase.auth().signOut().then(() => {
+        // Sign-out successful.
+        console.log('logging out user')
+    }).catch((error) => {
+        // An error happened.
+    })
+}
+
+// logout()
