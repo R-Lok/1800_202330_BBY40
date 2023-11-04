@@ -16,21 +16,15 @@
     height: 50px;
 }
 
-
-
 #main-page-chart-container, canvas {
     width: 100% !important;
     height: 100% !important;
     max-height: 500px;
 }
 
-@media screen and (max-width: 575px) {
-
-    #summary-stat {
-        width: 100%;
-    }
+.main-page-btn {
+    width: 50%;
 }
-
 
 .background-color {
     background-color:var(--main-color4);
@@ -51,4 +45,19 @@
 
 .about-font-color {
     color:var(--main-color2);
+}
+
+/* Media queries */
+@media screen and (max-width: 575px) {
+
+    #summary-stat {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 576px) {
+
+    .main-page-btn {
+        height: 10vh;
+    }
 }
