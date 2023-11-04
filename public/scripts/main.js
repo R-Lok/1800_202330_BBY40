@@ -21,3 +21,25 @@ function getNameFromAuth() {
         }
     });
 }
+
+const mainPageCanvas = document.getElementById("main-page-chart")
+
+new Chart(mainPageCanvas, {
+    type: 'bar',
+    data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+            label: 'Liters of water',
+            data: [10, 20, 30, 40, 50, 60, 70],
+            borderWidth: 1,
+            backgroundColor: '#478BC0'
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+})
