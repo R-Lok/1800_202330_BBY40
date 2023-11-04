@@ -1,3 +1,11 @@
+:root {
+    --main-color1: #478BC0;
+    --main-color2: #0E5F99;
+    --main-color3: #A1CEF1;
+    --main-color4: #EBEEFF;
+    --main-color5: #00011D;
+}
+
 .nav-item > button {
     width: 25vw;
     border: none;
@@ -6,4 +14,25 @@
 
 .footer-button > img {
     height: 50px;
+}
+
+.background-color {
+    background-color:var(--main-color4);
+}
+
+/*About Page*/
+
+.banner {
+    width:100%;
+    display:block;
+}
+
+.banner > .banner-image {
+    width:100%;
+    height:30%;
+    display:inline-block;
+}
+
+.about-font-color {
+    color:var(--main-color2);
 }
