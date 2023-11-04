@@ -18,9 +18,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
    
     <!-- Other libraries go here -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <!-- Link to styles of your own -->
     <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
+
 
     <!-------------------------------------------------------->
     <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
@@ -42,7 +43,8 @@
       <nav id="navplaceholder"></nav>
       <div class="px-4 py-5 my-5 text-center">
         <div class="jumbotron jumbotron-fluid">
-          <div class="container">
+          <div calss="chart-container">
+            <canvas id="main-page-chart"></canvas>
           </div>
         </div>
         <div class="col-lg-6 mx-auto">
