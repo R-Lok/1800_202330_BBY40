@@ -16,9 +16,14 @@ function logout() {
     firebase.auth().signOut().then(() => {
         // Sign-out successful.
         console.log('logging out user')
+        redirectToIndex();
     }).catch((error) => {
         // An error happened.
     })
 }
 
 // logout()
+
+function redirectToIndex() {
+    window.location.href = "./index.html"
+}
