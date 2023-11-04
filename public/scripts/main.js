@@ -31,7 +31,8 @@ new Chart(mainPageCanvas, {
         datasets: [{
             label: 'Liters of water',
             data: [10, 20, 30, 40, 50, 60, 70],
-            borderWidth: 1
+            borderWidth: 1,
+            backgroundColor: '#478BC0'
         }]
     },
     options: {
