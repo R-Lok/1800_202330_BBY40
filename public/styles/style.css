@@ -16,13 +16,13 @@
     height: 50px;
 }
 
-.chart-container {
-    width: 100%;
+
+
+#main-page-chart-container, canvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 500px;
 }
-
-
-
-
 
 @media screen and (max-width: 575px) {
 

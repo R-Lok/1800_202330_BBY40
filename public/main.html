@@ -41,16 +41,14 @@
     <!------------------------------>
     <!-- Stuff for body goes here -->
       <nav id="navplaceholder"></nav>
-      <div class="px-4 py-5 my-5 text-center">
-        <div class="jumbotron jumbotron-fluid">
-          <div calss="chart-container">
-            <canvas id="main-page-chart"></canvas>
-          </div>
+      <div class="px-4 py-5 text-center">
+        <div id="main-page-chart-container" class="jumbotron jumbotron-fluid mb-4 d-flex justify-content-center">
+          <canvas id="main-page-chart"></canvas>
         </div>
         <div class="col-lg-6 mx-auto">
           <button type="button" id="summary-stat" class="btn btn-secondary btn-lg btn-block mb-4">Estimated water bill for this month: placeholder</button>
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Add Water Use</button>
+            <button type="button" id="add-water-usage-btn" class="btn btn-primary btn-lg px-4 gap-3">Add Water Use</button>
             <button type="button" class="btn btn-primary btn-lg px-4">Edit Today's Usage</button>
           </div>
         </div>

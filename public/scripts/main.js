@@ -40,6 +40,7 @@ new Chart(mainPageCanvas, {
             y: {
                 beginAtZero: true
             }
-        }
+        },
+        responsive: true
     }
 })
