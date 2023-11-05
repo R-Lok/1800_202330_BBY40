@@ -7,6 +7,10 @@
     --overlay-color: rgba(255, 255, 255, 0.3);
 }
 
+.bg-primary, .btn-primary {
+    background-color: var(--main-color1) !important;
+}
+
 .nav-item > button {
     width: 25vw;
     border: none;
