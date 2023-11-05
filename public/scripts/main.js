@@ -44,3 +44,10 @@ new Chart(mainPageCanvas, {
         responsive: true
     }
 })
+
+const showerSlider = document.getElementById("showerSlider")
+const showerSliderValDisplay = document.getElementById("shower-duration")
+
+showerSlider.addEventListener('input', e => {
+    showerSliderValDisplay.innerText = `${showerSlider.value}m`
+})

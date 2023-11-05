@@ -4,6 +4,7 @@
     --main-color3: #A1CEF1;
     --main-color4: #EBEEFF;
     --main-color5: #00011D;
+    --overlay-color: rgba(255, 255, 255, 0.3);
 }
 
 .nav-item > button {
@@ -24,6 +25,11 @@
 
 .main-page-btn {
     width: 50%;
+}
+
+.select-use-btn {
+    height: 10vh;
+    margin: 5px;
 }
 
 .background-color {
