@@ -100,3 +100,26 @@ nav a:hover {
 .card-body{
     background-color:var(--main-color3);
 }
+
+/*Water Bill*/
+
+.textBlockCenter { 
+    margin: 0px auto; 
+    width: 95%; 
+    background: #aabbcc;
+    text-align:center;
+ }
+
+ .dark {
+    background-color: var(--main-color5);
+    color: var(--main-color1);
+ }
+
+ .light{
+    background-color: var(--main-color3);
+    color: var(--main-color2);
+ }
+
+ .header-image {
+    background-image: url(../images/banner2.jpg);
+ }
