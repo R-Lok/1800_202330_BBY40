@@ -1,8 +1,8 @@
 # Project Title
+WaterLog
 
 ## 1. Project Description
-State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-This browser based web application to ... 
+Our team BBY-40 is developing an application to help environmentally-conscious individuals be aware of their water usage by providing a platform to keep track of their water use.
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
@@ -16,7 +16,9 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * HTML, CSS, JavaScript
 * Bootstrap 5.0 (Frontend library)
 * Firebase 8.0 (BAAS - Backend as a Service)
-* ...
+* Chart.js 
+* Material design icons
+* 
 
 ## 4. Complete setup/installion/usage
 State what a user needs to do when they come to your project.  How do others start using your code or application?
@@ -33,7 +35,7 @@ Here are some known bugs:
 
 ## 6. Features for Future
 What we'd like to build in the future:
-* ...
+* Flesh out dark mode - currently very basic
 * ...
 * ...
 	
