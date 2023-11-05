@@ -19,9 +19,9 @@ const saveTheme = (theme) => {
 
 const applyTheme = () => {
     if (localStorage.getItem('theme') === 'light') {
-        document.head.appendChild(document.createElement('style')).innerHTML = `body > div {background-color: var(--main-color4);color: var(--main-color5);}`
+        document.head.appendChild(document.createElement('style')).innerHTML = `body {background-color: var(--main-color4);color: var(--main-color5);}`
     } else {
-        document.head.appendChild(document.createElement('style')).innerHTML = `body > div {background-color: var(--main-color5);color: var(--main-color4);}`
+        document.head.appendChild(document.createElement('style')).innerHTML = `body {background-color: var(--main-color5);color: var(--main-color4);}`
     }
 }
 
