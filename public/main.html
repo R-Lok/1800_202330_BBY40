@@ -63,12 +63,12 @@
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle">Select Water Use</h5>
             </div>
-            <div class="modal-body d-grid gap-4 justify-content-between">
+            <div class="modal-body d-grid gap-4">
               <div class="row">
                 <button type="button" id="drink-btn" class="col select-use-btn btn btn-primary btn-lg"  data-dismiss="modal" data-toggle="modal" data-target="#drink-modal">Placeholder</button>
                 <button type="button" id="flush-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Flush</button>
                 <d class="w-100"></d>
-                <button type="button" id="sink-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#sink-modal">Sink/Tap</button>
+                <button type="button" id="sink-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#tap-modal">Sink/Tap</button>
                 <button type="button" id="shower-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#shower-modal">Shower</button>
                 <div class="w-100"></div>
                 <button type="button" id="laundry-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Laundry</button>
@@ -89,12 +89,34 @@
             <div class="modal-header">
               <h5 class="modal-title" id="showerDurationModal">Enter Shower Duration</h5>
             </div>
-            <div class="modal-body d-grid gap-4 justify-content-center">
-              <div class="row">
+            <div class="modal-body d-grid gap-4">
+              <fieldset>
                 <label for="showerSlider" class="form-label">Shower duration: <span id="shower-duration">0m</span></label>
                 <input type="range" class="form-range" id="showerSlider" min="1" max="60" step="1" value="0" required>
                 <!-- Need to fix drag finger for input slider also affecting the homepage behind-->
-              </div>
+              </fieldset>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+              <button type="button" class="form-submit-btn btn btn-primary" data-dismiss="modal">Submit</button>
+              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal for part 2 form for sink -->
+      <div class="modal fade" id="tap-modal" tabindex="-1" role="dialog" aria-labelledby="Tap use duration form"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="TapUseDurationModal">Enter Tap Use Duration</h5>
+            </div>
+            <div class="modal-body d-grid gap-4">
+              <fieldset>
+                <label for="tapUseSlider" class="form-label">Tap use duration: <span id="tap-use-duration">0s</span></label>
+                <input type="range" class="form-range" id="tapUseSlider" min="1" max="180" step="1" value="0" required>
+              </fieldset>
             </div>
             <div class="modal-footer d-flex justify-content-between">
               <button type="button" class="form-submit-btn btn btn-primary" data-dismiss="modal">Submit</button>

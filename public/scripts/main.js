@@ -51,3 +51,19 @@ const showerSliderValDisplay = document.getElementById("shower-duration")
 showerSlider.addEventListener('input', e => {
     showerSliderValDisplay.innerText = `${showerSlider.value}m`
 })
+
+const tapSlider = document.getElementById("tapUseSlider")
+const tapSliderValDisplay = document.getElementById("tap-use-duration")
+
+tapSlider.addEventListener('input', e => {
+    let tapUseMinutes = Math.trunc(tapSlider.value / 60)
+    let tapUseSeconds = tapSlider.value % 60
+
+    if (tapUseMinutes != 0 && tapUseSeconds != 0) {
+        tapSliderValDisplay.innerText = `${tapUseMinutes}m${tapUseSeconds}s`
+    } else if (tapUseSeconds == 0) {
+        tapSliderValDisplay.innerText = `${tapUseMinutes}m`
+    } else {
+        tapSliderValDisplay.innerText = `${tapUseSeconds}s`
+    }
+})

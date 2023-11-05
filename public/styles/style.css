@@ -32,6 +32,10 @@
     margin: 5px;
 }
 
+label {
+    width: 100%;
+}
+
 .background-color {
     background-color:var(--main-color4);
 }
