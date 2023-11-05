@@ -38,12 +38,12 @@
 
 /*About Page*/
 
-.banner {
+.banner1 {
     width:100%;
     display:block;
 }
 
-.banner > .banner-image {
+.banner1 > .banner-image1 {
     width:100%;
     height:30%;
     display:inline-block;
@@ -51,4 +51,52 @@
 
 .about-font-color {
     color:var(--main-color2);
+}
+
+/*Water Tips Page*/
+
+.banner2{ 
+    width:100%;
+    display:block;
+    height:30%;
+}
+
+.banner2 > .banner-image2 {
+    width:100%;
+    height:30%;
+    display:inline-block;
+}
+
+.tip-links {
+    text-align:center;
+    padding:0px;
+}
+
+.tip-links > ul {
+    list-style-type:none;
+    padding:0;
+}
+
+
+
+nav a{
+    text-decoration:none;
+    color:var(--main-color5);
+}
+
+nav a:hover {
+    color:var(--main-color3);
+}
+
+.card-header{
+    background-color: var(--main-color2);
+}
+
+.btn.btn-link.collapsed{
+    text-decoration:none;
+    color:var(--main-color4);
+}
+
+.card-body{
+    background-color:var(--main-color3);
 }
