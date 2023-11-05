@@ -7,11 +7,6 @@
     --overlay-color: rgba(255, 255, 255, 0.3);
 }
 
-.dark-mode {
-    background-color: #00011D;
-    color: #EBEEFF;
-}
-
 .nav-item > button {
     width: 25vw;
     border: none;

@@ -38,7 +38,12 @@
         <div class="col-lg-6 mx-auto">
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <button onclick="" type="button" class="btn btn-outline-secondary btn-lg px-4">metric / imperial</button>
-            <button onclick="toggleDarkMode()" type="button" class="btn btn-primary btn-lg px-4 gap-3">dark / light mode</button>
+            <button class="btn btn-primary btn-lg px-4">
+              <label class="form-check-label">Light</label>
+              <input onclick="saveTheme(value)" type="radio" id="dark" name="theme" value="light"><br><br>
+              <label class="form-check-label">Dark</label>
+              <input onclick="saveTheme(value)" type="radio" id="light" name="theme" value="dark"><br><br>          
+            </button>
           </div>
           <div>
             <button class="btn btn-outline-secondary btn-lg px-4" type="button" onclick="logout()">Logout</button>
