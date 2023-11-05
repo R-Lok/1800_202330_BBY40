@@ -24,6 +24,7 @@ function getNameFromAuth() {
 
 const mainPageCanvas = document.getElementById("main-page-chart")
 
+// When we integrate backend, will need to make data below be pulled from firestore (currently filled with placeholders)
 new Chart(mainPageCanvas, {
     type: 'bar',
     data: {
@@ -45,6 +46,7 @@ new Chart(mainPageCanvas, {
     }
 })
 
+//We will need to write functions to post form data to firestore in future
 const showerSlider = document.getElementById("showerSlider")
 const showerSliderValDisplay = document.getElementById("shower-duration")
 
