@@ -71,8 +71,8 @@
                 <button type="button" id="sink-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#tap-modal">Sink/Tap</button>
                 <button type="button" id="shower-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#shower-modal">Shower</button>
                 <div class="w-100"></div>
-                <button type="button" id="laundry-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Laundry</button>
-                <button type="button" id="dishwasher-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Dishwasher</button>
+                <button type="button" id="laundry-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#laundry-modal">Laundry</button>
+                <button type="button" id="dishwasher-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#dishwasher-modal">Dishwasher</button>
               </div>
             </div>
             <div class="modal-footer">
@@ -87,7 +87,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="shower-duration-modal-title">Enter Shower Duration</h5>
+              <h5 class="modal-title" id="shower-duration-modal-title">Enter Shower Duration:</h5>
             </div>
             <div class="modal-body d-grid gap-4">
               <fieldset>
@@ -110,7 +110,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="tap-use-duration-modal-title">Enter Tap Use Duration</h5>
+              <h5 class="modal-title" id="tap-use-duration-modal-title">Enter Tap Use Duration:</h5>
             </div>
             <div class="modal-body d-grid gap-4">
               <fieldset>
@@ -120,6 +120,54 @@
             </div>
             <div class="modal-footer d-flex justify-content-between">
               <button type="button" class="form-submit-btn btn btn-primary" data-dismiss="modal">Submit</button>
+              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal for part 2 form for laundry -->
+      <div class="modal fade" id="laundry-modal" tabindex="-1" role="dialog" aria-labelledby="Laundry machine type form"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="laundry-machine-type-modal-title">Pick your laundry machine type:</h5>
+            </div>
+            <div class="modal-body d-grid gap-4">
+              <div class="row">
+                <button type="button" id="laundry-standard-btn"class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Standard model</button>
+                <button type="button" id="laundry-energystar-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Energy star certified</button>
+                <button type="button" id="laundry-old-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Old model</button>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Modal for part 2 form for dishwasher -->
+      <div class="modal fade" id="dishwasher-modal" tabindex="-1" role="dialog" aria-labelledby="Dishwasher type form"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="dishwasher-type-modal-title">Pick your dishwasher type:</h5>
+            </div>
+            <div class="modal-body d-grid gap-4">
+              <div class="row">
+                <button type="button" id="dishwasher-standard-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Standard
+                  model</button>
+                <button type="button" id="dishwasher-energystar-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Energy star
+                  certified</button>
+                <button type="button" id="dishwasher-old-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Old
+                  model</button>
+              </div>
+            </div>
+            <div class="modal-footer">
               <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
