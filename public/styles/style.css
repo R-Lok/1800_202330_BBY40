@@ -32,6 +32,11 @@
     margin: 5px;
 }
 
+.machine-type-btn {
+    height: 15vh;
+    margin: 5px;
+}
+
 label {
     width: 100%;
 }
