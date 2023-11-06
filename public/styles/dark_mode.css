@@ -151,6 +151,11 @@ nav a:hover {
     background-color:var(--main-color3);
 }
 
+/* Settings */
+#logout-btn {
+    margin-top: 10vh;
+}
+
 /*Water Bill*/
 
 .textBlockCenter { 
