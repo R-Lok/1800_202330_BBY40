@@ -25,11 +25,15 @@ body {
     height: 50px;
 }
 
-#main-page-chart-container, #water-usage-container, canvas {
+#main-page-chart-container {
     width: 100% !important;
     height: 100% !important;
     max-height: 500px;
     min-height: 50vh;
+}
+
+.usage-chart {
+    height: 50vh;
 }
 
 #index-logo {

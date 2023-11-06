@@ -1,25 +1,68 @@
-const water_usage_chart = () => {
-    const ctx = document.getElementById('water-usage-chart')
+const yearly = document.getElementById('water-usage-chart-yearly')
 
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Jan', 'Feb', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                label: 'Liters used',
-                data: [122, 195, 350, 225, 112, 333, 444, 450, 435, 322, 222, 345],
-                borderWidth: 1,
-            }],
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                },
+new Chart(yearly, {
+    type: 'bar',
+    data: {
+        labels: ['Jan', 'Feb', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+            label: 'Liters of water',
+            data: [122, 195, 350, 225, 112, 333, 444, 450, 435, 322, 222, 345],
+            borderWidth: 1,
+        }],
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
             },
         },
-        responsive: true
-    })
-}
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+    },
+})
 
-water_usage_chart()
+const weekly = document.getElementById('water-usage-chart-weekly')
+
+new Chart(weekly, {
+    type: 'bar',
+    data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+            label: 'Liters of water',
+            data: [20, 22, 34, 55, 12, 15, 44],
+            borderWidth: 1
+        }],
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+            },
+        },
+        indexAxis: 'y',
+        maintainAspectRatio: false
+    },
+})
+
+const monthly = document.getElementById('water-usage-chart-monthly')
+
+new Chart(monthly, {
+    type: 'bar',
+    data: {
+        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        datasets: [{
+            label: 'Liters of water',
+            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+            borderWidth: 1
+        }],
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+            },
+        },
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+    },
+})
