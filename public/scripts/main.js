@@ -43,7 +43,16 @@ new Chart(mainPageCanvas, {
             }
         },
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Your weekly summary',
+                font: {
+                    size: 20
+                }
+            }
+        }
     }
 })
 
