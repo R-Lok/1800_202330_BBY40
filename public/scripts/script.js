@@ -12,15 +12,16 @@ function redirectToIndex() {
     window.location.href = './index.html'
 }
 
-const setToggle = (id) => {
-    if (localStorage.getItem(id) === 'true' && document.getElementById(id)) {
-        document.getElementById(id).checked = true
+const setToggle = (ids) => {
+    for (const id of ids) {
+        if (localStorage.getItem(id) === 'true' && document.getElementById(id)) {
+            document.getElementById(id).checked = true
+        }
     }
 }
 
-const saveTheme = () => {
-    const theme = document.getElementById('theme').checked
-    localStorage.setItem('theme', theme)
+const saveToggle = (id) => {
+    localStorage.setItem(id, document.getElementById(id).checked)
     applyTheme()
 }
 
@@ -32,5 +33,5 @@ const applyTheme = () => {
     }
 }
 
-setToggle('theme')
+setToggle(['system', 'theme'])
 applyTheme()

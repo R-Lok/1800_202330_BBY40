@@ -37,26 +37,15 @@
       <div class="px-4 py-5 my-5 text-center">
         <img class="d-block mx-auto mb-4" src="images/drink1.jpg" alt="" width="72" height="57">
         <h1 class="display-5 fw-bold">Settings</h1>
-
         <div class="col-lg-6 mx-auto">
-          <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <button onclick="" type="button" class="btn btn-outline-secondary btn-lg px-4">metric / imperial</button>
-            <button class="btn btn-primary btn-lg px-4">
-              <label class="form-check-label">Light</label>
-              <input onclick="saveTheme(value)" type="radio" id="dark" name="theme" value="light"><br><br>
-              <label class="form-check-label">Dark</label>
-              <input onclick="saveTheme(value)" type="radio" id="light" name="theme" value="dark"><br><br>          
-            </button>
-          </div> -->
-          <div>
-            <input type="checkbox" data-toggle="toggle" id="theme" name="theme" onchange="saveTheme()">
-            
-            <button class="btn btn-outline-secondary btn-lg px-4" type="button" onclick="logout()">Logout</button>
+          <div class="d-flex gap-3 justify-content-sm-center align-items-center flex-column">
+            <input type="checkbox" data-toggle="toggle" id="system" data-onlabel="Imperial" data-offlabel="Metric" onchange="saveToggle('system')">
+            <input type="checkbox" data-toggle="toggle" id="theme" data-onlabel="Dark" data-offlabel="Light" onchange="saveToggle('theme')">
+            <button class="btn btn-primary btn-lg px-4" type="button" onclick="logout()">Logout</button>
           </div>
         </div>
       </div>
       <footer id="footerplaceholder"></footer>
-
       <script src="./scripts/firebaseAPI_BBY40.js"></script>
       <script src="./scripts/skeleton.js"></script>
       <script src="./scripts/script.js"></script>
