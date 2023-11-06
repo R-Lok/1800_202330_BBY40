@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: var(--main-color4);color: var(--main-color5);
+    background-color: var(--main-color5);color: var(--main-color4);
 }
 
 .bg-primary, .btn-primary {

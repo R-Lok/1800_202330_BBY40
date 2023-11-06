@@ -12,17 +12,25 @@ function redirectToIndex() {
     window.location.href = './index.html'
 }
 
-const saveTheme = (theme) => {
+const setToggle = (id) => {
+    if (localStorage.getItem(id) === 'true') {
+        document.getElementById(id).checked = true
+    }
+}
+
+const saveTheme = () => {
+    const theme = document.getElementById('theme').checked
     localStorage.setItem('theme', theme)
     applyTheme()
 }
 
 const applyTheme = () => {
-    if (localStorage.getItem('theme') === 'light') {
-        document.head.appendChild(document.createElement('style')).innerHTML = `body {background-color: var(--main-color4);color: var(--main-color5);}`
+    if (localStorage.getItem('theme') === 'false') {
+        document.getElementById('main_css').href = './styles/style.css'
     } else {
-        document.head.appendChild(document.createElement('style')).innerHTML = `body {background-color: var(--main-color5);color: var(--main-color4);}`
+        document.getElementById('main_css').href = './styles/dark_mode.css'
     }
 }
 
+setToggle('theme')
 applyTheme()
