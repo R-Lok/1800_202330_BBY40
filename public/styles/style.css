@@ -21,10 +21,11 @@
     height: 50px;
 }
 
-#main-page-chart-container, canvas {
+#main-page-chart-container, #water-usage-container, canvas {
     width: 100% !important;
     height: 100% !important;
     max-height: 500px;
+    min-height: 50vh;
 }
 
 .main-page-btn {

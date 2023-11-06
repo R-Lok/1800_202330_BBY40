@@ -42,7 +42,8 @@ new Chart(mainPageCanvas, {
                 beginAtZero: true
             }
         },
-        responsive: true
+        responsive: true,
+        maintainAspectRatio: false
     }
 })
 

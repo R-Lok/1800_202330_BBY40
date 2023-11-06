@@ -4,10 +4,10 @@ const water_usage_chart = () => {
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['Jan', 'Feb', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Liters used',
+                data: [122, 195, 350, 225, 112, 333, 444, 450, 435, 322, 222, 345],
                 borderWidth: 1,
             }],
         },
@@ -18,6 +18,7 @@ const water_usage_chart = () => {
                 },
             },
         },
+        responsive: true
     })
 }
 
