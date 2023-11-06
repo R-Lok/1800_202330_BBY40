@@ -1,3 +1,25 @@
+const weeklyToggle = document.getElementById('weekly-label')
+const monthlyToggle = document.getElementById('monthly-label')
+const yearlyToggle = document.getElementById('yearly-label')
+
+weeklyToggle.addEventListener("click", e => {
+    weekly.style.display = "block"
+    monthly.style.display = "none"
+    yearly.style.display = "none"
+})
+
+monthlyToggle.addEventListener("click", e => {
+    weekly.style.display = "none"
+    monthly.style.display = "block"
+    yearly.style.display = "none"
+})
+
+yearlyToggle.addEventListener("click", e => {
+    weekly.style.display = "none"
+    monthly.style.display = "none"
+    yearly.style.display = "block"
+})
+//Below: charts
 const yearly = document.getElementById('water-usage-chart-yearly')
 
 new Chart(yearly, {
