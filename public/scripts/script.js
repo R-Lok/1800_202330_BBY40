@@ -13,7 +13,7 @@ function redirectToIndex() {
 }
 
 const setToggle = (id) => {
-    if (localStorage.getItem(id) === 'true') {
+    if (localStorage.getItem(id) === 'true' && document.getElementById(id)) {
         document.getElementById(id).checked = true
     }
 }
