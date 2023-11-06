@@ -35,13 +35,15 @@
   <body>
       <nav id="navplaceholder"></nav>
       <div class="px-4 py-5 my-5 text-center">
-        <img class="d-block mx-auto mb-4" src="images/drink1.jpg" alt="" width="72" height="57">
-        <h1 class="display-5 fw-bold">Settings</h1>
+        <img class="d-block mx-auto mb-4" src="images/icons/settingsicon.svg" alt="" width="100">
+        <h1 class="display-5 fw-bold mb-5">Settings</h1>
         <div class="col-lg-6 mx-auto">
           <div class="d-flex gap-3 justify-content-sm-center align-items-center flex-column">
-            <input type="checkbox" data-toggle="toggle" id="system" data-onlabel="Imperial" data-offlabel="Metric" onchange="saveToggle('system')">
-            <input type="checkbox" data-toggle="toggle" id="theme" data-onlabel="Dark" data-offlabel="Light" onchange="saveToggle('theme')">
-            <button class="btn btn-primary btn-lg px-4" type="button" onclick="logout()">Logout</button>
+            <h5>Measurement System</h5>
+            <input type="checkbox" data-toggle="toggle" data-width="100" id="system" data-onlabel="Imperial" data-offlabel="Metric" onchange="saveToggle('system')">
+            <h5>Theme</h5>
+            <input type="checkbox" data-toggle="toggle" data-width="100" id="theme" data-onlabel="Dark" data-offlabel="Light" onchange="saveToggle('theme')">
+            <button id="logout-btn" class="btn btn-primary btn-lg px-4" type="button" onclick="logout()">Logout</button>
           </div>
         </div>
       </div>
