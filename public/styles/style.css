@@ -28,6 +28,10 @@
     min-height: 50vh;
 }
 
+#index-logo {
+    width: 80vw;
+}
+
 .main-page-btn {
     width: 50%;
 }
