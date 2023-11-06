@@ -71,6 +71,21 @@ label {
     color:var(--main-color2);
 }
 
+.usage-timescale-option {
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.usage-timescale-option-label {
+    background: var(--main-color1);
+    border: var(--main-color2);
+}
+
+.usage-timescale-option-label.active {
+    background-color: var(--main-color2) !important;
+}
+
 /* Media queries */
 @media screen and (max-width: 575px) {
 
