@@ -1,0 +1,10 @@
+[
+    {
+        "country": "USA",
+        "costPerLitre": 1.2
+    },
+    {
+        "country": "Taiwan",
+        "costPerLitre": 0.04
+    }
+]
