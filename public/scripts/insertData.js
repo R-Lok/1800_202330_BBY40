@@ -33,14 +33,12 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 const getData = async (name) => {
-    const results = await getDocs(collection(db, name))
-        .then((results) => results.docs.map((doc) => doc.data()))
-
     const coll = collection(db, name)
+    // const results = await getDocs(coll).then((results) => results.docs.map((doc) => doc.data()))
     const snapshot = await getCountFromServer(coll)
-    console.log(results)
+    // console.log(results)
     console.log('count: ', snapshot.data().count)
-    return results
+    // return results
 }
 
 const getDataById = async () => {
@@ -89,10 +87,7 @@ const batchWrite = async (name, items) => {
     console.log('done')
 }
 
-const main = async () => {
-    // await batchWrite('useTypes', useTypes)
-    // await batchWrite('priceFactors', priceFactors)
-
+const insertWaterLogs = async () => {
     const userIds = await getDocs(collection(db, 'users'))
         .then((results) => results.docs.map((doc) => doc.id))
 
@@ -102,31 +97,69 @@ const main = async () => {
             return { id, ...doc.data() }
         }))
 
+    const querySnapshot = await getDocs(query(collection(db, 'priceFactors'), where('country', '==', 'Canada')))
+    let costPerLitre
+    querySnapshot.forEach((doc) => {
+        costPerLitre = doc.data().costPerLitre
+    // console.log(doc.id, ' => ', doc.data().costPerLitre)
+    })
+    // console.log(costPerLitre)
+    // console.log(userIds)
     // console.log(useTypes)
-    const waterlogs = []
-    for (let i = 0; i < 10; i++) {
-        const useType = useTypes[Math.floor(Math.random() * 9)]
+
+    const waterLogs = []
+    for (let i = 0; i < 7300; i++) {
+        const useType = useTypes[Math.floor(Math.random() * 8)]
         const createdAt = Timestamp.now().toDate()
         const expiresIn = Math.floor(Math.random() * 365) * 60 * 60 * 24
         createdAt.setSeconds(createdAt.getSeconds() + expiresIn)
-        waterlogs.push({
+        const calcfactor = Math.floor(Math.random() * 11)
+        const estVol = useType.waterVolFactor * calcfactor
+        const estCost = estVol * costPerLitre
+        waterLogs.push({
             'useType_id': useType.id,
-            'calcfactor': Math.floor(Math.random() * 11),
+            'calcfactor': calcfactor,
             'machine_type': useType.model,
-            'estVol': Math.floor(Math.random() * 11),
-            'estCost': Math.floor(Math.random() * 11),
+            'estVol': estVol,
+            'estCost': estCost,
             'userId': userIds[i % 2],
             'home': i % 2 === 0,
             'updatedAt': createdAt,
             'createdAt': createdAt,
         })
     }
-    console.log(waterlogs)
+    let batch = writeBatch(db)
+    let count = 0
+    let total = 0
+    for (const item of waterLogs) {
+        batch.set(doc(db, 'waterLogs', uuidv4()), item)
+        count++
+        total++
+        if (count === 500) {
+            await batch.commit()
+            console.log(`insert ${count} records`)
+            count = 0
+            batch = writeBatch(db)
+        }
+    }
+    console.log(`insert ${count} records`)
+    await batch.commit()
+    console.log(`${total} records inserted.`)
+}
+
+const main = async () => {
+    // await batchWrite('useTypes', useTypes)
+    // await batchWrite('priceFactors', priceFactors)
+    // await insertWaterLogs()
 
     // getDataByTime('useTypes', await getTimestamp())
     // await getData('useTypes')
+    // await getData('waterLogs')
+
     // await getDataById()
     // await deleteData('useTypes')
+    // await deleteData('priceFactors')
+    // await deleteData('waterLogs')
 }
 
 main()

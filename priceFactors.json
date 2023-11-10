@@ -1,10 +1,10 @@
 [
     {
-        "country": "USA",
-        "costPerLitre": 1.2
+        "country": "Canada",
+        "costPerLitre": 0.001779
     },
     {
         "country": "Taiwan",
-        "costPerLitre": 0.04
+        "costPerLitre": 0.000313
     }
 ]
