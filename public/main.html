@@ -61,22 +61,23 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="select-water-use-modal-title">Select Water Use</h5>
+              <h5 class="modal-title" id="select-water-use-modal-title">Select Water Use:</h5>
             </div>
             <div class="modal-body d-grid gap-4">
               <div class="row">
-                <button type="button" id="drink-btn" class="col select-use-btn btn btn-primary btn-lg"  data-dismiss="modal" data-toggle="modal" data-target="#drink-modal">Placeholder</button>
-                <button type="button" id="flush-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal">Flush</button>
+                <button type="button" id="flush-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#home-modal">Flush</button>
                 <d class="w-100"></d>
                 <button type="button" id="sink-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#tap-modal">Sink/Tap</button>
+                <d class="w-100"></d>
                 <button type="button" id="shower-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#shower-modal">Shower</button>
                 <div class="w-100"></div>
                 <button type="button" id="laundry-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#laundry-modal">Laundry</button>
+                <d class="w-100"></d>
                 <button type="button" id="dishwasher-btn" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#dishwasher-modal">Dishwasher</button>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </div>
@@ -97,8 +98,8 @@
               </fieldset>
             </div>
             <div class="modal-footer d-flex justify-content-between">
-              <button type="button" class="form-submit-btn btn btn-primary" data-dismiss="modal">Submit</button>
-              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="form-submit-btn btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#home-modal">Next</button>
+              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </div>
@@ -119,8 +120,8 @@
               </fieldset>
             </div>
             <div class="modal-footer d-flex justify-content-between">
-              <button type="button" class="form-submit-btn btn btn-primary" data-dismiss="modal">Submit</button>
-              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="form-submit-btn btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#home-modal">Next</button>
+              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </div>
@@ -136,13 +137,13 @@
             </div>
             <div class="modal-body d-grid gap-4">
               <div class="row">
-                <button type="button" id="laundry-standard-btn"class="col machine-type-btn btn btn-primary btn-lg" data-dismiss="modal">Standard model</button>
-                <button type="button" id="laundry-energystar-btn" class="col machine-type-btn btn btn-primary btn-lg" data-dismiss="modal">Energy star certified</button>
-                <button type="button" id="laundry-old-btn" class="col machine-type-btn btn btn-primary btn-lg" data-dismiss="modal">Old model</button>
+                <button type="button" id="laundry-standard-btn"class="col machine-type-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#home-modal">Standard model</button>
+                <button type="button" id="laundry-energystar-btn" class="col machine-type-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#home-modal">Energy star certified</button>
+                <button type="button" id="laundry-old-btn" class="col machine-type-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal" data-target="#home-modal">Old model</button>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </div>
@@ -163,16 +164,39 @@
                   model</button>
                 <button type="button" id="dishwasher-energystar-btn" class="col machine-type-btn btn btn-primary btn-lg" data-dismiss="modal">Energy star
                   certified</button>
-                <button type="button" id="dishwasher-old-btn" class="col machine-type-btn btn btn-primary btn-lg" data-dismiss="modal">Old
-                  model</button>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Modal for form picking home or outside -->
+      <div class="modal fade" id="home-modal" tabindex="-1" role="dialog" aria-labelledby="At home use or outside use form"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="home-modal-title">Was the use at home?: <br><span>*Determines whether to include in water bill estimate</span></h5>
+            </div>
+            <div class="modal-body d-grid gap-4">
+              <div class="row">
+                <button type="button" id="home-use-btn" class="col machine-type-btn btn btn-primary btn-lg"
+                  data-dismiss="modal">Home</button>
+                <button type="button" id="outside-use-btn" class="col machine-type-btn btn btn-primary btn-lg"
+                  data-dismiss="modal">Outside</button>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
       
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->

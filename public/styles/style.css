@@ -156,6 +156,10 @@ nav a:hover {
     background-color:var(--main-color3);
 }
 
+#home-modal-title > span {
+    font-size: 10pt;
+}
+
 /* Settings */
 #logout-btn {
     margin-top: 10vh;
