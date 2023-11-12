@@ -201,8 +201,9 @@ async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMa
 // }
 
 
-//eventlisteners for form
+//-----------------------------eventlisteners for form
 
+//usage-select form buttons
 let addWaterUseBtn = document.getElementById("add-water-usage-btn")
 let flushBtn = document.getElementById("flush-btn")
 let tapBtn = document.getElementById("sink-btn")
@@ -225,6 +226,25 @@ function storeTapUseDetails() {
     addCalcFactorToSessionStr(tapDurationSlider.value / 60)
 }
 
+//flush usage listeners & helper functions
+flushBtn.addEventListener("click", (e) => storeFlushUseDetails(e))
+
+function storeFlushUseDetails(e) {
+    addCalcFactorToSessionStr(1)
+    addUseTypeToSessionStr(e)
+}
+
+//shower usage listeners & helper functions
+let showerUseDurationNextBtn = document.getElementById("shower-form-next-btn")
+let showerDurationSlider = document.getElementById("showerSlider")
+
+showerBtn.addEventListener("click", (e) => addUseTypeToSessionStr(e))
+showerUseDurationNextBtn.addEventListener("click", (e) => storeShowerUseDetails())
+
+function storeShowerUseDetails() {
+    addCalcFactorToSessionStr(showerDurationSlider.value)
+}
+
 
 //eventListeners for home and outside buttons for at-home? form
 let homeSelectBtn = document.getElementById("home-use-btn")
@@ -232,6 +252,15 @@ let outsideSelectBtn = document.getElementById("outside-use-btn")
 
 homeSelectBtn.addEventListener("click", (e) => {
     let home = true
+    let calc_factor = getCalcFactorFromSessionStr()
+    let machine_type = getMachineTypeFromSessionStr()
+    let useType = getUseTypeFromSessionStr()
+
+    submitUseDetails(home, useType, calc_factor, machine_type)
+})
+
+outsideSelectBtn.addEventListener("click", (e) => {
+    let home = false
     let calc_factor = getCalcFactorFromSessionStr()
     let machine_type = getMachineTypeFromSessionStr()
     let useType = getUseTypeFromSessionStr()
