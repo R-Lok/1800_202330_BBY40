@@ -135,69 +135,70 @@ function getUserId() {
         
 }
 
-// async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
-//     try {
-//         db.collection("useTypes").doc(useType).get().then(doc => {
-//             let calc_factor = storedCalcFactor
-//             let createdAt = firebase.firestore.Timestamp.now().toDate()
-//             let estVol = doc.data().waterVolFactor
-//             let estCost = estVol * parseInt(calc_factor)
-//             let home = homeBoolean
-//             let machine_type = storedMachineType
-//             let updatedAt = firebase.firestore.Timestamp.now().toDate()
-//             let useType_id = useType
-//             let userId = getUserId();
-
-//             db.collection("waterLogs").add({
-//                 calc_factor: parseInt(calc_factor),
-//                 createdAt: createdAt,
-//                 estCost: estCost,
-//                 estVol: estVol,
-//                 home: home,
-//                 machine_type: machine_type,
-//                 updatedAt: updatedAt,
-//                 useType_id: useType_id,
-//                 userId: userId
-//             })
-//             console.log("Use submitted")
-//         });
-//     } catch (error) {
-//         console.log("Submission encountered an error")
-//         alert("Submission encountered an error")
-//     }
+async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
     
-// }
+    try {
+        let userId = await getUserId();
+        db.collection("useTypes").doc(useType).get().then(doc => {
+            let calc_factor = storedCalcFactor
+            let createdAt = firebase.firestore.Timestamp.now().toDate()
+            let estVol = doc.data().waterVolFactor
+            let estCost = estVol * parseInt(calc_factor)
+            let home = homeBoolean
+            let machine_type = storedMachineType
+            let updatedAt = firebase.firestore.Timestamp.now().toDate()
+            let useType_id = useType
+
+            db.collection("waterLogs").add({
+                calc_factor: parseInt(calc_factor),
+                createdAt: createdAt,
+                estCost: estCost,
+                estVol: estVol,
+                home: home,
+                machine_type: machine_type,
+                updatedAt: updatedAt,
+                useType_id: useType_id,
+                userId: userId
+            })
+            console.log("Use submitted")
+        });
+    } catch (error) {
+        console.log("Submission encountered an error")
+        alert("Submission encountered an error")
+    }
+    
+}
 
 //test function below which doesnt actually use read/writes
-async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
-    try {
-        let calc_factor = storedCalcFactor
-        let createdAt = Date.now()
-        let estVol = 5
-        let estCost = estVol * calc_factor
-        let home = homeBoolean
-        let machine_type = storedMachineType
-        let updatedAt = Date.now()
-        let useType_id = "test_string"
-        let uid = await getUserId()
+// async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
+//     try {
+//         let calc_factor = storedCalcFactor
+//         let createdAt = Date.now()
+//         let estVol = 5
+//         let estCost = estVol * calc_factor
+//         let home = homeBoolean
+//         let machine_type = storedMachineType
+//         let updatedAt = Date.now()
+//         let useType_id = useType
+//         let uid = await getUserId()
 
-        let submission = {
-            calc_factor: parseInt(calc_factor),
-            createdAt: createdAt,
-            estCost: estCost,
-            estVol: estVol,
-            home: home,
-            machine_type: machine_type,
-            updatedAt: updatedAt,
-            useType_id: useType_id,
-            userId: uid
-        }
-        console.log(submission)
+//         let submission = {
+//             calc_factor: parseInt(calc_factor),
+//             createdAt: createdAt,
+//             estCost: estCost,
+//             estVol: estVol,
+//             home: home,
+//             machine_type: machine_type,
+//             updatedAt: updatedAt,
+//             useType_id: useType_id,
+//             userId: uid
+//         }
+//         console.log(submission)
 
-    } catch (error) {
-        console.log("Could not fetch userId")
-    }       
-}
+//     } catch (error) {
+//         console.log("Could not fetch userId")
+//     }       
+// }
 
 
 //eventlisteners for form
@@ -221,7 +222,7 @@ tapBtn.addEventListener("click", e => addUseTypeToSessionStr(e))
 tapUseDurationNextBtn.addEventListener("click", (e) => {storeTapUseDetails()})
 
 function storeTapUseDetails() {
-    addCalcFactorToSessionStr(tapDurationSlider.value)
+    addCalcFactorToSessionStr(tapDurationSlider.value / 60)
 }
 
 
@@ -238,4 +239,3 @@ homeSelectBtn.addEventListener("click", (e) => {
     submitUseDetails(home, useType, calc_factor, machine_type)
 })
 
-console.log(firebase.firestore.Timestamp.now())
