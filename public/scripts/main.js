@@ -1,3 +1,5 @@
+
+
 function getNameFromAuth() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if a user is signed in:
@@ -78,3 +80,162 @@ tapSlider.addEventListener('input', e => {
         tapSliderValDisplay.innerText = `${tapUseSeconds}s`
     }
 })
+
+//function to clear session storage, to clear stored form values when user cancels input
+function clearSessionStorage() {
+    sessionStorage.clear();
+    console.log("Session storage cleared");
+}
+
+//function to test eventListenerTriggers
+function testEventListener() {
+    console.log("You triggered the test event listener")
+}
+
+function addUseTypeToSessionStr(e) {
+    let useType = e.target.getAttribute("value")
+    sessionStorage.setItem("useType", useType)
+    console.log("Use type stored")
+}
+
+function getUseTypeFromSessionStr() {
+    return sessionStorage.getItem("useType")
+}
+
+function addMachineTypeToSessionStr(machineType) {
+    sessionStorage.setItem("machine_type", machineType)
+}
+
+function getMachineTypeFromSessionStr() {
+    return sessionStorage.getItem("machine_type")
+}
+
+function addCalcFactorToSessionStr(factor) {
+    sessionStorage.setItem("calc_factor", factor)
+}
+
+function getCalcFactorFromSessionStr() {
+    return sessionStorage.getItem("calc_factor")
+}
+
+function getUserId() {
+    return new Promise((resolve, reject) => {
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                // User logged in already or has just logged in.
+                console.log(user.uid)
+                sessionStorage.setItem("userId", user.uid)
+                let userId = user.uid
+                resolve(userId)
+            } else {
+                reject("Not logged in")
+            }
+        })
+    })
+        
+}
+
+// async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
+//     try {
+//         db.collection("useTypes").doc(useType).get().then(doc => {
+//             let calc_factor = storedCalcFactor
+//             let createdAt = firebase.firestore.Timestamp.now().toDate()
+//             let estVol = doc.data().waterVolFactor
+//             let estCost = estVol * parseInt(calc_factor)
+//             let home = homeBoolean
+//             let machine_type = storedMachineType
+//             let updatedAt = firebase.firestore.Timestamp.now().toDate()
+//             let useType_id = useType
+//             let userId = getUserId();
+
+//             db.collection("waterLogs").add({
+//                 calc_factor: parseInt(calc_factor),
+//                 createdAt: createdAt,
+//                 estCost: estCost,
+//                 estVol: estVol,
+//                 home: home,
+//                 machine_type: machine_type,
+//                 updatedAt: updatedAt,
+//                 useType_id: useType_id,
+//                 userId: userId
+//             })
+//             console.log("Use submitted")
+//         });
+//     } catch (error) {
+//         console.log("Submission encountered an error")
+//         alert("Submission encountered an error")
+//     }
+    
+// }
+
+//test function below which doesnt actually use read/writes
+async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
+    try {
+        let calc_factor = storedCalcFactor
+        let createdAt = Date.now()
+        let estVol = 5
+        let estCost = estVol * calc_factor
+        let home = homeBoolean
+        let machine_type = storedMachineType
+        let updatedAt = Date.now()
+        let useType_id = "test_string"
+        let uid = await getUserId()
+
+        let submission = {
+            calc_factor: parseInt(calc_factor),
+            createdAt: createdAt,
+            estCost: estCost,
+            estVol: estVol,
+            home: home,
+            machine_type: machine_type,
+            updatedAt: updatedAt,
+            useType_id: useType_id,
+            userId: uid
+        }
+        console.log(submission)
+
+    } catch (error) {
+        console.log("Could not fetch userId")
+    }       
+}
+
+
+//eventlisteners for form
+
+let addWaterUseBtn = document.getElementById("add-water-usage-btn")
+let flushBtn = document.getElementById("flush-btn")
+let tapBtn = document.getElementById("sink-btn")
+let showerBtn = document.getElementById("shower-btn")
+let laundryBtn = document.getElementById("laundry-btn")
+let dishwasherBtn = document.getElementById("dishwasher-btn")
+
+addWaterUseBtn.addEventListener("click", (e) => clearSessionStorage())
+
+
+//tap forms listeners & helper functions
+
+let tapUseDurationNextBtn = document.getElementById("tap-form-next-btn")
+let tapDurationSlider = document.getElementById("tapUseSlider")
+
+tapBtn.addEventListener("click", e => addUseTypeToSessionStr(e))
+tapUseDurationNextBtn.addEventListener("click", (e) => {storeTapUseDetails()})
+
+function storeTapUseDetails() {
+    addCalcFactorToSessionStr(tapDurationSlider.value)
+}
+
+
+//eventListeners for home and outside buttons for at-home? form
+let homeSelectBtn = document.getElementById("home-use-btn")
+let outsideSelectBtn = document.getElementById("outside-use-btn")
+
+homeSelectBtn.addEventListener("click", (e) => {
+    let home = true
+    let calc_factor = getCalcFactorFromSessionStr()
+    let machine_type = getMachineTypeFromSessionStr()
+    let useType = getUseTypeFromSessionStr()
+
+    submitUseDetails(home, useType, calc_factor, machine_type)
+})
+
+console.log(firebase.firestore.Timestamp.now())
