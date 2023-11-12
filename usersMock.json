@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "email": "test1@gmail.com",
+        "name": "tester1",
+        "theme": "light",
+        "measurement": "metric",
+        "updatedAt": "2023-11-12T04:58:56.167Z",
+        "createdAt": "2023-11-12T04:58:56.167Z"
+    },
+    {
+        "id": 1,
+        "email": "test1@gmail.com",
+        "name": "tester1",
+        "theme": "light",
+        "measurement": "metric",
+        "updatedAt": "2023-11-12T04:58:56.167Z",
+        "createdAt": "2023-11-12T04:58:56.167Z"
+    }
+]

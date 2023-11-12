@@ -1,0 +1,66 @@
+[
+   {  
+      "id": 1,
+      "name":"shower",
+      "model":null,
+      "waterVolFactor":8,
+      "updatedAt": "2023-11-12T04:58:56.167Z",
+      "createdAt": "2023-11-12T04:58:56.167Z"
+   },
+   {
+      "id": 2,
+      "name":"tap",
+      "model":null,
+      "waterVolFactor":6,
+      "updatedAt": "2023-11-12T04:58:56.167Z",
+      "createdAt": "2023-11-12T04:58:56.167Z"
+   },
+   {
+      "id": 3,
+      "name":"flush",
+      "model":null,
+      "waterVolFactor":6,
+      "updatedAt": "2023-11-12T04:58:56.167Z",
+      "createdAt": "2023-11-12T04:58:56.167Z"
+   },
+   {
+      "id": 4,
+      "name":"dishwasher",
+      "model":"efficient",
+      "waterVolFactor":15,
+      "updatedAt": "2023-11-12T04:58:56.167Z",
+      "createdAt": "2023-11-12T04:58:56.167Z"
+   },
+   {
+      "id": 5,
+      "name":"dishwasher",
+      "model":"standard",
+      "waterVolFactor":20,
+      "updatedAt": "2023-11-12T04:58:56.167Z",
+      "createdAt": "2023-11-12T04:58:56.167Z"
+   },
+   {
+      "id": 6,
+      "name":"laundry",
+      "model":"efficient",
+      "waterVolFactor":50,
+      "updatedAt": "2023-11-12T04:58:56.167Z",
+      "createdAt": "2023-11-12T04:58:56.167Z"
+   },
+   {  
+      "id": 7,
+      "name":"laundry",
+      "model":"standard",
+      "waterVolFactor":90,
+      "updatedAt": "2023-11-12T04:58:56.167Z",
+      "createdAt": "2023-11-12T04:58:56.167Z"
+   },
+   {
+      "id": 8,
+      "name":"laundry",
+      "model":"old",
+      "waterVolFactor":110,
+      "updatedAt": "2023-11-12T04:58:56.167Z",
+      "createdAt": "2023-11-12T04:58:56.167Z"
+   }
+]
