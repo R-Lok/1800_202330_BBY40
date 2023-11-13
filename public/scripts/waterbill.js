@@ -1,4 +1,4 @@
-//Function for getting current user ID
+//Function for getting current userId
 function getUserId() {
     return new Promise((resolve, reject) => {
         firebase.auth().onAuthStateChanged(function (user) {
@@ -20,17 +20,14 @@ function getUserId() {
 //Function for populating current week's water bill cost
 async function populateWeeklyCosts() {
 
-    //try catch blocks to catch errors
+    //try catch blocks to catch and alert of errors
     try{
 
 
-        //get current logged in userID
+        //get current logged in user's userId
         let userId = await getUserId();
-        
-        //Initialize final cost variable
-        var weekCost = 0;
 
-        //Create a date for today
+        var weekCost = 0;
         var d = new Date();
 
         //Change today's date to string
@@ -76,8 +73,8 @@ async function populateWeeklyCosts() {
         var start = new Date (date);
 
 
-        //Querying database for waterLog documents within specific timeframe 
-        //and created by the logged in user
+        //Querying database for waterLog documents that were created within 
+        //last monday to now, by the user at home
         db.collection("waterLogs").where("home", "==", true)
         .where("userId", "==", userId)
         .where("createdAt", ">=", start)
@@ -89,7 +86,7 @@ async function populateWeeklyCosts() {
                 costs.push(doc.data().estCost);
             }); 
             
-            //Summing all estCosts from each document
+            //Summing all estCost values from each document
             console.log(costs);
             costs.forEach(sumAll);
 
@@ -110,15 +107,18 @@ async function populateWeeklyCosts() {
 }
 }
 
-// Call function to enter value into weekly waterbill section
+// Call function
 populateWeeklyCosts();
 
 
 
 //Calculating and populating current month's water bill cost
 async function populateMonthCosts() {
+
+    //try catch blocks to catch and alert of errors
     try{
 
+        //get current logged in user's userId
         let userId = await getUserId();
 
         var monthCost = 0;
@@ -131,8 +131,8 @@ async function populateMonthCosts() {
         var date = year + "-" + month + "-" + 1;
         var monthStart = new Date(date);
 
-        //Querying database for waterLog documents within specific timeframe 
-        //and created by the logged in user
+        //Querying database for waterLog documents that were created within 
+        //the first day of the month to now, by the user at home
         db.collection("waterLogs").where("home", "==", true)
         .where("userId", "==", userId)
         .where("createdAt", ">=", monthStart)
@@ -144,7 +144,7 @@ async function populateMonthCosts() {
                 costs.push(doc.data().estCost);
             }); 
             
-            //Summing all estCosts from each document
+            //Summing all estCost values from each document
             console.log(costs);
             costs.forEach(sumAll);
 
@@ -152,10 +152,10 @@ async function populateMonthCosts() {
             monthCost += num;
         }
         
-        //Changing summed cost value into money format
+        //Changing summed estCost value into money format
         monthCost = "$" + parseFloat(monthCost).toFixed(2);
         
-        //Replacing html content with new value
+        //Replacing Monthly WaterBill's html content with new value
         document.getElementById("monthCost").innerHTML = monthCost;
     });
 
@@ -165,25 +165,29 @@ async function populateMonthCosts() {
     }
 } 
 
+//Call function
 //populateMonthCosts();
 
 
 //Calculating and populating current year's waterbill cost
 async function populateYearCosts() {
+
+     //try catch blocks to catch and alert of errors
     try{
 
+        //get current logged in user's userId
         let userId = await getUserId();
 
         var yearCost = 0;
-
         var today = new Date();
 
+        //Created variable for first day of the year
         var year = today.getFullYear();
         var date = year + "-" + 1 + "-" + 1;
         var yearStart = new Date(date);
 
-        //Querying database for waterLog documents within specific timeframe 
-        //and created by the logged in user
+        //Querying database for waterLog documents that were created within 
+        //the first day of the year to now, by the user at home
         db.collection("waterLogs").where("home", "==", true)
         .where("userId", "==", userId)
         .where("createdAt", ">=", yearStart)
@@ -195,18 +199,17 @@ async function populateYearCosts() {
                 costs.push(doc.data().estCost);
             }); 
             
-            //Summing all estCosts from each document
-            console.log(costs);
+            //Summing all estCost values from each document
             costs.forEach(sumAll);
 
             function sumAll(num) {
-            yearCost += num;
+                yearCost += num;
         }
         
         //Changing summed cost value into money format
         yearCost = "$" + parseFloat(yearCost).toFixed(2);
         
-        //Replacing Weekly Waterbill's html content with new value
+        //Replacing Yearly Waterbill's html content with new value
         document.getElementById("yearCost").innerHTML = yearCost;
     });
 
@@ -216,35 +219,43 @@ async function populateYearCosts() {
     }
 } 
 
+//Call function
+//populateYearCosts()
+
 
 
 //Calculating and populating total waterbill costs
 async function populateTotalCosts() {
-    try{
 
+    //try catch blocks to catch and alert of errors
+    try{
+        
+        //get current logged in user's userId
         let userId = await getUserId();
 
         var totalCost = 0;
 
-
-    db.collection("waterLogs").where("home", "==", true)
-    .where("userId", "==", userId)
+        //Querying database for all waterLog documents that were 
+        //created by the user at home
+        db.collection("waterLogs").where("home", "==", true)
+        .where("userId", "==", userId)
         .onSnapshot((querySnapshot) => {
             var costs = [];
             querySnapshot.forEach(async (doc) => {
                 costs.push(doc.data().estCost);
             });
         
+        //Summing all estCost values from each document
         costs.forEach(sumAll);
 
         function sumAll(num) {
             totalCost += num;
         }
 
+        //Changing summed cost value into money format
         totalCost = "$" + parseFloat(totalCost).toFixed(2);
 
-        console.log(weekCostOutput);
-        
+    //Replacing Total Waterbill's html content with new value
     document.getElementById("totalCost").innerHTML = totalCost;
 });
 
@@ -254,7 +265,7 @@ async function populateTotalCosts() {
 }
 }
 
-//Call function to enter value into total waterbill section
+//Call function
 //populateTotalCosts();
 
 

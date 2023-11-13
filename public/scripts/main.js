@@ -284,8 +284,8 @@ async function populateMonthCosts() {
         var date = year + "-" + month + "-" + 1;
         var monthStart = new Date(date);
 
-        //Querying database for waterLog documents within a month's timeframe
-        //and created by the logged in user
+        //Querying database for waterLog documents that were created within 
+        //the first day of the month to now, by the user at home
         db.collection("waterLogs").where("home", "==", true)
         .where("userId", "==", userId)
         .where("createdAt", ">=", monthStart)
