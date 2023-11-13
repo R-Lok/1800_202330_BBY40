@@ -125,8 +125,6 @@ function getUserId() {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 // User logged in already or has just logged in.
-                console.log(user.uid)
-                sessionStorage.setItem("userId", user.uid)
                 let userId = user.uid
                 resolve(userId)
             } else {
