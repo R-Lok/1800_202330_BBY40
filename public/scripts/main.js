@@ -102,8 +102,10 @@ function getUseTypeFromSessionStr() {
     return sessionStorage.getItem("useType")
 }
 
-function addMachineTypeToSessionStr(machineType) {
+function addMachineTypeToSessionStr(e) {
+    let machineType = e.target.getAttribute("machinetype")
     sessionStorage.setItem("machine_type", machineType)
+    console.log("Machine type stored")
 }
 
 function getMachineTypeFromSessionStr() {
@@ -243,6 +245,22 @@ showerUseDurationNextBtn.addEventListener("click", (e) => storeShowerUseDetails(
 
 function storeShowerUseDetails() {
     addCalcFactorToSessionStr(showerDurationSlider.value)
+}
+
+//laundry machine usage lsiteners & helper functions
+let laundryStandardBtn = document.getElementById("laundry-standard-btn")
+let laundryEfficientBtn = document.getElementById("laundry-energystar-btn")
+let laundryOldBtn = document.getElementById("laundry-old-btn")
+let laundryBtns = [laundryStandardBtn, laundryEfficientBtn, laundryOldBtn]
+
+laundryBtns.forEach(button => button.addEventListener("click", e => storeLaundryUseDetails(e)))
+
+function storeLaundryUseDetails(e) {
+    let calc_factor = 1
+
+    addUseTypeToSessionStr(e)
+    addMachineTypeToSessionStr(e)
+    addCalcFactorToSessionStr(calc_factor)
 }
 
 
