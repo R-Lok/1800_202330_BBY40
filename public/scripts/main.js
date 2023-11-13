@@ -306,7 +306,7 @@ async function populateMonthCosts() {
         }
         
         //Changing summed cost value into money format
-        monthCost = "$" + parseFloat(monthCost).toFixed(2);
+        monthCost = "This Month's Water Bill Estimate: " + "$" + parseFloat(monthCost).toFixed(2);
         
         //Replacing html content with new value
         document.getElementById("summary-stat").innerHTML = monthCost;
@@ -317,3 +317,6 @@ async function populateMonthCosts() {
         alert("Monthly Cost can't be found");
     }
 } 
+
+//Function call
+//populateMonthCosts();
