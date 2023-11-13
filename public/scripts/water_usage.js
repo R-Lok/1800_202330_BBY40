@@ -42,7 +42,7 @@ const dayRangeDict = {
 
 const sumWaterUsage = (type, doc, sum) => {
     const index = type === 'week' ? adjustDay(doc.createdAt.toDate()) : doc.createdAt.toDate().getDate() - 1
-    sum[index] = sum[index] || 0 + doc.estVol
+    sum[index] += doc.estVol
 }
 
 const daysInMonth = (time) => new Date(time.getFullYear(), time.getMonth(), 0).getDate()
@@ -116,7 +116,7 @@ const main = async () => {
     ])
     // console.log(weeklyData)
     // console.log(monthlyData)
-    console.log(yearlyData)
+    // console.log(yearlyData)
 
     const weekly = document.getElementById('water-usage-chart-weekly')
     const monthly = document.getElementById('water-usage-chart-monthly')
@@ -145,7 +145,7 @@ const main = async () => {
     })
 
     new Chart(weekly, getChartConfig(weeklyData, ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']))
-    new Chart(monthly, getChartConfig(monthlyData, [...Array(daysInMonth(new Date(Date.now()))).keys()]))
+    new Chart(monthly, getChartConfig(monthlyData, Array.from({ length: daysInMonth(new Date()) }, (v, i) => i + 1)))
     new Chart(yearly, getChartConfig(yearlyData, ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']))
 }
 
