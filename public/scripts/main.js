@@ -1,76 +1,136 @@
 
 
 function getNameFromAuth() {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
         // Check if a user is signed in:
         if (user) {
-            // Do something for the currently logged-in user here: 
-            console.log(user.uid); //print the uid in the browser console
-            console.log(user.displayName);  //print the user name in the browser console
-            userName = user.displayName;
+            // Do something for the currently logged-in user here:
+            console.log(user.uid) // print the uid in the browser console
+            console.log(user.displayName) // print the user name in the browser console
+            userName = user.displayName
 
-            //method #1:  insert with JS
-            document.getElementById("name-goes-here").innerText = userName;
+            // method #1:  insert with JS
+            document.getElementById('name-goes-here').innerText = userName
 
-            //method #2:  insert using jquery
-            //$("#name-goes-here").text(userName); //using jquery
+            // method #2:  insert using jquery
+            // $("#name-goes-here").text(userName); //using jquery
 
-            //method #3:  insert using querySelector
-            //document.querySelector("#name-goes-here").innerText = userName
-
+            // method #3:  insert using querySelector
+            // document.querySelector("#name-goes-here").innerText = userName
         } else {
             // No user is signed in.
         }
-    });
+    })
 }
 
-const mainPageCanvas = document.getElementById("main-page-chart")
+const adjustDay = (time) => time.getDay() === 0 ? 7 - 1 : time.getDay() - 1
 
-// When we integrate backend, will need to make data below be pulled from firestore (currently filled with placeholders)
-new Chart(mainPageCanvas, {
-    type: 'bar',
-    data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-            label: 'Liters of water',
-            data: [10, 20, 30, 40, 50, 60, 70],
-            borderWidth: 1,
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Your weekly summary',
-                font: {
-                    size: 20
-                }
-            }
-        }
+const getWeek = () => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const dayOfWeek = adjustDay(today)
+
+    const todayUnix = today.getTime()
+    const oneDayUnix = 60 * 60 * 24 * 1000
+
+    const start = new Date(todayUnix - (dayOfWeek * oneDayUnix))
+    const end = new Date(todayUnix + oneDayUnix)
+    return { start, end }
+}
+
+const dayRangeDict = {
+    'week': getWeek,
+}
+
+const sumWaterUsage = (type, doc, sum) => {
+    const index = type === 'week' ? adjustDay(doc.createdAt.toDate()) : doc.createdAt.toDate().getDate() - 1
+    sum[index] = sum[index] || 0 + doc.estVol
+}
+
+const sumArray = (type, start) => {
+    switch (type) {
+    case 'week':
+        return new Array(7).fill(0)
+    default:
+        throw new Error('Eh? how did you get here?')
     }
-})
+}
 
-//We will need to write functions to post form data to firestore in future
-const showerSlider = document.getElementById("showerSlider")
-const showerSliderValDisplay = document.getElementById("shower-duration")
+const getWaterUsage = (type, userId) => {
+    return new Promise((resolve, reject) => {
+        const { start, end } = dayRangeDict[type]()
+        // console.log(`start: ${start}`)
+        // console.log(`end: ${end}`)
 
-showerSlider.addEventListener('input', e => {
+        db.collection('waterLogs')
+            .where('userId', '==', userId)
+            .where('createdAt', '>=', start)
+            .where('createdAt', '<', end)
+            .get()
+            .then((querySnapshot) => {
+                const sum = sumArray(type, start)
+                querySnapshot.forEach((doc) => {
+                    sumWaterUsage(type, doc.data(), sum)
+                })
+                resolve(sum)
+            })
+            .catch((error) => {
+                reject(console.log('Error getting documents: ', error))
+            })
+    })
+}
+
+const main = async () => {
+    const weeklyData = await getWaterUsage('week', localStorage.getItem('userId'))
+    const mainPageCanvas = document.getElementById('main-page-chart')
+
+    new Chart(mainPageCanvas, {
+        type: 'bar',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Liters of water',
+                data: weeklyData,
+                borderWidth: 1,
+            }],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Your weekly summary',
+                    font: {
+                        size: 20,
+                    },
+                },
+            },
+        },
+    })
+}
+
+main()
+
+// We will need to write functions to post form data to firestore in future
+const showerSlider = document.getElementById('showerSlider')
+const showerSliderValDisplay = document.getElementById('shower-duration')
+
+showerSlider.addEventListener('input', (e) => {
     showerSliderValDisplay.innerText = `${showerSlider.value}m`
 })
 
-const tapSlider = document.getElementById("tapUseSlider")
-const tapSliderValDisplay = document.getElementById("tap-use-duration")
+const tapSlider = document.getElementById('tapUseSlider')
+const tapSliderValDisplay = document.getElementById('tap-use-duration')
 
-tapSlider.addEventListener('input', e => {
-    let tapUseMinutes = Math.trunc(tapSlider.value / 60)
-    let tapUseSeconds = tapSlider.value % 60
+tapSlider.addEventListener('input', (e) => {
+    const tapUseMinutes = Math.trunc(tapSlider.value / 60)
+    const tapUseSeconds = tapSlider.value % 60
 
     if (tapUseMinutes != 0 && tapUseSeconds != 0) {
         tapSliderValDisplay.innerText = `${tapUseMinutes}m${tapUseSeconds}s`
@@ -81,88 +141,87 @@ tapSlider.addEventListener('input', e => {
     }
 })
 
-//function to clear session storage, to clear stored form values when user cancels input
+// function to clear session storage, to clear stored form values when user cancels input
 function clearSessionStorage() {
-    sessionStorage.clear();
-    console.log("Session storage cleared");
+    sessionStorage.clear()
+    console.log('Session storage cleared')
 }
 
-//function to test eventListenerTriggers
+// function to test eventListenerTriggers
 function testEventListener() {
-    console.log("You triggered the test event listener")
+    console.log('You triggered the test event listener')
 }
 
 function addUseTypeToSessionStr(e) {
-    let useType = e.target.getAttribute("value")
-    sessionStorage.setItem("useType", useType)
-    console.log("Use type stored")
+    const useType = e.target.getAttribute('value')
+    sessionStorage.setItem('useType', useType)
+    console.log('Use type stored')
 }
 
 function getUseTypeFromSessionStr() {
-    return sessionStorage.getItem("useType")
+    return sessionStorage.getItem('useType')
 }
 
 function addMachineTypeToSessionStr(e) {
-    let machineType = e.target.getAttribute("machinetype")
-    sessionStorage.setItem("machine_type", machineType)
-    console.log("Machine type stored")
+    const machineType = e.target.getAttribute('machinetype')
+    sessionStorage.setItem('machine_type', machineType)
+    console.log('Machine type stored')
 }
 
 function getMachineTypeFromSessionStr() {
-    return sessionStorage.getItem("machine_type")
+    return sessionStorage.getItem('machine_type')
 }
 
 function addCalcFactorToSessionStr(factor) {
-    sessionStorage.setItem("calc_factor", factor)
+    sessionStorage.setItem('calc_factor', factor)
 }
 
 function getCalcFactorFromSessionStr() {
-    return sessionStorage.getItem("calc_factor")
+    return sessionStorage.getItem('calc_factor')
 }
 
 function getUserId() {
     return new Promise((resolve, reject) => {
-        firebase.auth().onAuthStateChanged(function (user) {
+        firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 // User logged in already or has just logged in.
-                let userId = user.uid
+                const userId = user.uid
                 resolve(userId)
             } else {
-                reject("Not logged in")
+                reject('Not logged in')
             }
         })
     })
 }
 
 function getPriceFactor() {
-    //currently assumes that the user is in canada, as the doc retrieved is the canada document
+    // currently assumes that the user is in canada, as the doc retrieved is the canada document
     return new Promise((resolve, reject) => {
-        db.collection("priceFactors").doc("36380e25-46b3-4ae9-a17c-3d95e7080a1f").get().then(doc => {
+        db.collection('priceFactors').doc('36380e25-46b3-4ae9-a17c-3d95e7080a1f').get().then((doc) => {
             if (doc.data().costPerLitre) {
                 resolve(doc.data().costPerLitre)
             } else {
-                reject(Console.log("Could not fetch cost per litre"))
+                reject(Console.log('Could not fetch cost per litre'))
             }
         })
     })
 }
 
 async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
-    
     try {
-        let priceFactor = await getPriceFactor()
-        let userId = await getUserId();
-        db.collection("useTypes").doc(useType).get().then(doc => {
-            let calc_factor = storedCalcFactor
-            let createdAt = firebase.firestore.Timestamp.now().toDate()
-            let estVol = doc.data().waterVolFactor * calc_factor
-            let estCost = estVol * priceFactor
-            let home = homeBoolean
-            let machine_type = storedMachineType
-            let updatedAt = firebase.firestore.Timestamp.now().toDate()
-            let useType_id = useType
+        const priceFactor = await getPriceFactor()
+        const userId = await getUserId()
+        db.collection('useTypes').doc(useType).get().then((doc) => {
+            const calc_factor = storedCalcFactor
+            const createdAt = firebase.firestore.Timestamp.now().toDate()
+            const estVol = doc.data().waterVolFactor * calc_factor
+            const estCost = estVol * priceFactor
+            const home = homeBoolean
+            const machine_type = storedMachineType
+            const updatedAt = firebase.firestore.Timestamp.now().toDate()
+            const useType_id = useType
 
-            db.collection("waterLogs").add({
+            db.collection('waterLogs').add({
                 calc_factor: parseInt(calc_factor),
                 createdAt: createdAt,
                 estCost: estCost,
@@ -171,18 +230,17 @@ async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMa
                 machine_type: machine_type,
                 updatedAt: updatedAt,
                 useType_id: useType_id,
-                userId: userId
+                userId: userId,
             })
-            console.log("Use submitted")
-        });
+            console.log('Use submitted')
+        })
     } catch (error) {
-        console.log("Submission encountered an error")
-        alert("Submission encountered an error")
+        console.log('Submission encountered an error')
+        alert('Submission encountered an error')
     }
-    
 }
 
-//test function below which doesnt actually use read/writes
+// test function below which doesnt actually use read/writes
 // async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
 //     try {
 //         let calc_factor = storedCalcFactor
@@ -210,156 +268,153 @@ async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMa
 
 //     } catch (error) {
 //         console.log("Could not fetch userId")
-//     }       
+//     }
 // }
 
 
-//-----------------------------eventlisteners for form
+// -----------------------------eventlisteners for form
 
-//usage-select form buttons
-let addWaterUseBtn = document.getElementById("add-water-usage-btn")
-let flushBtn = document.getElementById("flush-btn")
-let tapBtn = document.getElementById("sink-btn")
-let showerBtn = document.getElementById("shower-btn")
-let laundryBtn = document.getElementById("laundry-btn")
-let dishwasherBtn = document.getElementById("dishwasher-btn")
+// usage-select form buttons
+const addWaterUseBtn = document.getElementById('add-water-usage-btn')
+const flushBtn = document.getElementById('flush-btn')
+const tapBtn = document.getElementById('sink-btn')
+const showerBtn = document.getElementById('shower-btn')
+const laundryBtn = document.getElementById('laundry-btn')
+const dishwasherBtn = document.getElementById('dishwasher-btn')
 
-addWaterUseBtn.addEventListener("click", (e) => clearSessionStorage())
+addWaterUseBtn.addEventListener('click', (e) => clearSessionStorage())
 
 
-//tap forms listeners & helper functions
+// tap forms listeners & helper functions
 
-let tapUseDurationNextBtn = document.getElementById("tap-form-next-btn")
-let tapDurationSlider = document.getElementById("tapUseSlider")
+const tapUseDurationNextBtn = document.getElementById('tap-form-next-btn')
+const tapDurationSlider = document.getElementById('tapUseSlider')
 
-tapBtn.addEventListener("click", e => addUseTypeToSessionStr(e))
-tapUseDurationNextBtn.addEventListener("click", (e) => {storeTapUseDetails()})
+tapBtn.addEventListener('click', (e) => addUseTypeToSessionStr(e))
+tapUseDurationNextBtn.addEventListener('click', (e) => {
+    storeTapUseDetails()
+})
 
 function storeTapUseDetails() {
     addCalcFactorToSessionStr(tapDurationSlider.value / 60)
 }
 
-//flush usage listeners & helper functions
-flushBtn.addEventListener("click", (e) => storeFlushUseDetails(e))
+// flush usage listeners & helper functions
+flushBtn.addEventListener('click', (e) => storeFlushUseDetails(e))
 
 function storeFlushUseDetails(e) {
     addCalcFactorToSessionStr(1)
     addUseTypeToSessionStr(e)
 }
 
-//shower usage listeners & helper functions
-let showerUseDurationNextBtn = document.getElementById("shower-form-next-btn")
-let showerDurationSlider = document.getElementById("showerSlider")
+// shower usage listeners & helper functions
+const showerUseDurationNextBtn = document.getElementById('shower-form-next-btn')
+const showerDurationSlider = document.getElementById('showerSlider')
 
-showerBtn.addEventListener("click", (e) => addUseTypeToSessionStr(e))
-showerUseDurationNextBtn.addEventListener("click", (e) => storeShowerUseDetails())
+showerBtn.addEventListener('click', (e) => addUseTypeToSessionStr(e))
+showerUseDurationNextBtn.addEventListener('click', (e) => storeShowerUseDetails())
 
 function storeShowerUseDetails() {
     addCalcFactorToSessionStr(showerDurationSlider.value)
 }
 
-//laundry machine usage listeners & helper functions,  can be further optimised using html classes
-let laundryStandardBtn = document.getElementById("laundry-standard-btn")
-let laundryEfficientBtn = document.getElementById("laundry-energystar-btn")
-let laundryOldBtn = document.getElementById("laundry-old-btn")
-let laundryBtns = [laundryStandardBtn, laundryEfficientBtn, laundryOldBtn]
+// laundry machine usage listeners & helper functions,  can be further optimised using html classes
+const laundryStandardBtn = document.getElementById('laundry-standard-btn')
+const laundryEfficientBtn = document.getElementById('laundry-energystar-btn')
+const laundryOldBtn = document.getElementById('laundry-old-btn')
+const laundryBtns = [laundryStandardBtn, laundryEfficientBtn, laundryOldBtn]
 
-laundryBtns.forEach(button => button.addEventListener("click", e => storeLaundryOrDishwasherUseDetails(e)))
+laundryBtns.forEach((button) => button.addEventListener('click', (e) => storeLaundryOrDishwasherUseDetails(e)))
 
 function storeLaundryOrDishwasherUseDetails(e) {
-    let calc_factor = 1
+    const calc_factor = 1
 
     addUseTypeToSessionStr(e)
     addMachineTypeToSessionStr(e)
     addCalcFactorToSessionStr(calc_factor)
 }
 
-//dishwasher machine usage listeners & helper functions, can be further optimised using html classes
-let dishwasherStandardBtn = document.getElementById("dishwasher-standard-btn")
-let dishwasherEfficientBtn = document.getElementById("dishwasher-energystar-btn")
-let dishwasherBtns = [dishwasherStandardBtn, dishwasherEfficientBtn]
+// dishwasher machine usage listeners & helper functions, can be further optimised using html classes
+const dishwasherStandardBtn = document.getElementById('dishwasher-standard-btn')
+const dishwasherEfficientBtn = document.getElementById('dishwasher-energystar-btn')
+const dishwasherBtns = [dishwasherStandardBtn, dishwasherEfficientBtn]
 
-dishwasherBtns.forEach(button => button.addEventListener("click", e => storeLaundryOrDishwasherUseDetails(e)))
-dishwasherBtns.forEach(button => button.addEventListener("click", e => {
-    let home = false
-    let calc_factor = getCalcFactorFromSessionStr()
-    let machine_type = getMachineTypeFromSessionStr()
-    let useType = getUseTypeFromSessionStr()
+dishwasherBtns.forEach((button) => button.addEventListener('click', (e) => storeLaundryOrDishwasherUseDetails(e)))
+dishwasherBtns.forEach((button) => button.addEventListener('click', (e) => {
+    const home = false
+    const calc_factor = getCalcFactorFromSessionStr()
+    const machine_type = getMachineTypeFromSessionStr()
+    const useType = getUseTypeFromSessionStr()
 
     submitUseDetails(home, useType, calc_factor, machine_type)
 }))
 
 
+// eventListeners for home and outside buttons for at-home? form
+const homeSelectBtn = document.getElementById('home-use-btn')
+const outsideSelectBtn = document.getElementById('outside-use-btn')
 
-
-//eventListeners for home and outside buttons for at-home? form
-let homeSelectBtn = document.getElementById("home-use-btn")
-let outsideSelectBtn = document.getElementById("outside-use-btn")
-
-homeSelectBtn.addEventListener("click", (e) => {
-    let home = true
-    let calc_factor = getCalcFactorFromSessionStr()
-    let machine_type = getMachineTypeFromSessionStr()
-    let useType = getUseTypeFromSessionStr()
+homeSelectBtn.addEventListener('click', (e) => {
+    const home = true
+    const calc_factor = getCalcFactorFromSessionStr()
+    const machine_type = getMachineTypeFromSessionStr()
+    const useType = getUseTypeFromSessionStr()
 
     submitUseDetails(home, useType, calc_factor, machine_type)
 })
 
-outsideSelectBtn.addEventListener("click", (e) => {
-    let home = false
-    let calc_factor = getCalcFactorFromSessionStr()
-    let machine_type = getMachineTypeFromSessionStr()
-    let useType = getUseTypeFromSessionStr()
+outsideSelectBtn.addEventListener('click', (e) => {
+    const home = false
+    const calc_factor = getCalcFactorFromSessionStr()
+    const machine_type = getMachineTypeFromSessionStr()
+    const useType = getUseTypeFromSessionStr()
 
     submitUseDetails(home, useType, calc_factor, machine_type)
 })
 
-//function to calculate and output estimated monthly water bill value
+// function to calculate and output estimated monthly water bill value
 async function populateMonthCosts() {
-    try{
+    try {
+        const userId = await getUserId()
 
-        let userId = await getUserId();
+        let monthCost = 0
+        const today = new Date()
 
-        var monthCost = 0;
-        var today = new Date();
+        // Creating the date variable for the start of the month
+        const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+        const month = months[today.getMonth()]
+        const year = today.getFullYear()
+        const date = year + '-' + month + '-' + 1
+        const monthStart = new Date(date)
 
-        //Creating the date variable for the start of the month
-        var months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-        var month = months[today.getMonth()];
-        var year = today.getFullYear();
-        var date = year + "-" + month + "-" + 1;
-        var monthStart = new Date(date);
+        // Querying database for waterLog documents that were created within
+        // the first day of the month to now, by the user at home
+        db.collection('waterLogs').where('home', '==', true)
+            .where('userId', '==', userId)
+            .where('createdAt', '>=', monthStart)
+            .where('createdAt', '<=', today)
+            .onSnapshot((querySnapshot) => {
+                const costs = []
+                querySnapshot.forEach((doc) => {
+                    costs.push(doc.data().estCost)
+                })
 
-        //Querying database for waterLog documents that were created within 
-        //the first day of the month to now, by the user at home
-        db.collection("waterLogs").where("home", "==", true)
-        .where("userId", "==", userId)
-        .where("createdAt", ">=", monthStart)
-        .where("createdAt", "<=", today)
-        .onSnapshot((querySnapshot) => {
-            var costs = [];
-            querySnapshot.forEach((doc) => {
+                // Summing all estCosts from each retrieved document
+                console.log(costs)
+                costs.forEach(sumAll)
 
-                costs.push(doc.data().estCost);
-            }); 
-            
-            //Summing all estCosts from each retrieved document
-            console.log(costs);
-            costs.forEach(sumAll);
+                function sumAll(num) {
+                    monthCost += num
+                }
 
-            function sumAll(num) {
-            monthCost += num;
-        }
-        
-        //Changing summed cost value into money format
-        monthCost = "$" + parseFloat(monthCost).toFixed(2);
-        
-        //Replacing html content with new value
-        document.getElementById("summary-stat").innerHTML = monthCost;
-    });
+                // Changing summed cost value into money format
+                monthCost = '$' + parseFloat(monthCost).toFixed(2)
 
-    } catch (error){
-        console.log("Monthly Cost can't be found");
-        alert("Monthly Cost can't be found");
+                // Replacing html content with new value
+                document.getElementById('summary-stat').innerHTML = monthCost
+            })
+    } catch (error) {
+        console.log('Monthly Cost can\'t be found')
+        alert('Monthly Cost can\'t be found')
     }
-} 
+}

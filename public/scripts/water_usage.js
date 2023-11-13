@@ -40,24 +40,9 @@ const dayRangeDict = {
     'year': getYear,
 }
 
-const sumDay = (doc, sum) => {
-    const index = adjustDay(doc.createdAt.toDate())
+const sumWaterUsage = (type, doc, sum) => {
+    const index = type === 'week' ? adjustDay(doc.createdAt.toDate()) : doc.createdAt.toDate().getDate() - 1
     sum[index] = sum[index] || 0 + doc.estVol
-}
-
-const sumMonth = (doc, sum) => {
-    const index = doc.createdAt.toDate().getDate() - 1
-    sum[index] = sum[index] || 0 + doc.estVol
-}
-const sumYear = (doc, sum) => {
-    const index = doc.createdAt.toDate().getMonth() - 1
-    sum[index] = sum[index] || 0 + doc.estVol
-}
-
-const sumDict = {
-    'week': sumDay,
-    'month': sumMonth,
-    'year': sumYear,
 }
 
 const daysInMonth = (time) => new Date(time.getFullYear(), time.getMonth(), 0).getDate()
@@ -71,7 +56,7 @@ const sumArray = (type, start) => {
     case 'year':
         return new Array(12).fill(0)
     default:
-        throw new Error('Hm? how did you get here?')
+        throw new Error('Eh? how did you get here?')
     }
 }
 
@@ -90,7 +75,7 @@ const getWaterUsage = (type, userId) => {
                 const sum = sumArray(type, start)
                 console.log(querySnapshot.size)
                 querySnapshot.forEach((doc) => {
-                    sumDict[type](doc.data(), sum)
+                    sumWaterUsage(type, doc.data(), sum)
                 })
                 resolve(sum)
             })
@@ -98,6 +83,29 @@ const getWaterUsage = (type, userId) => {
                 reject(console.log('Error getting documents: ', error))
             })
     })
+}
+
+const getChartConfig = (data, labels) => {
+    return {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Liters of water',
+                data: data,
+                borderWidth: 1,
+            }],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+        },
+    }
 }
 
 const main = async () => {
@@ -136,68 +144,9 @@ const main = async () => {
         yearly.style.display = 'block'
     })
 
-    new Chart(weekly, {
-        type: 'bar',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: 'Liters of water',
-                data: weeklyData,
-                borderWidth: 1,
-            }],
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                },
-            },
-            indexAxis: 'y',
-            maintainAspectRatio: false,
-        },
-    })
-
-    new Chart(monthly, {
-        type: 'bar',
-        data: {
-            labels: [...Array(daysInMonth(new Date(Date.now()))).keys()],
-            datasets: [{
-                label: 'Liters of water',
-                data: monthlyData,
-                borderWidth: 1,
-            }],
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                },
-            },
-            indexAxis: 'y',
-            maintainAspectRatio: false,
-        },
-    })
-
-    new Chart(yearly, {
-        type: 'bar',
-        data: {
-            labels: ['Jan', 'Feb', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                label: 'Liters of water',
-                data: yearlyData,
-                borderWidth: 1,
-            }],
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                },
-            },
-            indexAxis: 'y',
-            maintainAspectRatio: false,
-        },
-    })
+    new Chart(weekly, getChartConfig(weeklyData, ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']))
+    new Chart(monthly, getChartConfig(monthlyData, [...Array(daysInMonth(new Date(Date.now()))).keys()]))
+    new Chart(yearly, getChartConfig(yearlyData, ['Jan', 'Feb', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']))
 }
 
 main()
