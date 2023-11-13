@@ -42,9 +42,13 @@ const dayRangeDict = {
     'week': getWeek,
 }
 
-const sumWaterUsage = (type, doc, sum) => {
-    const index = type === 'week' ? adjustDay(doc.createdAt.toDate()) : doc.createdAt.toDate().getDate() - 1
-    sum[index] = sum[index] || 0 + doc.estVol
+const sumDay = (doc, sum) => {
+    const index = adjustDay(doc.createdAt.toDate())
+    sum[index] += doc.estVol
+}
+
+const sumDict = {
+    'week': sumDay,
 }
 
 const sumArray = (type, start) => {
@@ -70,7 +74,7 @@ const getWaterUsage = (type, userId) => {
             .then((querySnapshot) => {
                 const sum = sumArray(type, start)
                 querySnapshot.forEach((doc) => {
-                    sumWaterUsage(type, doc.data(), sum)
+                    sumDict[type](doc.data(), sum)
                 })
                 resolve(sum)
             })

@@ -40,9 +40,24 @@ const dayRangeDict = {
     'year': getYear,
 }
 
-const sumWaterUsage = (type, doc, sum) => {
-    const index = type === 'week' ? adjustDay(doc.createdAt.toDate()) : doc.createdAt.toDate().getDate() - 1
+const sumDay = (doc, sum) => {
+    const index = adjustDay(doc.createdAt.toDate())
     sum[index] += doc.estVol
+}
+
+const sumMonth = (doc, sum) => {
+    const index = doc.createdAt.toDate().getDate() - 1
+    sum[index] += doc.estVol
+}
+const sumYear = (doc, sum) => {
+    const index = doc.createdAt.toDate().getMonth()
+    sum[index] += doc.estVol
+}
+
+const sumDict = {
+    'week': sumDay,
+    'month': sumMonth,
+    'year': sumYear,
 }
 
 const daysInMonth = (time) => new Date(time.getFullYear(), time.getMonth(), 0).getDate()
@@ -75,7 +90,7 @@ const getWaterUsage = (type, userId) => {
                 const sum = sumArray(type, start)
                 console.log(querySnapshot.size)
                 querySnapshot.forEach((doc) => {
-                    sumWaterUsage(type, doc.data(), sum)
+                    sumDict[type](doc.data(), sum)
                 })
                 resolve(sum)
             })
