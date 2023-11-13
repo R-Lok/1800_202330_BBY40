@@ -16,7 +16,8 @@ function getUserId() {
         
 }
 
-//Function for populating weekly cost of user
+
+//Function for populating current week's water bill cost
 async function populateWeeklyCosts() {
 
     //try catch blocks to catch errors
@@ -29,53 +30,48 @@ async function populateWeeklyCosts() {
         //Initialize final cost variable
         var weekCost = 0;
 
-        //Create a date for today and setting a variable to its UNIX time
+        //Create a date for today
         var d = new Date();
-        var today = d.getTime();
 
         //Change today's date to string
         var totalWords = d.toString();
 
-        //Remove all words except the first string representing
-        //the weekday
+        //Remove all words except the first string representing the weekday
         var firstWord = totalWords.replace(/ .*/,"");
 
-        //Creating a variable to store the unix time for the previous Monday
-        var lastMonday;
+        //Creating a new date variable to store previous Monday's date.
+        var lastMonday = new Date();
         
-        //Using today's weekday string and UNIX time to calculate the previous
-        //Monday's UNIX time.
+        //Using today's weekday string and date to determine previous monday's date.
         switch (firstWord) {
 
         case "Mon": 
-            lastMonday = today;
             break;
         case "Tue":
-            lastMonday = today - 86400000;
+            lastMonday.setDate(d.getDate() - 1)
             break;
         case "Wed":
-            lastMonday = today - 2*86400000;
+            lastMonday.setDate(d.getDate() - 2)
             break;
         case "Thu":
-            lastMonday = today - 3*86400000;
+            lastMonday.setDate(d.getDate() - 3)
             break;
         case "Fri":
-            lastMonday = today - 4*86400000;
+            lastMonday.setDate(d.getDate() - 4)
             break;
         case "Sat":
-            lastMonday = today - 5*86400000;
+            lastMonday.setDate(d.getDate() - 5)
             break;
         case "Sun":
-            lastMonday = today - 6*86400000;
+            lastMonday.setDate(d.getDate() - 6)
         
         }
 
-        //Converting the UNIX time of the previous monday to date format
-        var monday = new Date (lastMonday);
+        //Converting lastMonday's date to year-month-day format to set time to 00:00:00.
         var months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-        var year = monday.getFullYear();
-        var month = months[monday.getMonth()];
-        var day = monday.getDate();
+        var year = lastMonday.getFullYear();
+        var month = months[lastMonday.getMonth()];
+        var day = lastMonday.getDate();
         var date = year + "-" + month + "-" + day;
         var start = new Date (date);
 
@@ -114,15 +110,115 @@ async function populateWeeklyCosts() {
 }
 }
 
-
-
 // Call function to enter value into weekly waterbill section
 populateWeeklyCosts();
 
 
-/*
 
-//Calculating and populating overall costs
+//Calculating and populating current month's water bill cost
+async function populateMonthCosts() {
+    try{
+
+        let userId = await getUserId();
+
+        var monthCost = 0;
+
+        var today = new Date();
+
+        var months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+        var month = months[today.getMonth()];
+        var year = today.getFullYear();
+        var date = year + "-" + month + "-" + 1;
+        var monthStart = new Date(date);
+
+        //Querying database for waterLog documents within specific timeframe 
+        //and created by the logged in user
+        db.collection("waterLogs").where("home", "==", true)
+        .where("userId", "==", userId)
+        .where("createdAt", ">=", monthStart)
+        .where("createdAt", "<=", today)
+        .onSnapshot((querySnapshot) => {
+            var costs = [];
+            querySnapshot.forEach((doc) => {
+
+                costs.push(doc.data().estCost);
+            }); 
+            
+            //Summing all estCosts from each document
+            console.log(costs);
+            costs.forEach(sumAll);
+
+            function sumAll(num) {
+            monthCost += num;
+        }
+        
+        //Changing summed cost value into money format
+        monthCost = "$" + parseFloat(monthCost).toFixed(2);
+        
+        //Replacing Weekly Waterbill's html content with new value
+        document.getElementById("monthCost").innerHTML = monthCost;
+    });
+
+    } catch (error){
+        console.log("Monthly Cost can't be found");
+        alert("Monthly Cost can't be found");
+    }
+} 
+
+//populateMonthCosts();
+
+
+//Calculating and populating current year's waterbill cost
+async function populateYearCosts() {
+    try{
+
+        let userId = await getUserId();
+
+        var yearCost = 0;
+
+        var today = new Date();
+
+        var year = today.getFullYear();
+        var date = year + "-" + 1 + "-" + 1;
+        var yearStart = new Date(date);
+
+        //Querying database for waterLog documents within specific timeframe 
+        //and created by the logged in user
+        db.collection("waterLogs").where("home", "==", true)
+        .where("userId", "==", userId)
+        .where("createdAt", ">=", yearStart)
+        .where("createdAt", "<=", today)
+        .onSnapshot((querySnapshot) => {
+            var costs = [];
+            querySnapshot.forEach((doc) => {
+
+                costs.push(doc.data().estCost);
+            }); 
+            
+            //Summing all estCosts from each document
+            console.log(costs);
+            costs.forEach(sumAll);
+
+            function sumAll(num) {
+            yearCost += num;
+        }
+        
+        //Changing summed cost value into money format
+        yearCost = "$" + parseFloat(yearCost).toFixed(2);
+        
+        //Replacing Weekly Waterbill's html content with new value
+        document.getElementById("yearCost").innerHTML = yearCost;
+    });
+
+    } catch (error){
+        console.log("Yearly Cost can't be found");
+        alert("Yearly Cost can't be found");
+    }
+} 
+
+
+
+//Calculating and populating total waterbill costs
 async function populateTotalCosts() {
     try{
 
@@ -159,6 +255,6 @@ async function populateTotalCosts() {
 }
 
 //Call function to enter value into total waterbill section
-populateTotalCosts();
+//populateTotalCosts();
 
-*/
+
