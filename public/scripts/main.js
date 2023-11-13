@@ -268,3 +268,52 @@ outsideSelectBtn.addEventListener("click", (e) => {
     submitUseDetails(home, useType, calc_factor, machine_type)
 })
 
+//function to calculate and output estimated monthly water bill value
+async function populateMonthCosts() {
+    try{
+
+        let userId = await getUserId();
+
+        var monthCost = 0;
+        var today = new Date();
+
+        //Creating the date variable for the start of the month
+        var months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+        var month = months[today.getMonth()];
+        var year = today.getFullYear();
+        var date = year + "-" + month + "-" + 1;
+        var monthStart = new Date(date);
+
+        //Querying database for waterLog documents within a month's timeframe
+        //and created by the logged in user
+        db.collection("waterLogs").where("home", "==", true)
+        .where("userId", "==", userId)
+        .where("createdAt", ">=", monthStart)
+        .where("createdAt", "<=", today)
+        .onSnapshot((querySnapshot) => {
+            var costs = [];
+            querySnapshot.forEach((doc) => {
+
+                costs.push(doc.data().estCost);
+            }); 
+            
+            //Summing all estCosts from each retrieved document
+            console.log(costs);
+            costs.forEach(sumAll);
+
+            function sumAll(num) {
+            monthCost += num;
+        }
+        
+        //Changing summed cost value into money format
+        monthCost = "$" + parseFloat(monthCost).toFixed(2);
+        
+        //Replacing html content with new value
+        document.getElementById("summary-stat").innerHTML = monthCost;
+    });
+
+    } catch (error){
+        console.log("Monthly Cost can't be found");
+        alert("Monthly Cost can't be found");
+    }
+} 

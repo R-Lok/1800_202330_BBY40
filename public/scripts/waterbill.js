@@ -122,9 +122,9 @@ async function populateMonthCosts() {
         let userId = await getUserId();
 
         var monthCost = 0;
-
         var today = new Date();
 
+        //Creating the date variable for the start of the month
         var months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
         var month = months[today.getMonth()];
         var year = today.getFullYear();
@@ -155,7 +155,7 @@ async function populateMonthCosts() {
         //Changing summed cost value into money format
         monthCost = "$" + parseFloat(monthCost).toFixed(2);
         
-        //Replacing Weekly Waterbill's html content with new value
+        //Replacing html content with new value
         document.getElementById("monthCost").innerHTML = monthCost;
     });
 
