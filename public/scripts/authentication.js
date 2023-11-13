@@ -5,6 +5,7 @@ const uiConfig = {
     callbacks: {
         signInSuccessWithAuthResult: function(authResult, redirectUrl) {
             const user = authResult.user // get the user object from the Firebase authentication database
+            localStorage.setItem('userId', user.uid)
             if (authResult.additionalUserInfo.isNewUser) { // if new user
                 const now = firebase.firestore.FieldValue.serverTimestamp()
                 db.collection('users').doc(user.uid).set({ // write to firestore. We are using the UID for the ID in users collection
