@@ -247,21 +247,38 @@ function storeShowerUseDetails() {
     addCalcFactorToSessionStr(showerDurationSlider.value)
 }
 
-//laundry machine usage lsiteners & helper functions
+//laundry machine usage listeners & helper functions,  can be further optimised using html classes
 let laundryStandardBtn = document.getElementById("laundry-standard-btn")
 let laundryEfficientBtn = document.getElementById("laundry-energystar-btn")
 let laundryOldBtn = document.getElementById("laundry-old-btn")
 let laundryBtns = [laundryStandardBtn, laundryEfficientBtn, laundryOldBtn]
 
-laundryBtns.forEach(button => button.addEventListener("click", e => storeLaundryUseDetails(e)))
+laundryBtns.forEach(button => button.addEventListener("click", e => storeLaundryOrDishwasherUseDetails(e)))
 
-function storeLaundryUseDetails(e) {
+function storeLaundryOrDishwasherUseDetails(e) {
     let calc_factor = 1
 
     addUseTypeToSessionStr(e)
     addMachineTypeToSessionStr(e)
     addCalcFactorToSessionStr(calc_factor)
 }
+
+//dishwasher machine usage listeners & helper functions, can be further optimised using html classes
+let dishwasherStandardBtn = document.getElementById("dishwasher-standard-btn")
+let dishwasherEfficientBtn = document.getElementById("dishwasher-energystar-btn")
+let dishwasherBtns = [dishwasherStandardBtn, dishwasherEfficientBtn]
+
+dishwasherBtns.forEach(button => button.addEventListener("click", e => storeLaundryOrDishwasherUseDetails(e)))
+dishwasherBtns.forEach(button => button.addEventListener("click", e => {
+    let home = false
+    let calc_factor = getCalcFactorFromSessionStr()
+    let machine_type = getMachineTypeFromSessionStr()
+    let useType = getUseTypeFromSessionStr()
+
+    submitUseDetails(home, useType, calc_factor, machine_type)
+}))
+
+
 
 
 //eventListeners for home and outside buttons for at-home? form
