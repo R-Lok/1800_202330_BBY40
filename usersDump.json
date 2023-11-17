@@ -1,0 +1,20 @@
+[
+  {
+     "measurement":"metric",
+     "theme":"light",
+     "updatedAt": "2023-11-11T00:14:32.159Z",
+     "name":"test test",
+     "email":"test@test.ca",
+     "createdAt":"2023-11-11T00:14:32.159Z",
+     "id":"6LZ2OUfUSqQglYnLNyQ2ipXOv0g1"
+  },
+  {
+     "measurement":"metric",
+     "createdAt":"2023-11-09T08:03:33.535Z",
+     "name":"Will",
+     "updatedAt":"2023-11-09T08:03:33.535Z",
+     "theme":"light",
+     "email":"wyliao76@gmail.com",
+     "id":"RdrsbrhaOydlNR0hvqp65cKfKSV2"
+  }
+]
