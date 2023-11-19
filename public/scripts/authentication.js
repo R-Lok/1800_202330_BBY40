@@ -6,6 +6,24 @@ const uiConfig = {
         signInSuccessWithAuthResult: function(authResult, redirectUrl) {
             const user = authResult.user // get the user object from the Firebase authentication database
             localStorage.setItem('userId', user.uid)
+
+
+            //This code to localStorage theme and measurement isn't working right now
+            db.collection('users').doc(user.uid).get()
+            .then(userDoc => {
+                console.log(userDoc.data())
+                if (userDoc.data().theme == "light"){
+                    localStorage.setItem('theme', false);
+                } else {
+                    localStorage.setItem('theme', true);
+                }
+                if (userDoc.data().measurement == "metric"){
+                    localStorage.setItem('system', false);
+                } else {
+                    localStorage.setItem('system', true);
+                }
+            })
+
             if (authResult.additionalUserInfo.isNewUser) { // if new user
                 const now = firebase.firestore.FieldValue.serverTimestamp()
                 db.collection('users').doc(user.uid).set({ // write to firestore. We are using the UID for the ID in users collection

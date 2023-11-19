@@ -164,7 +164,7 @@ async function populateMonthCosts() {
 } 
 
 //Call function
-//populateMonthCosts();
+populateMonthCosts();
 
 
 //Calculating and populating current year's waterbill cost
