@@ -266,4 +266,19 @@ async function populateTotalCosts() {
 //Call function
 //populateTotalCosts();
 
+function getNameFromAuth() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            userName=user.displayName;
+
+            document.getElementById("name-goes-here").innerText = userName;
+
+        } else {
+
+        }
+    })
+}
+
+getNameFromAuth();
+
 
