@@ -246,10 +246,11 @@ async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMa
                 userId: userId,
             })
             console.log('Use submitted')
+            displaySuccessNotif()
         })
     } catch (error) {
         console.log('Submission encountered an error')
-        alert('Submission encountered an error')
+        displayFailNotif()
     }
 }
 
@@ -294,9 +295,14 @@ const tapBtn = document.getElementById('sink-btn')
 const showerBtn = document.getElementById('shower-btn')
 const laundryBtn = document.getElementById('laundry-btn')
 const dishwasherBtn = document.getElementById('dishwasher-btn')
+const cancelBtns = document.querySelectorAll('.form-close-btn')
 
 addWaterUseBtn.addEventListener('click', (e) => clearSessionStorage())
 
+//make all cancel buttons display cancel notif
+cancelBtns.forEach(element => {
+    element.addEventListener('click', e => displayCancelNotif())
+})
 
 // tap forms listeners & helper functions
 
@@ -384,6 +390,45 @@ outsideSelectBtn.addEventListener('click', (e) => {
 
     submitUseDetails(home, useType, calc_factor, machine_type)
 })
+
+//display successful submission notif
+
+function displaySuccessNotif() {
+    const notif = document.getElementById('main-notif')
+    notif.innerText = 'Water use submitted!'
+    notif.setAttribute('class', "")
+    notif.classList.add('alert')
+    notif.classList.add('alert-success')
+    hideNotif()
+}
+
+//display water cancelled submission notif
+function displayCancelNotif() {
+    const notif = document.getElementById('main-notif')
+    notif.innerText = 'Submission cancelled!'
+    notif.setAttribute('class', "")
+    notif.classList.add('alert')
+    notif.classList.add('alert-danger')
+    hideNotif()
+}
+
+//display submission failed notif
+function displayFailNotif() {
+    const notif = document.getElementById('main-notif')
+    notif.innerText = 'Submission failed, please try again!'
+    notif.setAttribute('class', "")
+    notif.classList.add('alert')
+    notif.classList.add('alert-warning')
+    hideNotif()
+}
+
+//make notif hidden
+function hideNotif() {
+    setTimeout(() => {
+        const notif = document.getElementById('main-notif')
+        notif.classList.add('hidden')
+    }, 3000)
+}
 
 // function to calculate and output estimated monthly water bill value
 async function populateMonthCosts() {
