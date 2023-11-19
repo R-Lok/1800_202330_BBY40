@@ -9,6 +9,14 @@ function logout() {
     })
 }
 
+function checkIfLoggedIn() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (!user) {
+            redirectToIndex()
+        }
+    })
+}
+
 function redirectToIndex() {
     window.location.href = './index.html'
 }
@@ -34,6 +42,7 @@ const applyTheme = () => {
     }
 }
 
+checkIfLoggedIn()
 setToggle(['system', 'theme'])
 applyTheme()
 
