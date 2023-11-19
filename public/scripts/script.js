@@ -1,29 +1,13 @@
-function logout() {
-    firebase.auth().signOut().then(() => {
-        // Sign-out successful.
-        console.log('logging out user')
-        localStorage.clear()
-        redirectToIndex()
-    }).catch((error) => {
-        // An error happened.
+function checkIfLoggedIn() {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (!user) {
+            redirectToIndex()
+        }
     })
 }
 
 function redirectToIndex() {
     window.location.href = './index.html'
-}
-
-const setToggle = (ids) => {
-    for (const id of ids) {
-        if (localStorage.getItem(id) === 'true' && document.getElementById(id)) {
-            document.getElementById(id).checked = true
-        }
-    }
-}
-
-const saveToggle = (id) => {
-    localStorage.setItem(id, document.getElementById(id).checked)
-    applyTheme()
 }
 
 const applyTheme = () => {
@@ -34,5 +18,5 @@ const applyTheme = () => {
     }
 }
 
-setToggle(['system', 'theme'])
+checkIfLoggedIn()
 applyTheme()
