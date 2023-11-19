@@ -7,19 +7,6 @@ const uiConfig = {
             const user = authResult.user // get the user object from the Firebase authentication database
             localStorage.setItem('userId', user.uid)
 
-        db.collection('users')
-        .doc(localStorage.getItem('userId'))
-        .get()
-        .then((doc) => {
-            const user = doc.data()
-            localStorage.setItem('theme', user.theme === 'light')
-            localStorage.setItem('measurement', user.measurement === 'metric')
-        }) 
-
-
-
-            
-
             if (authResult.additionalUserInfo.isNewUser) { // if new user
                 const now = firebase.firestore.FieldValue.serverTimestamp()
                 db.collection('users').doc(user.uid).set({ // write to firestore. We are using the UID for the ID in users collection
@@ -32,11 +19,25 @@ const uiConfig = {
                 }).then(function() {
                     console.log('New user added to firestore')
                     window.location.assign('main.html') // re-direct to main.html after signup
+                    localStorage.setItem('theme', user.theme)
+                    localStorage.setItem('system', user.measurement)
+                    window.location.assign('main.html')
                 }).catch(function(error) {
-                    console.log('Error adding new user: ' + error)
+                    console.log('Error adding new users: ' + error)
                 })
             } else {
-                return true
+                db.collection('users')
+                .doc(user.uid)
+                .get()
+                .then((doc) => {
+                    const user = doc.data()
+                    localStorage.setItem('theme', user.theme === 'dark')
+                    localStorage.setItem('system', user.measurement === 'imperial')
+                    window.location.assign('main.html')
+                }) 
+                .catch(function(error) {
+                    console.log('Error adding new user: ' + error)
+                })
             }
             return false
         },
@@ -65,4 +66,5 @@ const uiConfig = {
 }
 
 ui.start('#firebaseui-auth-container', uiConfig)
+
 
