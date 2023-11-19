@@ -8,7 +8,8 @@
 }
 
 body {
-    background-color: var(--main-color4);color: var(--main-color5);
+    background-color: var(--main-color4);
+    color: var(--main-color5);
 }
 
 .bg-primary, .btn-primary {
@@ -25,6 +26,8 @@ body {
     height: 50px;
 }
 
+
+/*Main page styling*/
 #main-page-chart-container {
     width: 100% !important;
     height: 100% !important;
