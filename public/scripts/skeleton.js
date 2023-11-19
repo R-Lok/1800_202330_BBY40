@@ -45,4 +45,4 @@ async function blueOut() {
     }
 }
 
-loadSkeleton().then(blueOut);
+blueOut()
