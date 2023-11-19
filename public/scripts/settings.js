@@ -3,10 +3,14 @@ function logout() {
         // Sign-out successful.
         console.log('logging out user')
         localStorage.clear()
-        redirectToIndex()
+        redirectToGoodbyePage()
     }).catch((error) => {
         // An error happened.
     })
+}
+
+function redirectToGoodbyePage() {
+    window.location.href='./goodbye.html'
 }
 
 const themeToggle = document.getElementById('theme')
