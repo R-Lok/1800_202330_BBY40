@@ -6,7 +6,7 @@ const uiConfig = {
         signInSuccessWithAuthResult: function(authResult, redirectUrl) {
             const user = authResult.user // get the user object from the Firebase authentication database
             localStorage.setItem('userId', user.uid)
-
+            localStorage.setItem('userName', user.displayName)
             if (authResult.additionalUserInfo.isNewUser) { // if new user
                 const now = firebase.firestore.FieldValue.serverTimestamp()
                 db.collection('users').doc(user.uid).set({ // write to firestore. We are using the UID for the ID in users collection
@@ -27,17 +27,17 @@ const uiConfig = {
                 })
             } else {
                 db.collection('users')
-                .doc(user.uid)
-                .get()
-                .then((doc) => {
-                    const user = doc.data()
-                    localStorage.setItem('theme', user.theme === 'dark')
-                    localStorage.setItem('system', user.measurement === 'imperial')
-                    window.location.assign('main.html')
-                }) 
-                .catch(function(error) {
-                    console.log('Error adding new user: ' + error)
-                })
+                    .doc(user.uid)
+                    .get()
+                    .then((doc) => {
+                        const user = doc.data()
+                        localStorage.setItem('theme', user.theme === 'dark')
+                        localStorage.setItem('system', user.measurement === 'imperial')
+                        window.location.assign('main.html')
+                    })
+                    .catch(function(error) {
+                        console.log('Error adding new user: ' + error)
+                    })
             }
             return false
         },
