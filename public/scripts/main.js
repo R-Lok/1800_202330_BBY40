@@ -109,7 +109,7 @@ const main = async () => {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Your weekly summary',
+                    text: await getUserName() + "'s Weekly Summary",
                     font: {
                         size: 20,
                     },
@@ -196,6 +196,20 @@ function getUserId() {
                 // User logged in already or has just logged in.
                 const userId = user.uid
                 resolve(userId)
+            } else {
+                reject('Not logged in')
+            }
+        })
+    })
+}
+
+function getUserName() {
+    return new Promise((resolve, reject) => {
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                // User logged in already or has just logged in.
+                const userName = user.displayName
+                resolve(userName)
             } else {
                 reject('Not logged in')
             }
