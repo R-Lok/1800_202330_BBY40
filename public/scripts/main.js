@@ -121,6 +121,11 @@ const main = async () => {
 
 main()
 
+const editWaterButton = document.getElementById('edit-day-usage-btn')
+editWaterButton.addEventListener('click', () => {
+    window.location.href = './water_usages.html'
+})
+
 // We will need to write functions to post form data to firestore in future
 const showerSlider = document.getElementById('showerSlider')
 const showerSliderValDisplay = document.getElementById('shower-duration')
@@ -202,16 +207,16 @@ function getPriceFactor() {
     // currently assumes that the user is in canada, as the doc retrieved is the canada document
     return new Promise((resolve, reject) => {
         db.collection('priceFactors').doc('36380e25-46b3-4ae9-a17c-3d95e7080a1f').get()
-        .then((doc) => {
-            if (doc.data().costPerLitre) {
-                resolve(doc.data().costPerLitre)
-            } else {
-                reject(Console.log('Could not fetch cost per litre'))
-            }
-        })
-        .catch(error => {
-            console.log("Could not reach firestore")
-        })
+            .then((doc) => {
+                if (doc.data().costPerLitre) {
+                    resolve(doc.data().costPerLitre)
+                } else {
+                    reject(Console.log('Could not fetch cost per litre'))
+                }
+            })
+            .catch((error) => {
+                console.log('Could not reach firestore')
+            })
     })
 }
 

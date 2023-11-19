@@ -1,13 +1,25 @@
 const adjustDay = (time) => time.getDay() === 0 ? 7 - 1 : time.getDay() - 1
 
-const getWeek = () => {
+const getBasicDay = () => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
-    const dayOfWeek = adjustDay(today)
-
     const todayUnix = today.getTime()
     const oneDayUnix = 60 * 60 * 24 * 1000
+    return { today, todayUnix, oneDayUnix }
+}
 
+const getDay = () => {
+    const { today, todayUnix, oneDayUnix } = getBasicDay()
+
+    const start = today
+    const end = new Date(todayUnix + oneDayUnix)
+    return { start, end }
+}
+
+const getWeek = () => {
+    const { today, todayUnix, oneDayUnix } = getBasicDay()
+
+    const dayOfWeek = adjustDay(today)
     const start = new Date(todayUnix - (dayOfWeek * oneDayUnix))
     const end = new Date(todayUnix + oneDayUnix)
     return { start, end }
@@ -35,6 +47,7 @@ const getYear = () => {
 }
 
 const dayRangeDict = {
+    'day': getDay,
     'week': getWeek,
     'month': getMonth,
     'year': getYear,
@@ -75,8 +88,27 @@ const sumArray = (type, start) => {
     }
 }
 
-const getWaterUsage = (type, userId) => {
+const getSum = ({ querySnapshot, type, start, resolve }) => {
+    const sum = sumArray(type, start)
+    console.log(querySnapshot.size)
+    querySnapshot.forEach((doc) => {
+        sumDict[type](doc.data(), sum)
+    })
+    return resolve(sum)
+}
+
+const getList = ({ querySnapshot, resolve }) => {
+    const results = []
+    console.log(querySnapshot.size)
+    querySnapshot.forEach((doc) => {
+        results.push(doc.data())
+    })
+    return resolve(results)
+}
+
+const getWaterUsage = (type, callback) => {
     return new Promise((resolve, reject) => {
+        const userId = localStorage.getItem('userId')
         const { start, end } = dayRangeDict[type]()
         // console.log(`start: ${start}`)
         // console.log(`end: ${end}`)
@@ -86,16 +118,10 @@ const getWaterUsage = (type, userId) => {
             .where('createdAt', '>=', start)
             .where('createdAt', '<', end)
             .get()
-            .then((querySnapshot) => {
-                const sum = sumArray(type, start)
-                console.log(querySnapshot.size)
-                querySnapshot.forEach((doc) => {
-                    sumDict[type](doc.data(), sum)
-                })
-                resolve(sum)
-            })
+            .then((querySnapshot) => callback({ querySnapshot, type, start, resolve }))
             .catch((error) => {
-                reject(console.log('Error getting documents: ', error))
+                console.log('Error getting documents: ', error)
+                return reject(error)
             })
     })
 }
@@ -125,9 +151,9 @@ const getChartConfig = (data, labels) => {
 
 const main = async () => {
     const [weeklyData, monthlyData, yearlyData] = await Promise.all([
-        getWaterUsage('week', localStorage.getItem('userId')),
-        getWaterUsage('month', localStorage.getItem('userId')),
-        getWaterUsage('year', localStorage.getItem('userId')),
+        getWaterUsage('week', getSum),
+        getWaterUsage('month', getSum),
+        getWaterUsage('year', getSum),
     ])
     // console.log(weeklyData)
     // console.log(monthlyData)
