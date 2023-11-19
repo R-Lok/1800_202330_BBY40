@@ -24,16 +24,24 @@ async function blueOut() {
     if (new RegExp('.*main.html').test(page)){
         document.getElementById("home")
         .setAttribute("style", "filter: invert(25%) sepia(71%) saturate(1573%) hue-rotate(184deg) brightness(93%) contrast(91%);");
+        document.getElementById("homeButton")
+        .setAttribute("style", "cursor: default");
     } else if (new RegExp('.*water_usage.html').test(page)){
         document.getElementById('usage')
         .setAttribute("style", "filter: invert(25%) sepia(71%) saturate(1573%) hue-rotate(184deg) brightness(93%) contrast(91%);");
+        document.getElementById("usageButton")
+        .setAttribute("style", "cursor: default");
     } else if (new RegExp('.*waterbill.html').test(page)){
         document.getElementById('waterbill')
         .setAttribute("style", "filter: invert(25%) sepia(71%) saturate(1573%) hue-rotate(184deg) brightness(93%) contrast(91%);");
+        document.getElementById("waterBillButton")
+        .setAttribute("style", "cursor: default");
     } else if (new RegExp('.*setting').test(page)){
         document.getElementById('settings')
         .setAttribute("style", "filter: invert(25%) sepia(71%) saturate(1573%) hue-rotate(184deg) brightness(93%) contrast(91%);");
-    }
+        document.getElementById("settingsButton")
+        .setAttribute("style", "cursor: default");
+    } 
 }
 
 loadSkeleton().then(blueOut);
