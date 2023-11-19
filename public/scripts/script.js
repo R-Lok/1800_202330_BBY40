@@ -9,6 +9,43 @@ function logout() {
     })
 }
 
+const themeToggle = document.getElementById('theme')
+const measurementSystemToggle = document.getElementById('system')
+
+themeToggle.addEventListener('change', e => updateUserPreferences())
+measurementSystemToggle.addEventListener('change', e => updateUserPreferences())
+
+function updateUserPreferences() {
+    const userId = localStorage.getItem('userId')
+    let currentTheme = getCurrentTheme()
+    let currentMeasurementSystem = getCurrentMeasurementSystem()
+
+    db.collection('users').doc(userId).update({
+        theme: currentTheme,
+        measurement: currentMeasurementSystem
+    })
+}
+
+function getCurrentTheme() {
+    let darkToggled = localStorage.getItem('theme')
+
+    if (darkToggled === 'true') {
+        return 'dark'
+    } else {
+        return 'light'
+    }
+}
+
+function getCurrentMeasurementSystem() {
+    let imperialToggled = localStorage.getItem('system')
+
+    if (imperialToggled === 'true') {
+        return 'imperial'
+    } else {
+        return 'metric'
+    }
+}
+
 function checkIfLoggedIn() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (!user) {
