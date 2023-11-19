@@ -17,11 +17,12 @@ function loadSkeleton() {
     });
 }
 
+//Turns icon for current page blue and set cursor to default when hovering over icon
 async function blueOut() {
     await loadSkeleton(); // Wait for loadSkeleton() to complete before proceeding
     
     const page = window.location.href;
-    if (new RegExp('.*main.html').test(page)){
+    if (new RegExp('.*main').test(page)){
         document.getElementById("home")
         .setAttribute("style", "filter: invert(25%) sepia(71%) saturate(1573%) hue-rotate(184deg) brightness(93%) contrast(91%);");
         document.getElementById("homeButton")
@@ -31,7 +32,7 @@ async function blueOut() {
         .setAttribute("style", "filter: invert(25%) sepia(71%) saturate(1573%) hue-rotate(184deg) brightness(93%) contrast(91%);");
         document.getElementById("usageButton")
         .setAttribute("style", "cursor: default");
-    } else if (new RegExp('.*waterbill.html').test(page)){
+    } else if (new RegExp('.*waterbill').test(page)){
         document.getElementById('waterbill')
         .setAttribute("style", "filter: invert(25%) sepia(71%) saturate(1573%) hue-rotate(184deg) brightness(93%) contrast(91%);");
         document.getElementById("waterBillButton")
@@ -41,9 +42,7 @@ async function blueOut() {
         .setAttribute("style", "filter: invert(25%) sepia(71%) saturate(1573%) hue-rotate(184deg) brightness(93%) contrast(91%);");
         document.getElementById("settingsButton")
         .setAttribute("style", "cursor: default");
-    } 
+    }
 }
 
 loadSkeleton().then(blueOut);
-
-
