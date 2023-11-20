@@ -109,7 +109,7 @@ const main = async () => {
             plugins: {
                 title: {
                     display: true,
-                    text: await getUserName() + "'s Weekly Summary",
+                    text: await getUserName() + '\'s Weekly Summary',
                     font: {
                         size: 20,
                     },
@@ -123,7 +123,7 @@ main()
 
 const editWaterButton = document.getElementById('edit-day-usage-btn')
 editWaterButton.addEventListener('click', () => {
-    window.location.href = './water_usages.html'
+    window.location.href = './edit_usage.html'
 })
 
 // We will need to write functions to post form data to firestore in future
@@ -205,7 +205,7 @@ function getUserId() {
 
 function getUserName() {
     return new Promise((resolve, reject) => {
-        firebase.auth().onAuthStateChanged(function (user) {
+        firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 // User logged in already or has just logged in.
                 const userName = user.displayName
@@ -313,9 +313,9 @@ const cancelBtns = document.querySelectorAll('.form-close-btn')
 
 addWaterUseBtn.addEventListener('click', (e) => clearSessionStorage())
 
-//make all cancel buttons display cancel notif
-cancelBtns.forEach(element => {
-    element.addEventListener('click', e => displayCancelNotif())
+// make all cancel buttons display cancel notif
+cancelBtns.forEach((element) => {
+    element.addEventListener('click', (e) => displayCancelNotif())
 })
 
 // tap forms listeners & helper functions
@@ -405,38 +405,38 @@ outsideSelectBtn.addEventListener('click', (e) => {
     submitUseDetails(home, useType, calc_factor, machine_type)
 })
 
-//display successful submission notif
+// display successful submission notif
 
 function displaySuccessNotif() {
     const notif = document.getElementById('main-notif')
     notif.innerText = 'Water use submitted!'
-    notif.setAttribute('class', "")
+    notif.setAttribute('class', '')
     notif.classList.add('alert')
     notif.classList.add('alert-success')
     hideNotif()
 }
 
-//display water cancelled submission notif
+// display water cancelled submission notif
 function displayCancelNotif() {
     const notif = document.getElementById('main-notif')
     notif.innerText = 'Submission cancelled!'
-    notif.setAttribute('class', "")
+    notif.setAttribute('class', '')
     notif.classList.add('alert')
     notif.classList.add('alert-danger')
     hideNotif()
 }
 
-//display submission failed notif
+// display submission failed notif
 function displayFailNotif() {
     const notif = document.getElementById('main-notif')
     notif.innerText = 'Submission failed, please try again!'
-    notif.setAttribute('class', "")
+    notif.setAttribute('class', '')
     notif.classList.add('alert')
     notif.classList.add('alert-warning')
     hideNotif()
 }
 
-//make notif hidden
+// make notif hidden
 function hideNotif() {
     setTimeout(() => {
         const notif = document.getElementById('main-notif')
