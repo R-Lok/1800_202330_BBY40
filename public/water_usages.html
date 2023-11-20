@@ -34,7 +34,36 @@
   <body>
       <nav id="navplaceholder"></nav>
       <h1 class="display-5 fw-bold text-center">Water Usages</h1>
-      <div id="water-usage-container"></div>
+      <div id="water-usage-container" class="container-fluid" style="margin-bottom: 15vh;"></div>
+
+      <template id="template-waterlogs">
+        <div class="d-flex flex-column">
+          <button id="edit-btn" type="button" class="col select-use-btn btn btn-primary btn-lg" data-dismiss="modal" data-toggle="modal">Edit</button>
+          <button id="delete-btn" type="button" class="form-close-btn btn btn-secondary">Delete</button>
+        </div>
+      </template>
+
+      <div class="modal fade" id="shower-modal" tabindex="-1" role="dialog" aria-labelledby="Shower duration form" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="shower-duration-modal-title">Enter Shower Duration:</h5>
+            </div>
+            <div class="modal-body d-grid gap-4">
+              <fieldset>
+                <label for="showerSlider" class="form-label">Shower duration: <span id="shower-duration">0m</span></label>
+                <input type="range" class="form-range" id="showerSlider" min="1" max="60" step="1" value="0" required>
+                <!-- Need to fix drag finger for input slider also affecting the homepage behind-->
+              </fieldset>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+              <button type="button" id="shower-form-next-btn" class="form-submit-btn btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#home-modal">Next</button>
+              <button type="button" class="form-close-btn btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <footer id="footerplaceholder"></footer>
 
       <script src="./scripts/firebaseAPI_BBY40.js"></script>

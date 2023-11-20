@@ -1,10 +1,18 @@
 const insertHTML = (docs) => {
     const parent = document.getElementById('water-usage-container')
+    const temp = document.getElementById('template-waterlogs')
+
     for (const doc of docs) {
-        const div = document.createElement('div')
+        const clone = temp.content.cloneNode(true)
+        const div = clone.querySelector('div')
         div.id = doc.id
-        div.classList.add('d-flex')
-        div.classList.add('flex-column')
+        const editBtn = clone.getElementById('edit-btn')
+        editBtn.id = `${doc.id}-edit-btn`
+        editBtn.setAttribute('data-target', `#${doc.useType}-modal`)
+
+        const deleteBtn = clone.getElementById('delete-btn')
+        deleteBtn.addEventListener('click', () => deleteWaterUsage(doc.id), false)
+
         let html = ''
         html += `<span>id: ${doc.id}</span>`
         html += `<span>use type: ${doc.useType}</span>`
@@ -17,17 +25,10 @@ const insertHTML = (docs) => {
         html += `<span>updated at: ${doc.updatedAt}</span>`
         html += `<span>created at: ${doc.createdAt}</span>`
         div.innerHTML = html
-        parent.appendChild(div)
 
-        const editBtn = document.createElement('button')
-        editBtn.textContent = 'Edit'
-        editBtn.addEventListener('click', () => updateWaterUsage(doc.id), false)
         div.appendChild(editBtn)
-
-        const deleteBtn = document.createElement('button')
-        deleteBtn.textContent = 'Delete'
-        deleteBtn.addEventListener('click', () => deleteWaterUsage(doc.id), false)
         div.appendChild(deleteBtn)
+        parent.appendChild(clone)
     }
 }
 
