@@ -3,12 +3,12 @@ const ui = new firebaseui.auth.AuthUI(firebase.auth())
 
 const uiConfig = {
     callbacks: {
-        signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+        signInSuccessWithAuthResult: (authResult, redirectUrl) => {
             const user = authResult.user // get the user object from the Firebase authentication database
             localStorage.setItem('userId', user.uid)
             localStorage.setItem('userName', user.displayName)
+            const now = firebase.firestore.FieldValue.serverTimestamp()
             if (authResult.additionalUserInfo.isNewUser) { // if new user
-                const now = firebase.firestore.FieldValue.serverTimestamp()
                 db.collection('users').doc(user.uid).set({ // write to firestore. We are using the UID for the ID in users collection
                     name: user.displayName, // "users" collection
                     email: user.email, // with authenticated user's ID (user.uid)
@@ -16,13 +16,12 @@ const uiConfig = {
                     measurement: 'false',
                     updatedAt: now,
                     createdAt: now,
-                }).then(function() {
+                }).then(() => {
                     console.log('New user added to firestore')
-                    window.location.assign('main.html') // re-direct to main.html after signup
                     localStorage.setItem('theme', 'false')
                     localStorage.setItem('system', 'false')
                     window.location.assign('main.html')
-                }).catch(function(error) {
+                }).catch((error) => {
                     console.log('Error adding new users: ' + error)
                 })
             } else {
@@ -31,12 +30,17 @@ const uiConfig = {
                     .get()
                     .then((doc) => {
                         const user = doc.data()
-                        console.log(typeof user.theme)
                         localStorage.setItem('theme', user.theme)
                         localStorage.setItem('system', user.measurement)
-                        window.location.assign('main.html')
+                        db.collection('users')
+                            .doc(doc.id)
+                            .update({ updatedAt: now })
+                            .then(() => window.location.assign('main.html'))
+                            .catch((error) => {
+                                console.log('Error adding new user: ' + error)
+                            })
                     })
-                    .catch(function(error) {
+                    .catch((error) => {
                         console.log('Error adding new user: ' + error)
                     })
             }
