@@ -23,69 +23,8 @@ function getNameFromAuth() {
     })
 }
 
-const adjustDay = (time) => time.getDay() === 0 ? 7 - 1 : time.getDay() - 1
-
-const getWeek = () => {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    const dayOfWeek = adjustDay(today)
-
-    const todayUnix = today.getTime()
-    const oneDayUnix = 60 * 60 * 24 * 1000
-
-    const start = new Date(todayUnix - (dayOfWeek * oneDayUnix))
-    const end = new Date(todayUnix + oneDayUnix)
-    return { start, end }
-}
-
-const dayRangeDict = {
-    'week': getWeek,
-}
-
-const sumDay = (doc, sum) => {
-    const index = adjustDay(doc.createdAt.toDate())
-    sum[index] += doc.estVol
-}
-
-const sumDict = {
-    'week': sumDay,
-}
-
-const sumArray = (type, start) => {
-    switch (type) {
-    case 'week':
-        return new Array(7).fill(0)
-    default:
-        throw new Error('Eh? how did you get here?')
-    }
-}
-
-const getWaterUsage = (type, userId) => {
-    return new Promise((resolve, reject) => {
-        const { start, end } = dayRangeDict[type]()
-        // console.log(`start: ${start}`)
-        // console.log(`end: ${end}`)
-
-        db.collection('waterLogs')
-            .where('userId', '==', userId)
-            .where('createdAt', '>=', start)
-            .where('createdAt', '<', end)
-            .get()
-            .then((querySnapshot) => {
-                const sum = sumArray(type, start)
-                querySnapshot.forEach((doc) => {
-                    sumDict[type](doc.data(), sum)
-                })
-                resolve(sum)
-            })
-            .catch((error) => {
-                reject(console.log('Error getting documents: ', error))
-            })
-    })
-}
-
 const main = async () => {
-    const weeklyData = await getWaterUsage('week', localStorage.getItem('userId'))
+    const weeklyData = await getWaterUsage('week', getSum)
     const mainPageCanvas = document.getElementById('main-page-chart')
 
     new Chart(mainPageCanvas, {
@@ -109,7 +48,7 @@ const main = async () => {
             plugins: {
                 title: {
                     display: true,
-                    text: await getUserName() + '\'s Weekly Summary',
+                    text: `${localStorage.getItem('userName')}'s Weekly Summary`,
                     font: {
                         size: 20,
                     },
@@ -203,6 +142,7 @@ function getUserId() {
     })
 }
 
+// todo: remove
 function getUserName() {
     return new Promise((resolve, reject) => {
         firebase.auth().onAuthStateChanged(function(user) {
@@ -217,6 +157,7 @@ function getUserName() {
     })
 }
 
+// todo: fix
 function getPriceFactor() {
     // currently assumes that the user is in canada, as the doc retrieved is the canada document
     return new Promise((resolve, reject) => {
