@@ -12,15 +12,15 @@ const uiConfig = {
                 db.collection('users').doc(user.uid).set({ // write to firestore. We are using the UID for the ID in users collection
                     name: user.displayName, // "users" collection
                     email: user.email, // with authenticated user's ID (user.uid)
-                    theme: 'light',
-                    measurement: 'metric',
+                    theme: 'false',
+                    measurement: 'false',
                     updatedAt: now,
                     createdAt: now,
                 }).then(function() {
                     console.log('New user added to firestore')
                     window.location.assign('main.html') // re-direct to main.html after signup
-                    localStorage.setItem('theme', user.theme)
-                    localStorage.setItem('system', user.measurement)
+                    localStorage.setItem('theme', 'false')
+                    localStorage.setItem('system', 'false')
                     window.location.assign('main.html')
                 }).catch(function(error) {
                     console.log('Error adding new users: ' + error)
@@ -31,8 +31,9 @@ const uiConfig = {
                     .get()
                     .then((doc) => {
                         const user = doc.data()
-                        localStorage.setItem('theme', user.theme === 'dark')
-                        localStorage.setItem('system', user.measurement === 'imperial')
+                        console.log(typeof user.theme)
+                        localStorage.setItem('theme', user.theme)
+                        localStorage.setItem('system', user.measurement)
                         window.location.assign('main.html')
                     })
                     .catch(function(error) {
