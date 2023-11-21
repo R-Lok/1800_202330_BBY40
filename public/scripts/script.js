@@ -1,12 +1,10 @@
 function checkIfLoggedIn() {
-    firebase.auth().onAuthStateChanged(function (user) {
+    firebase.auth().onAuthStateChanged(function(user) {
         if (!user) {
+            alert('Not logged in!')
+            window.location.href = './index.html'
         }
     })
-}
-
-function redirectToIndex() {
-    window.location.href = './index.html'
 }
 
 const applyTheme = () => {
