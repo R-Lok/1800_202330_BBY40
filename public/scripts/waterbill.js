@@ -218,7 +218,7 @@ async function populateYearCosts() {
 } 
 
 //Call function
-//populateYearCosts()
+populateYearCosts()
 
 
 

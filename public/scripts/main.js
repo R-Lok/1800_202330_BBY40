@@ -431,3 +431,5 @@ async function populateMonthCosts() {
         alert('Monthly Cost can\'t be found')
     }
 }
+
+populateMonthCosts()
