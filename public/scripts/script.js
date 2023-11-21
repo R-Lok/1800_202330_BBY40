@@ -1,7 +1,6 @@
 function checkIfLoggedIn() {
     firebase.auth().onAuthStateChanged(function(user) {
         if (!user) {
-            alert('Not logged in!')
             window.location.href = './index.html'
         }
     })
