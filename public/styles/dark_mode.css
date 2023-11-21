@@ -25,6 +25,15 @@ body {
     height: 50px;
 }
 
+/*Logo Icon Styling*/
+.logoIcon {
+    width:30px;
+    height:30px;
+    margin-left:5px;
+    margin-bottom:5px;
+
+}
+
 #main-page-chart-container, #water-usage-container, canvas {
     width: 100% !important;
     height: 100% !important;
