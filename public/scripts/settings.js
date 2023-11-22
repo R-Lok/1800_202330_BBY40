@@ -3,51 +3,24 @@ function logout() {
         // Sign-out successful.
         console.log('logging out user')
         localStorage.clear()
-        redirectToGoodbyePage()
+        window.location.href = './goodbye.html'
     }).catch((error) => {
+        console.log(error)
         // An error happened.
     })
 }
 
-function redirectToGoodbyePage() {
-    window.location.href='./goodbye.html'
+const lists = ['system', 'theme']
+
+for (const list of lists) {
+    document.getElementById(list).addEventListener('change', () => updateUserPreferences())
 }
-
-const themeToggle = document.getElementById('theme')
-const measurementSystemToggle = document.getElementById('system')
-
-themeToggle.addEventListener('change', e => updateUserPreferences())
-measurementSystemToggle.addEventListener('change', e => updateUserPreferences())
 
 function updateUserPreferences() {
-    const userId = localStorage.getItem('userId')
-    let currentTheme = getCurrentTheme()
-    let currentMeasurementSystem = getCurrentMeasurementSystem()
-
-    db.collection('users').doc(userId).update({
-        theme: currentTheme,
-        measurement: currentMeasurementSystem
+    db.collection('users').doc(localStorage.getItem('userId')).update({
+        theme: localStorage.getItem('theme'),
+        measurement: localStorage.getItem('system'),
     })
-}
-
-function getCurrentTheme() {
-    let darkToggled = localStorage.getItem('theme')
-
-    if (darkToggled === 'true') {
-        return 'dark'
-    } else {
-        return 'light'
-    }
-}
-
-function getCurrentMeasurementSystem() {
-    let imperialToggled = localStorage.getItem('system')
-
-    if (imperialToggled === 'true') {
-        return 'imperial'
-    } else {
-        return 'metric'
-    }
 }
 
 const setToggle = (ids) => {
@@ -63,4 +36,4 @@ const saveToggle = (id) => {
     applyTheme()
 }
 
-setToggle(['system', 'theme'])
+setToggle(lists)

@@ -6,28 +6,18 @@ const insertHTML = (docs) => {
         const clone = temp.content.cloneNode(true)
         const div = clone.querySelector('div')
         div.id = doc.id
-        const editBtn = clone.getElementById('edit-btn')
-        editBtn.id = `${doc.id}-edit-btn`
-        editBtn.setAttribute('data-target', `#${doc.useType}-modal`)
+        for (const key of Object.keys(doc)) {
+            const span = clone.querySelector(`.${key}`)
+            if (!doc[key]) {
+                span.style.display = 'none'
+            }
+            if (span) {
+                span.textContent = `${key}: ${doc[key]}`
+            }
+        }
 
         const deleteBtn = clone.getElementById('delete-btn')
         deleteBtn.addEventListener('click', () => deleteWaterUsage(doc.id), false)
-
-        let html = ''
-        html += `<span>id: ${doc.id}</span>`
-        html += `<span>use type: ${doc.useType}</span>`
-        if (doc.machine_type) {
-            html += `<span>machine type: ${doc.machine_type}</span>`
-        }
-        html += `<span>home: ${doc.home}</span>`
-        html += `<span>est vol: ${doc.estVol} litre</span>`
-        html += `<span>est cost: $ ${doc.estCost}</span>`
-        html += `<span>updated at: ${doc.updatedAt}</span>`
-        html += `<span>created at: ${doc.createdAt}</span>`
-        div.innerHTML = html
-
-        div.appendChild(editBtn)
-        div.appendChild(deleteBtn)
         parent.appendChild(clone)
     }
 }
