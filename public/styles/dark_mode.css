@@ -68,7 +68,7 @@ label {
 
 .banner1 {
     display:grid;
-    grid-template-rows:20vh;
+    grid-template-rows:25vh;
 }
 
 .banner-image1 {
@@ -87,7 +87,7 @@ label {
 
     .banner1 {
         display:grid;
-        grid-template-rows:30vh;
+        grid-template-rows:40vh;
     }
 }
 
@@ -124,15 +124,22 @@ label {
 /*Water Tips Page*/
 
 .banner2{ 
-    width:100%;
-    display:block;
-    height:30%;
+    display:grid;
+    grid-template-rows: 25vh;
 }
 
-.banner2 > .banner-image2 {
+.banner-image2 {
     width:100%;
-    height:30%;
-    display:inline-block;
+    height:100%;
+    grid-row:1 / span 1;
+}
+
+@media screen and (min-width: 800px) {
+
+    .banner2{ 
+        display:grid;
+        grid-template-rows: 50vh;
+    }
 }
 
 .tip-links {
@@ -146,12 +153,12 @@ label {
 }
 
 nav a{
-    text-decoration:none;
-    color:var(--main-color5);
+    text-decoration:underline;
+    color:var(--main-color3);
 }
 
 nav a:hover {
-    color:var(--main-color3);
+    color:var(--main-color4);
 }
 
 .card-header{
