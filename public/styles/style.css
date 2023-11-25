@@ -219,28 +219,27 @@ nav a:hover {
 .billHeader {
     grid-row: 1 / span 1;
     height:100%;
-    padding:14%;
-    padding-top:10%;
+    width:100%;
+    padding:30px;
+    padding-top:40px;
+    background-image: url(../images/banner2.jpg);
 }
 
 .weekCost {
     grid-row: 3 / span 1;
     height:90%;
-    justify-self:center;
     align-self:center;
 }
 
 .monthCost {
     grid-row: 4 / span 1;
     height:90%;
-    justify-self:center;
     align-self:center;
 }
 
 .yearCost {
     grid-row: 5 / span 1;
     height:90%;
-    justify-self:center;
     align-self:center;
 }
 
@@ -283,8 +282,4 @@ nav a:hover {
  .light{
     background-color: var(--main-color3);
     color: var(--main-color2);
- }
-
- div .header-image {
-    background-image: url(../images/banner2.jpg);
  }

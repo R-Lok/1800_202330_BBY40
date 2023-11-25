@@ -24,22 +24,22 @@ async function blueOut() {
     const page = window.location.href;
     if (new RegExp('.*main').test(page)){
         document.getElementById("home")
-        .setAttribute("style", "filter: invert(84%) sepia(7%) saturate(2356%) hue-rotate(177deg) brightness(95%) contrast(98%);");
+        .setAttribute("style", "filter: invert(22%) sepia(57%) saturate(3065%) hue-rotate(188deg) brightness(89%) contrast(89%);");
         document.getElementById("homeButton")
         .setAttribute("style", "cursor: default");
     } else if (new RegExp('.*water_usage.html').test(page)){
         document.getElementById('usage')
-        .setAttribute("style", "filter: invert(84%) sepia(7%) saturate(2356%) hue-rotate(177deg) brightness(95%) contrast(98%);");
+        .setAttribute("style", "filter: invert(22%) sepia(57%) saturate(3065%) hue-rotate(188deg) brightness(89%) contrast(89%);");
         document.getElementById("usageButton")
         .setAttribute("style", "cursor: default");
     } else if (new RegExp('.*waterbill').test(page)){
         document.getElementById('waterbill')
-        .setAttribute("style", "filter: invert(84%) sepia(7%) saturate(2356%) hue-rotate(177deg) brightness(95%) contrast(98%);");
+        .setAttribute("style", "filter: invert(22%) sepia(57%) saturate(3065%) hue-rotate(188deg) brightness(89%) contrast(89%);");
         document.getElementById("waterBillButton")
         .setAttribute("style", "cursor: default");
     } else if (new RegExp('.*setting').test(page)){
         document.getElementById('settings')
-        .setAttribute("style", "filter: invert(84%) sepia(7%) saturate(2356%) hue-rotate(177deg) brightness(95%) contrast(98%);");
+        .setAttribute("style", "filter: invert(22%) sepia(57%) saturate(3065%) hue-rotate(188deg) brightness(89%) contrast(89%);");
         document.getElementById("settingsButton")
         .setAttribute("style", "cursor: default");
     }

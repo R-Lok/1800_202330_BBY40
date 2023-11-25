@@ -221,51 +221,6 @@ async function populateYearCosts() {
 populateYearCosts()
 
 
-
-//Calculating and populating total waterbill costs
-async function populateTotalCosts() {
-
-    //try catch blocks to catch and alert of errors
-    try{
-        
-        //get current logged in user's userId
-        let userId = await getUserId();
-
-        var totalCost = 0;
-
-        //Querying database for all waterLog documents that were 
-        //created by the user at home
-        db.collection("waterLogs").where("home", "==", true)
-        .where("userId", "==", userId)
-        .onSnapshot((querySnapshot) => {
-            var costs = [];
-            querySnapshot.forEach(async (doc) => {
-                costs.push(doc.data().estCost);
-            });
-        
-        //Summing all estCost values from each document
-        costs.forEach(sumAll);
-
-        function sumAll(num) {
-            totalCost += num;
-        }
-
-        //Changing summed cost value into money format
-        totalCost = "$" + parseFloat(totalCost).toFixed(2);
-
-    //Replacing Total Waterbill's html content with new value
-    document.getElementById("totalCost").innerHTML = totalCost;
-});
-
-} catch (error) {
-    console.log("Total Cost can't be found");
-    alert ("Total Cost can't be found")
-}
-}
-
-//Call function
-//populateTotalCosts();
-
 function getNameFromAuth() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
