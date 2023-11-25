@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 :root {
     --main-color1: #478BC0;
     --main-color2: #0E5F99;
@@ -35,6 +37,13 @@ body {
 
 }
 
+/*Brand Name Styling*/
+.navbar-brand {
+    font-family: 'Montserrat', serif;
+    font-weight:bolder;
+    font-size:20pt;
+    color:#2257bf;
+}
 
 /*Main page styling*/
 #main-page-chart-container {

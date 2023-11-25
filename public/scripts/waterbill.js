@@ -85,7 +85,6 @@ async function populateWeeklyCosts() {
             }); 
             
             //Summing all estCost values from each document
-            console.log(costs);
             costs.forEach(sumAll);
 
             function sumAll(num) {
@@ -143,7 +142,6 @@ async function populateMonthCosts() {
             }); 
             
             //Summing all estCost values from each document
-            console.log(costs);
             costs.forEach(sumAll);
 
             function sumAll(num) {
@@ -221,6 +219,7 @@ async function populateYearCosts() {
 populateYearCosts()
 
 
+//Get display name of current logged in user to populate greeting message
 function getNameFromAuth() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
