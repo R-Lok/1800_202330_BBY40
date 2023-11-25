@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bellota&display=swap');
 
 :root {
     --main-color1: #478BC0;
@@ -39,7 +39,7 @@ body {
 
 /*Brand Name Styling*/
 .navbar-brand {
-    font-family: 'Montserrat', serif;
+    font-family: 'Bellota', serif;
     font-weight:bolder;
     font-size:20pt;
     color:#2257bf;
@@ -222,7 +222,7 @@ nav a:hover {
 
 .billGrid{
     display:grid;
-    grid-template-rows: 25vh 1vh 20vh 20vh 20vh;
+    grid-template-rows: 22vh 1vh 20vh 20vh 20vh;
 }
 
 .billHeader {
@@ -302,7 +302,7 @@ nav a:hover {
 
     .textBlockCenter { 
         margin: 0px auto; 
-        width: 80%; 
+        width: 60%; 
         background: #aabbcc;
         text-align:center;
         background-color:var(--main-color4);

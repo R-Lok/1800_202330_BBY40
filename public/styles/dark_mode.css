@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bellota&display=swap');
+
 :root {
     --main-color1: #478BC0;
     --main-color2: #0E5F99;
@@ -32,6 +34,14 @@ body {
     margin-left:5px;
     margin-bottom:5px;
 
+}
+
+/*Brand Name Styling*/
+.navbar-brand {
+    font-family: 'Bellota', serif;
+    font-weight:bolder;
+    font-size:20pt;
+    color:#2257bf;
 }
 
 #main-page-chart-container, #water-usage-container, canvas {
@@ -187,7 +197,7 @@ nav a:hover {
 
 .billGrid{
     display:grid;
-    grid-template-rows: 25vh 1vh 20vh 20vh 20vh;
+    grid-template-rows: 22vh 1vh 20vh 20vh 20vh;
 }
 
 .billHeader {
@@ -271,7 +281,7 @@ nav a:hover {
 
     .textBlockCenter { 
         margin: 0px auto; 
-        width: 80%; 
+        width: 60%; 
         background: #aabbcc;
         text-align:center;
         background-color:var(--main-color4);
