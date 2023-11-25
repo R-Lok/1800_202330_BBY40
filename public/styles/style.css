@@ -28,8 +28,8 @@ body {
 
 /*Logo Icon Styling*/
 .logoIcon {
-    width:30px;
-    height:30px;
+    width:50px;
+    height:50px;
     margin-left:5px;
     margin-bottom:5px;
 
@@ -283,3 +283,20 @@ nav a:hover {
     background-color: var(--main-color3);
     color: var(--main-color2);
  }
+
+ @media screen and (min-width: 500px) {
+
+    .billGrid{
+        display:grid;
+        grid-template-rows: 25vh 1vh 18vh 18vh 18vh;
+    }
+
+    .textBlockCenter { 
+        margin: 0px auto; 
+        width: 80%; 
+        background: #aabbcc;
+        text-align:center;
+        background-color:var(--main-color4);
+     }
+    
+}

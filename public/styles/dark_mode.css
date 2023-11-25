@@ -27,8 +27,8 @@ body {
 
 /*Logo Icon Styling*/
 .logoIcon {
-    width:30px;
-    height:30px;
+    width:50px;
+    height:50px;
     margin-left:5px;
     margin-bottom:5px;
 
@@ -179,6 +179,10 @@ nav a:hover {
     margin-top: 10vh;
 }
 
+.settingsIcon {
+    filter: invert(86%) sepia(94%) saturate(7220%) hue-rotate(179deg) brightness(106%) contrast(105%);
+ }
+
 /*Water Bill*/
 
 .billGrid{
@@ -189,8 +193,10 @@ nav a:hover {
 .billHeader {
     grid-row: 1 / span 1;
     height:100%;
-    padding:14%;
-    padding-top:10%;
+    width:100%;
+    padding:30px;
+    padding-top:40px;
+    background-image: url(../images/banner2.jpg);
 }
 
 .weekCost {
@@ -255,10 +261,20 @@ nav a:hover {
     color: var(--main-color2);
  }
 
- div .header-image {
-    background-image: url(../images/banner2.jpg);
- }
 
- .settingsIcon {
-    filter: invert(86%) sepia(94%) saturate(7220%) hue-rotate(179deg) brightness(106%) contrast(105%);
- }
+ @media screen and (min-width: 500px) {
+
+    .billGrid{
+        display:grid;
+        grid-template-rows: 25vh 1vh 18vh 18vh 18vh;
+    }
+
+    .textBlockCenter { 
+        margin: 0px auto; 
+        width: 80%; 
+        background: #aabbcc;
+        text-align:center;
+        background-color:var(--main-color4);
+     }
+    
+}
