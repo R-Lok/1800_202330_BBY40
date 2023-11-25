@@ -67,18 +67,28 @@ label {
 /*About Page*/
 
 .banner1 {
-    width:100%;
-    display:block;
+    display:grid;
+    grid-template-rows:20vh;
 }
 
-.banner1 > .banner-image1 {
+.banner-image1 {
+    grid-row: 1 / span 1;
     width:100%;
-    height:30%;
-    display:inline-block;
+    height:100%;
 }
 
-.about-font-color {
-    color:var(--main-color2);
+.about-font {
+    color:var(--main-color4);
+    font-size:13pt;
+    padding-top:20px;
+}
+
+@media screen and (min-width: 800px) {
+
+    .banner1 {
+        display:grid;
+        grid-template-rows:30vh;
+    }
 }
 
 .usage-timescale-option {
@@ -240,4 +250,8 @@ nav a:hover {
 
  div .header-image {
     background-image: url(../images/banner2.jpg);
+ }
+
+ .settingsIcon {
+    filter: invert(86%) sepia(94%) saturate(7220%) hue-rotate(179deg) brightness(106%) contrast(105%);
  }

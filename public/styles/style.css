@@ -92,19 +92,30 @@ label {
 /*About Page*/
 
 .banner1 {
-    width:100%;
-    display:block;
+    display:grid;
+    grid-template-rows:20vh;
 }
 
-.banner1 > .banner-image1 {
+.banner-image1 {
+    grid-row: 1 / span 1;
     width:100%;
-    height:30%;
-    display:inline-block;
+    height:100%;
 }
 
-.about-font-color {
+.about-font {
     color:var(--main-color2);
+    font-size:13pt;
+    padding-top:20px;
 }
+
+@media screen and (min-width: 800px) {
+
+    .banner1 {
+        display:grid;
+        grid-template-rows:30vh;
+    }
+}
+
 
 .usage-timescale-option {
     position: fixed;
