@@ -40,59 +40,35 @@
     <!-- Stuff for body goes here -->
       <nav id="navplaceholder"></nav>
 
-      <div class="p-5 mb-4 header-image">
-        <div class="container-fluid py-5">
-          <h1 class="display-5 fw-bold bill-title">Water Bill Estimation</h1>
-          <p class="col-md-8 fs-4"> <h2>Hi <span id="name-goes-here"></span>! <br>
-            Here's your current and historical water bill estimates</p>
+      <div class=billGrid>
+      <div class="billHeader header-image">
+          <h1 class="billTitle">Water Bill Estimation</h1>
+          <p class="billGreeting">Hi <span id="name-goes-here"></span>!</p>
+            <p>Here's your current and historical water bill estimates</p>
+      </div>
+
+        <div class="weekCost col-md-6 textBlockCenter">
+          <div class="h-100 p-5 dark border">
+            <h2>Current Week's Estimate</h2>
+            <p id="weekCost" class="billText"></p>
+          </div>
+        </div>
+
+        <div class="monthCost col-md-6 textBlockCenter">
+          <div class="h-100 p-5 light border">
+            <h2>Current Month's Estimate</h2>
+            <p id="monthCost" class="billText"></p>
+          </div>
+        </div>
+
+        <div class="yearCost col-md-6 textBlockCenter">
+          <div class="h-100 p-5 dark border">
+            <h2>Current Year's Estimate</h2>
+            <p id="yearCost" class="billText"></p>
+          </div>
         </div>
       </div>
 
-      <br/>
-
-      
-
-
-        <div class="col-md-6 textBlockCenter">
-          <div class="h-100 p-5 dark rounded-3">
-            <h2>Current Week's Water Bill Estimate</h2>
-            <p id="weekCost"></p>
-          </div>
-        </div>
-
-        <br/>
-
-        <div class="col-md-6 textBlockCenter">
-          <div class="h-100 p-5 light border rounded-3">
-            <h2>Current Month's Water Bill Estimate</h2>
-            <p id="monthCost"></p>
-          </div>
-        </div>
-
-        <br/>
-
-        <div class="col-md-6 textBlockCenter">
-          <div class="h-100 p-5 dark rounded-3">
-            <h2>Current Year's Water Bill Estimate</h2>
-            <p id="yearCost"></p>
-          </div>
-        </div>
-
-        <br/>
-
-        <div class="col-md-6 textBlockCenter">
-          <div class="h-100 p-5 light border rounded-3">
-            <h2>Total Money Spent on Water</h2>
-            <p id="totalCost"></p>
-          </div>
-        </div>
-
-
-    </div>
-  </div>
-<br/>
-<br/>
-<br/>
       <footer id="footerplaceholder"></footer>
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->

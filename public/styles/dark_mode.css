@@ -63,9 +63,6 @@ label {
     width: 100%;
 }
 
-.background-color {
-    background-color:var(--main-color4);
-}
 
 /*About Page*/
 
@@ -167,16 +164,73 @@ nav a:hover {
 
 /*Water Bill*/
 
+.billGrid{
+    display:grid;
+    grid-template-rows: 25vh 1vh 20vh 20vh 20vh;
+}
+
+.billHeader {
+    grid-row: 1 / span 1;
+    height:100%;
+    padding:14%;
+    padding-top:10%;
+}
+
+.weekCost {
+    grid-row: 3 / span 1;
+    height:90%;
+    justify-self:center;
+    align-self:center;
+}
+
+.monthCost {
+    grid-row: 4 / span 1;
+    height:90%;
+    justify-self:center;
+    align-self:center;
+}
+
+.yearCost {
+    grid-row: 5 / span 1;
+    height:90%;
+    justify-self:center;
+    align-self:center;
+}
+
+.billTitle{
+    font-weight:bold;
+}
+
+.billGreeting{
+    font-weight:bolder;
+    font-size:large;
+    margin:0;
+}
+
 .textBlockCenter { 
     margin: 0px auto; 
-    width: 95%; 
+    width: 90%; 
     background: #aabbcc;
     text-align:center;
+    background:var(--main-color5);
+ }
+
+ .border {
+    border-radius:25px;
+ }
+
+ .billText{
+    font-style:bold;
+    font-size:large;
+ }
+
+ div h2{
+    font-size:large;
  }
 
  .dark {
-    background-color: var(--main-color5);
-    color: var(--main-color1);
+    background-color: var(--main-color2);
+    color: var(--main-color4);
  }
 
  .light{
@@ -184,6 +238,6 @@ nav a:hover {
     color: var(--main-color2);
  }
 
- .header-image {
+ div .header-image {
     background-image: url(../images/banner2.jpg);
  }
