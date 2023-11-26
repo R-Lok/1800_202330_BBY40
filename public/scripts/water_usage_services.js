@@ -55,16 +55,16 @@ const dayRangeDict = {
 
 const sumDay = (doc, sum) => {
     const index = adjustDay(doc.createdAt.toDate())
-    sum[index] += doc.estVol
+    sum[index] += convert(doc.estVol)
 }
 
 const sumMonth = (doc, sum) => {
     const index = doc.createdAt.toDate().getDate() - 1
-    sum[index] += doc.estVol
+    sum[index] += convert(doc.estVol)
 }
 const sumYear = (doc, sum) => {
     const index = doc.createdAt.toDate().getMonth()
-    sum[index] += doc.estVol
+    sum[index] += convert(doc.estVol)
 }
 
 const sumDict = {
@@ -88,6 +88,8 @@ const sumArray = (type, start) => {
     }
 }
 
+const convert = (item) => localStorage.getItem('system') === 'true' ? item / 3.785 : item
+
 const getSum = ({ querySnapshot, type, start, resolve }) => {
     const sum = sumArray(type, start)
     console.log(querySnapshot.size)
@@ -101,7 +103,9 @@ const getList = ({ querySnapshot, resolve }) => {
     console.log(querySnapshot.size)
     const results = []
     querySnapshot.forEach((doc) => {
-        results.push({ id: doc.id, ...doc.data() })
+        const item = doc.data()
+        item.estVol = (convert(item.estVol)).toFixed(2)
+        results.push({ id: doc.id, ...item })
     })
     // console.log(results)
     return resolve(results)
