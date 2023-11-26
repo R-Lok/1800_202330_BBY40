@@ -1,4 +1,11 @@
 const getChartConfig = (data, labels) => {
+    const userTheme = localStorage.getItem('theme')
+    let gridLineColor = 'rgba(0, 0, 0, 0.1)'
+
+    if (userTheme === 'true') {
+        gridLineColor = 'rgba(239, 239, 239, 0.2)'
+    } 
+
     return {
         type: 'bar',
         data: {
@@ -17,12 +24,18 @@ const getChartConfig = (data, labels) => {
                         text: 'Day/Date/Month',
                         display: true,
                     },
+                    grid: {
+                        color: gridLineColor
+                    }
                 },
                 x: {
                     title: {
                         display: true,
                         text: `Vol of Water Used (${getSystemString()})`,
                     },
+                    grid: {
+                        color: gridLineColor
+                    }
                 },
             },
             indexAxis: 'y',
