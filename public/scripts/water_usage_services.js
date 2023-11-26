@@ -107,7 +107,7 @@ const getList = ({ querySnapshot, resolve }) => {
     return resolve(results)
 }
 
-const getWaterUsage = (type, callback) => {
+const getWaterUsage = (type, callback, orderBy = 'createdAt', order = 'desc') => {
     return new Promise((resolve, reject) => {
         const userId = localStorage.getItem('userId')
         const { start, end } = dayRangeDict[type]()
@@ -118,6 +118,7 @@ const getWaterUsage = (type, callback) => {
             .where('userId', '==', userId)
             .where('createdAt', '>=', start)
             .where('createdAt', '<', end)
+            .orderBy(orderBy, order)
             .get()
             .then((querySnapshot) => callback({ querySnapshot, type, start, resolve }))
             .catch((error) => {
