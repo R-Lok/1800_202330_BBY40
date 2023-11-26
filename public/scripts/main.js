@@ -37,7 +37,7 @@ const main = async () => {
         data: {
             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             datasets: [{
-                label: 'Liters of water',
+                label: `${getSystemString()} of water`,
                 data: weeklyData,
                 borderWidth: 1,
             }],

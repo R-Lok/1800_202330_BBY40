@@ -90,6 +90,8 @@ const sumArray = (type, start) => {
 
 const convert = (item) => localStorage.getItem('system') === 'true' ? item / 3.785 : item
 
+const getSystemString = () => localStorage.getItem('system') === 'true' ? 'Gallons' : 'Litres'
+
 const getSum = ({ querySnapshot, type, start, resolve }) => {
     const sum = sumArray(type, start)
     console.log(querySnapshot.size)
@@ -104,7 +106,10 @@ const getList = ({ querySnapshot, resolve }) => {
     const results = []
     querySnapshot.forEach((doc) => {
         const item = doc.data()
-        item.estVol = (convert(item.estVol)).toFixed(2)
+        // there is a NaN behavior caused by firestore so keep this type checking please.
+        if (item.estVol) {
+            item.estVol = (convert(item.estVol)).toFixed(2)
+        }
         results.push({ id: doc.id, ...item })
     })
     // console.log(results)
