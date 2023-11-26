@@ -1,15 +1,3 @@
-function logout() {
-    firebase.auth().signOut().then(() => {
-        // Sign-out successful.
-        console.log('logging out user')
-        localStorage.clear()
-        window.location.href = './goodbye.html'
-    }).catch((error) => {
-        console.log(error)
-        // An error happened.
-    })
-}
-
 const lists = ['system', 'theme']
 
 for (const list of lists) {
