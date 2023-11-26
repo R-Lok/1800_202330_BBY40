@@ -22,12 +22,17 @@ function getNameFromAuth() {
         }
     })
 }
+let chart
 
 const main = async () => {
     const weeklyData = await getWaterUsage('week', getSum)
     const mainPageCanvas = document.getElementById('main-page-chart')
 
-    new Chart(mainPageCanvas, {
+    if (chart) {
+        chart.destroy()
+    }
+
+    chart = new Chart(mainPageCanvas, {
         type: 'bar',
         data: {
             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -202,6 +207,7 @@ async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMa
             })
             console.log('Use recorded!')
             displaySuccessNotif()
+            main()
         })
     } catch (error) {
         console.log('Submission encountered an error')
