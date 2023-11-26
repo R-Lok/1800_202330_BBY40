@@ -200,7 +200,7 @@ async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMa
                 useType_id: useType_id,
                 userId: userId,
             })
-            console.log('Use submitted')
+            console.log('Use recorded!')
             displaySuccessNotif()
         })
     } catch (error) {
