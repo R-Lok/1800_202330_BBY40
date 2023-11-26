@@ -17,7 +17,9 @@ const insertHTML = (docs) => {
         }
 
         const deleteBtn = clone.getElementById('delete-btn')
-        deleteBtn.addEventListener('click', () => deleteWaterUsage(doc.id), false)
+        deleteBtn.addEventListener('click', (event) => {
+            confirm('Are you sure you want to delete this waterlog?') ? deleteWaterUsage(doc.id) : event.preventDefault()
+        }, false)
         parent.appendChild(clone)
     }
 }
