@@ -27,6 +27,12 @@ let chart
 const main = async () => {
     const weeklyData = await getWaterUsage('week', getSum)
     const mainPageCanvas = document.getElementById('main-page-chart')
+    const userTheme = localStorage.getItem('theme')
+    let gridLineColor = 'rgba(0, 0, 0, 0.1)'
+
+    if (userTheme === 'true') {
+        gridLineColor = 'rgba(239, 239, 239, 0.2)'
+    }
 
     if (chart) {
         chart.destroy()
@@ -46,7 +52,15 @@ const main = async () => {
             scales: {
                 y: {
                     beginAtZero: true,
+                    grid: {
+                        color: gridLineColor
+                    }
                 },
+                x: {
+                    grid: {
+                        color: gridLineColor
+                    }
+                }
             },
             responsive: true,
             maintainAspectRatio: false,
