@@ -4,7 +4,7 @@ const getChartConfig = (data, labels) => {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Liters of water',
+                label: 'Litres of water',
                 data: data,
                 borderWidth: 1,
             }],
@@ -13,6 +13,16 @@ const getChartConfig = (data, labels) => {
             scales: {
                 y: {
                     beginAtZero: true,
+                    title: {
+                        text: 'Day/Date/Month',
+                        display: true
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Vol of Water Used (Litres)'
+                    }
                 },
             },
             indexAxis: 'y',
