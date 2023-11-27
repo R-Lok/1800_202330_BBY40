@@ -34,12 +34,18 @@ const selectDate = () => {
 
 const showSelectedDate = () => document.getElementById('Selected_date').value = localStorage.getItem('date') || new Date().toLocaleDateString('en-CA')
 
-const main = async () => {
+const getUseTypeDict = async () => {
     const useTypes = await getAll('useTypes')
     const useTypeDict = useTypes.reduce((map, useType) => {
         map[useType.id] = useType.name
         return map
     }, {})
+    localStorage.setItem('useTypeDict', JSON.stringify(useTypeDict))
+    return useTypeDict
+}
+
+const main = async () => {
+    const useTypeDict = JSON.parse(localStorage.getItem('useTypeDict')) || await getUseTypeDict()
 
     const waterUsages = await getWaterUsage('day', getList)
     const data = waterUsages.map((waterUsage) => {
