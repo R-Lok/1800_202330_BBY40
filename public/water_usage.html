@@ -33,14 +33,14 @@
   </head>
   <body>
       <nav id="navplaceholder"></nav>
-      <h1 class="display-5 fw-bold text-center">Water Usage</h1>
-      <div class="px-4 py-5 text-center">
+      <h1 id="stats-heading" class="display-5 fw-bold text-center m-2 mt-4 p-2">Usage Statistics</h1>
+      <div id="usage-container" class="text-center">
         <div id="water-usage-container" class="jumbotron jumbotron-fluid mb-4 d-flex justify-content-center">
           <canvas id="water-usage-chart-weekly" class="usage-chart"></canvas>
           <canvas id="water-usage-chart-monthly" class="usage-chart" style="display: none"></canvas>
           <canvas id="water-usage-chart-yearly" class="usage-chart" style="display: none"></canvas>
         </div>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <div id="time-tabs" class="btn-group btn-group-toggle" data-toggle="buttons">
           <label for="weekly-toggle" id="weekly-label" class="btn btn-secondary usage-timescale-option-label active">
             <input type="radio" class="usage-timescale-option" name="option" id="weekly-toggle" autocomplete="off" checked="true"> Week
           </label>

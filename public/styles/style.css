@@ -10,8 +10,9 @@
 }
 
 body {
-    background-color: var(--main-color4);
-    color: var(--main-color5);
+    background-color: var(--main-color5);
+    color: var(--main-color4);
+    height: 100vh;
 }
 
 .bg-primary, .btn-primary {
@@ -22,6 +23,10 @@ body {
     width: 25vw;
     border: none;
     background: none;
+}
+
+.nav-item {
+    text-align: center;
 }
 
 .footer-button > img {
@@ -99,6 +104,20 @@ label {
     transition: visibility 0s 1s, opacity 1s linear;
 }
 
+/*View Water Logs page*/
+.usage-log {
+    background: var(--main-color1);
+    border-radius: 20px;
+}
+
+.delete-btn {
+    background-color: rgb(190, 0, 0);
+}
+
+.createdAt {
+    font-weight: bold;
+}
+
 
 /*About Page*/
 
@@ -127,6 +146,7 @@ label {
     }
 }
 
+/*Usage stats page */
 
 .usage-timescale-option {
     position: fixed;
@@ -142,6 +162,27 @@ label {
 .usage-timescale-option-label.active {
     background-color: var(--main-color2) !important;
 }
+
+#usage-container {
+    height: 70vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: "chart"
+                         "tabs";
+}
+
+#water-usage-container {
+    grid-area: chart;
+}
+
+#time-tabs {
+    width: 50vw;
+    justify-self: center;
+}
+
+
 
 /* Media queries */
 @media screen and (max-width: 575px) {

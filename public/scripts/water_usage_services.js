@@ -1,15 +1,18 @@
+const pickDate = (date) => {
+    if (date) {
+        const parts = date.split('-')
+        return new Date(parts[0], parts[1] - 1, parts[2])
+    }
+    return new Date()
+}
+
 const adjustDay = (time) => time.getDay() === 0 ? 7 - 1 : time.getDay() - 1
 
-const getBasicDay = () => {
-    const today = new Date()
+const getDay = () => {
+    const today = pickDate(localStorage.getItem('date'))
     today.setHours(0, 0, 0, 0)
     const todayUnix = today.getTime()
     const oneDayUnix = 60 * 60 * 24 * 1000
-    return { today, todayUnix, oneDayUnix }
-}
-
-const getDay = () => {
-    const { today, todayUnix, oneDayUnix } = getBasicDay()
 
     const start = today
     const end = new Date(todayUnix + oneDayUnix)
@@ -17,7 +20,10 @@ const getDay = () => {
 }
 
 const getWeek = () => {
-    const { today, todayUnix, oneDayUnix } = getBasicDay()
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const todayUnix = today.getTime()
+    const oneDayUnix = 60 * 60 * 24 * 1000
 
     const dayOfWeek = adjustDay(today)
     const start = new Date(todayUnix - (dayOfWeek * oneDayUnix))

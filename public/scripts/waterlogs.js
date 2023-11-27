@@ -1,5 +1,5 @@
 const insertHTML = (docs) => {
-    const parent = document.getElementById('water-usage-container')
+    const parent = document.getElementById('edit-water-usage-container')
     const temp = document.getElementById('template-waterlogs')
 
     for (const doc of docs) {
@@ -8,21 +8,31 @@ const insertHTML = (docs) => {
         div.id = doc.id
         for (const key of Object.keys(doc)) {
             const span = clone.querySelector(`.${key}`)
-            if (!doc[key]) {
+            if (span && !doc[key]) {
                 span.style.display = 'none'
             }
-            if (span) {
+
+            if (span && span.className === 'createdAt') {
+                span.textContent = `${doc[key]}`
+            } else if (span) {
                 span.textContent = `${key}: ${doc[key]}`
             }
         }
 
-        const deleteBtn = clone.getElementById('delete-btn')
+        const deleteBtn = clone.querySelector('.delete-btn')
         deleteBtn.addEventListener('click', (event) => {
             confirm('Are you sure you want to delete this waterlog?') ? deleteWaterUsage(doc.id) : event.preventDefault()
         }, false)
         parent.appendChild(clone)
     }
 }
+
+const selectDate = () => {
+    localStorage.setItem('date', document.getElementById('Selected_date').value)
+    window.location.href = './waterlogs.html'
+}
+
+const showSelectedDate = () => document.getElementById('Selected_date').value = localStorage.getItem('date') || new Date().toLocaleDateString('en-CA')
 
 const main = async () => {
     const useTypes = await getAll('useTypes')
@@ -40,6 +50,7 @@ const main = async () => {
     })
 
     insertHTML(data)
+    showSelectedDate()
 }
 
 main()

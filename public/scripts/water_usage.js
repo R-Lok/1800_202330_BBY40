@@ -1,10 +1,12 @@
 const getChartConfig = (data, labels) => {
     const userTheme = localStorage.getItem('theme')
     let gridLineColor = 'rgba(0, 0, 0, 0.1)'
+    let textColor = '#666'
 
     if (userTheme === 'true') {
         gridLineColor = 'rgba(239, 239, 239, 0.2)'
-    } 
+        textColor = 'rgba(232,230,226, 1.0)'
+    }
 
     return {
         type: 'bar',
@@ -23,20 +25,35 @@ const getChartConfig = (data, labels) => {
                     title: {
                         text: 'Day/Date/Month',
                         display: true,
+                        color: textColor
                     },
                     grid: {
-                        color: gridLineColor
+                        color: gridLineColor,
+                    },
+                    ticks: {
+                        color: 'rgba(232,230,226, 1.0)'
                     }
                 },
                 x: {
                     title: {
                         display: true,
                         text: `Vol of Water Used (${getSystemString()})`,
+                        color: textColor
                     },
                     grid: {
-                        color: gridLineColor
+                        color: gridLineColor,
+                    },
+                    ticks: {
+                        color: textColor
                     }
                 },
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
             },
             indexAxis: 'y',
             maintainAspectRatio: false,
@@ -44,7 +61,7 @@ const getChartConfig = (data, labels) => {
     }
 }
 
-const makeCharts = ({ weeklyData, monthlyData, yearlyData }) => {
+const main = async () => {
     const weekly = document.getElementById('water-usage-chart-weekly')
     const monthly = document.getElementById('water-usage-chart-monthly')
     const yearly = document.getElementById('water-usage-chart-yearly')
@@ -59,33 +76,27 @@ const makeCharts = ({ weeklyData, monthlyData, yearlyData }) => {
         yearly.style.display = 'none'
     })
 
-    monthlyToggle.addEventListener('click', (e) => {
+    monthlyToggle.addEventListener('click', async (e) => {
         weekly.style.display = 'none'
         monthly.style.display = 'block'
         yearly.style.display = 'none'
+        const monthlyData = await getWaterUsage('month', getSum)
+        // console.log(monthlyData)
+        new Chart(monthly, getChartConfig(monthlyData, Array.from({ length: daysInMonth(new Date()) }, (v, i) => i + 1)))
     })
 
-    yearlyToggle.addEventListener('click', (e) => {
+    yearlyToggle.addEventListener('click', async (e) => {
         weekly.style.display = 'none'
         monthly.style.display = 'none'
         yearly.style.display = 'block'
+        const yearlyData = await getWaterUsage('year', getSum)
+        // console.log(yearlyData)
+        new Chart(yearly, getChartConfig(yearlyData, ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']))
     })
 
-    new Chart(weekly, getChartConfig(weeklyData, ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']))
-    new Chart(monthly, getChartConfig(monthlyData, Array.from({ length: daysInMonth(new Date()) }, (v, i) => i + 1)))
-    new Chart(yearly, getChartConfig(yearlyData, ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']))
-}
-
-const main = async () => {
-    const [weeklyData, monthlyData, yearlyData] = await Promise.all([
-        getWaterUsage('week', getSum),
-        getWaterUsage('month', getSum),
-        getWaterUsage('year', getSum),
-    ])
+    const weeklyData = await getWaterUsage('week', getSum)
     // console.log(weeklyData)
-    // console.log(monthlyData)
-    // console.log(yearlyData)
-    makeCharts({ weeklyData, monthlyData, yearlyData })
+    new Chart(weekly, getChartConfig(weeklyData, ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']))
 }
 
 main()

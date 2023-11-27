@@ -10,7 +10,9 @@
 }
 
 body {
-    background-color: var(--main-color5);color: var(--main-color4);
+    background-color: var(--main-color5);
+    color: var(--main-color4);
+    height: 100vh;
 }
 
 .bg-primary, .btn-primary {
@@ -21,6 +23,10 @@ body {
     width: 25vw;
     border: none;
     background: none;
+}
+
+.nav-item {
+    text-align: center;
 }
 
 .footer-button > img {
@@ -42,11 +48,20 @@ body {
     color:#2257bf;
 }
 
-#main-page-chart-container, #water-usage-container, canvas {
+/*Main page styling*/
+#main-page-chart-container {
     width: 100% !important;
     height: 100% !important;
     max-height: 500px;
     min-height: 50vh;
+}
+
+.navbar {
+    padding: 0 5px;
+}
+
+.usage-chart {
+    height: 50vh;
 }
 
 .navbar {
@@ -79,6 +94,34 @@ label {
     width: 100%;
 }
 
+.alert {
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    transform: translate(-50%, -50%);
+    width: max-content;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
+}
+
+/*View Water Logs page*/
+.usage-log {
+    background: var(--main-color1);
+    border-radius: 20px;
+}
+
+.delete-btn {
+    background-color: rgb(190, 0, 0);
+}
+
+.createdAt {
+    font-weight: bold;
+}
+
 
 /*About Page*/
 
@@ -94,7 +137,7 @@ label {
 }
 
 .about-font {
-    color:var(--main-color4);
+    color:var(--main-color2);
     font-size:12pt;
     padding-top:20px;
 }
@@ -106,6 +149,8 @@ label {
         grid-template-rows:40vh;
     }
 }
+
+/*Usage stats page */
 
 .usage-timescale-option {
     position: fixed;
@@ -121,6 +166,27 @@ label {
 .usage-timescale-option-label.active {
     background-color: var(--main-color2) !important;
 }
+
+#usage-container {
+    height: 70vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: "chart"
+                         "tabs";
+}
+
+#water-usage-container {
+    grid-area: chart;
+}
+
+#time-tabs {
+    width: 50vw;
+    justify-self: center;
+}
+
+
 
 /* Media queries */
 @media screen and (max-width: 575px) {
@@ -170,11 +236,11 @@ label {
 
 nav a{
     text-decoration:underline;
-    color:var(--main-color3);
+    color:var(--main-color2);
 }
 
 nav a:hover {
-    color:var(--main-color4);
+    color:var(--main-color3);
 }
 
 .card-header{
@@ -190,14 +256,14 @@ nav a:hover {
     background-color:var(--main-color3);
 }
 
+#home-modal-title > span {
+    font-size: 10pt;
+}
+
 /* Settings */
 #logout-btn {
     margin-top: 10vh;
 }
-
-.settingsIcon {
-    filter: invert(86%) sepia(94%) saturate(7220%) hue-rotate(179deg) brightness(106%) contrast(105%);
- }
 
 /*Water Bill*/
 
@@ -218,21 +284,18 @@ nav a:hover {
 .weekCost {
     grid-row: 3 / span 1;
     height:90%;
-    justify-self:center;
     align-self:center;
 }
 
 .monthCost {
     grid-row: 4 / span 1;
     height:90%;
-    justify-self:center;
     align-self:center;
 }
 
 .yearCost {
     grid-row: 5 / span 1;
     height:90%;
-    justify-self:center;
     align-self:center;
 }
 
@@ -251,7 +314,7 @@ nav a:hover {
     width: 90%; 
     background: #aabbcc;
     text-align:center;
-    background:var(--main-color5);
+    background-color:var(--main-color4);
  }
 
  .border {
@@ -277,7 +340,6 @@ nav a:hover {
     color: var(--main-color2);
  }
 
-
  @media screen and (min-width: 500px) {
 
     .billGrid{
@@ -293,4 +355,10 @@ nav a:hover {
         background-color:var(--main-color4);
      }
     
+}
+
+/* Dark mode specific styling */
+
+.settingsIcon {
+    filter: invert(86%) sepia(94%) saturate(7220%) hue-rotate(179deg) brightness(106%) contrast(105%);
 }

@@ -33,18 +33,23 @@
   </head>
   <body>
       <nav id="navplaceholder"></nav>
-      <h1 class="display-5 fw-bold text-center">Water Usages</h1>
-      <div id="water-usage-container" class="container-fluid" style="margin-bottom: 15vh;"></div>
+      <h1 id="logs-header" class="display-5 fw-bold text-center m-2 mt-4 p-2">Water Logs</h1>
+      <div class="text-center">
+        <label for="Selected_date">Selected Date:</label>
+        <input type="date" id="Selected_date" name="Selected_date" onchange="selectDate()">
+      </div>
+      <br>
+      <div id="edit-water-usage-container" class="container-fluid pb-5"></div>
 
       <template id="template-waterlogs">
-        <div class="d-flex flex-column">
+        <div class="usage-log p-4 mb-2 d-flex flex-column">
           <span class="createdAt"></span>
           <span class="useType"></span>
           <span class="machine_type"></span>
           <span class="home"></span>
           <span class="estVol"></span>
           <span class="estCost"></span>
-          <button id="delete-btn" type="button" class="btn btn-secondary">Delete</button>
+          <button type="button" class="delete-btn btn btn-secondary mt-4">Delete</button>
         </div>
       </template>
 
@@ -54,7 +59,7 @@
       <script src="./scripts/skeleton.js"></script>
       <script src="./scripts/apply_theme.js"></script>
       <script src="./scripts/water_usage_services.js"></script>
-      <script src="./scripts/edit_usage.js"></script>
+      <script src="./scripts/waterlogs.js"></script>
       <script src="./scripts/check_if_logged_in.js"></script>
   </body>
 
