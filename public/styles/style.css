@@ -25,6 +25,10 @@ body {
     background: none;
 }
 
+.nav-item {
+    text-align: center;
+}
+
 .footer-button > img {
     height: 50px;
 }
