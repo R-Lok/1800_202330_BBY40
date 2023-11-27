@@ -1,27 +1,3 @@
-
-
-function getNameFromAuth() {
-    firebase.auth().onAuthStateChanged((user) => {
-        // Check if a user is signed in:
-        if (user) {
-            // Do something for the currently logged-in user here:
-            console.log(user.uid) // print the uid in the browser console
-            console.log(user.displayName) // print the user name in the browser console
-            userName = user.displayName
-
-            // method #1:  insert with JS
-            document.getElementById('name-goes-here').innerText = userName
-
-            // method #2:  insert using jquery
-            // $("#name-goes-here").text(userName); //using jquery
-
-            // method #3:  insert using querySelector
-            // document.querySelector("#name-goes-here").innerText = userName
-        } else {
-            // No user is signed in.
-        }
-    })
-}
 let chart
 
 const main = async () => {
@@ -29,7 +5,6 @@ const main = async () => {
     const mainPageCanvas = document.getElementById('main-page-chart')
     const userTheme = localStorage.getItem('theme')
     let gridLineColor = 'rgba(0, 0, 0, 0.1)'
-    let axesLabelsColor = '#666'
     let textColor = '#666'
 
     if (userTheme === 'true') {
@@ -60,7 +35,7 @@ const main = async () => {
                     },
                     ticks: {
                         color: textColor,
-                    }
+                    },
                 },
                 x: {
                     grid: {
@@ -68,7 +43,7 @@ const main = async () => {
                     },
                     ticks: {
                         color: textColor,
-                    }
+                    },
                 },
             },
             responsive: true,
@@ -80,13 +55,13 @@ const main = async () => {
                     font: {
                         size: 20,
                     },
-                    color: textColor
+                    color: textColor,
                 },
                 legend: {
                     labels: {
-                        color: textColor
-                    }
-                }
+                        color: textColor,
+                    },
+                },
             },
         },
     })
@@ -162,58 +137,24 @@ function getCalcFactorFromSessionStr() {
     return sessionStorage.getItem('calc_factor')
 }
 
-function getUserId() {
-    return new Promise((resolve, reject) => {
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                // User logged in already or has just logged in.
-                const userId = user.uid
-                resolve(userId)
-            } else {
-                reject('Not logged in')
-            }
-        })
-    })
-}
-
-// todo: remove
-function getUserName() {
-    return new Promise((resolve, reject) => {
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                // User logged in already or has just logged in.
-                const userName = user.displayName
-                resolve(userName)
-            } else {
-                reject('Not logged in')
-            }
-        })
-    })
-}
-
-// todo: fix
 function getPriceFactor() {
-    // currently assumes that the user is in canada, as the doc retrieved is the canada document
     return new Promise((resolve, reject) => {
-        db.collection('priceFactors').doc('36380e25-46b3-4ae9-a17c-3d95e7080a1f').get()
-            .then((doc) => {
-                if (doc.data().costPerLitre) {
-                    resolve(doc.data().costPerLitre)
-                } else {
-                    reject(Console.log('Could not fetch cost per litre'))
-                }
-            })
-            .catch((error) => {
-                console.log('Could not reach firestore')
-                displayFailNotif()
-            })
+        db.collection('priceFactors')
+            .where('country', '==', 'Canada')
+            .get()
+            .then((querySnapshot) => querySnapshot.forEach((doc) => {
+                const costPerLitre = doc.data().costPerLitre
+                localStorage.setItem('costPerLitre', costPerLitre)
+                resolve(costPerLitre)
+            }))
+            .catch((error) => reject(error))
     })
 }
 
 async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
     try {
-        const priceFactor = await getPriceFactor()
-        const userId = await getUserId()
+        const priceFactor = localStorage.getItem('costPerLitre') || await getPriceFactor()
+        const userId = localStorage.getItem('userId')
         db.collection('useTypes').doc(useType).get().then((doc) => {
             const calc_factor = storedCalcFactor
             const createdAt = firebase.firestore.Timestamp.now().toDate()
@@ -240,6 +181,7 @@ async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMa
             main()
         })
     } catch (error) {
+        console.log(error)
         console.log('Submission encountered an error')
         displayFailNotif()
     }
@@ -256,7 +198,7 @@ async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMa
 //         let machine_type = storedMachineType
 //         let updatedAt = Date.now()
 //         let useType_id = useType
-//         let uid = await getUserId()
+//         let uid = localStorage.getItem('userId')
 
 //         let submission = {
 //             calc_factor: parseInt(calc_factor),
@@ -424,7 +366,7 @@ function hideNotif() {
 // function to calculate and output estimated monthly water bill value
 async function populateMonthCosts() {
     try {
-        const userId = await getUserId()
+        const userId = localStorage.getItem('userId')
 
         let monthCost = 0
         const today = new Date()
