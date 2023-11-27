@@ -59,6 +59,14 @@ body {
     height: 50vh;
 }
 
+.navbar {
+    padding: 0 5px;
+}
+
+.usage-chart {
+    height: 50vh;
+}
+
 #index-logo {
     width: 80vw;
 }
