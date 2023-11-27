@@ -29,7 +29,7 @@ const insertHTML = (docs) => {
 
 const selectDate = () => {
     localStorage.setItem('date', document.getElementById('Selected_date').value)
-    window.location.href = './edit_usage.html'
+    window.location.href = './waterlogs.html'
 }
 
 const showSelectedDate = () => document.getElementById('Selected_date').value = localStorage.getItem('date') || new Date().toLocaleDateString('en-CA')

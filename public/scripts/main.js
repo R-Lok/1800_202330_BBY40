@@ -53,14 +53,14 @@ const main = async () => {
                 y: {
                     beginAtZero: true,
                     grid: {
-                        color: gridLineColor
-                    }
+                        color: gridLineColor,
+                    },
                 },
                 x: {
                     grid: {
-                        color: gridLineColor
-                    }
-                }
+                        color: gridLineColor,
+                    },
+                },
             },
             responsive: true,
             maintainAspectRatio: false,
@@ -79,9 +79,9 @@ const main = async () => {
 
 main()
 
-const editWaterButton = document.getElementById('edit-day-usage-btn')
-editWaterButton.addEventListener('click', () => {
-    window.location.href = './edit_usage.html'
+const waterlogsButton = document.getElementById('waterlogs-btn')
+waterlogsButton.addEventListener('click', () => {
+    window.location.href = './waterlogs.html'
 })
 
 // We will need to write functions to post form data to firestore in future
