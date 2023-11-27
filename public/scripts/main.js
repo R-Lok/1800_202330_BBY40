@@ -1,75 +1,3 @@
-let chart
-
-const main = async () => {
-    const weeklyData = await getWaterUsage('week', getSum)
-    const mainPageCanvas = document.getElementById('main-page-chart')
-    const userTheme = localStorage.getItem('theme')
-    let gridLineColor = 'rgba(0, 0, 0, 0.1)'
-    const axesLabelsColor = '#666'
-    let textColor = '#666'
-
-    if (userTheme === 'true') {
-        gridLineColor = 'rgba(239, 239, 239, 0.2)'
-        textColor = 'rgba(232,230,226, 1.0)'
-    }
-
-    if (chart) {
-        chart.destroy()
-    }
-
-    chart = new Chart(mainPageCanvas, {
-        type: 'bar',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: `${getSystemString()} of water`,
-                data: weeklyData,
-                borderWidth: 1,
-            }],
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: gridLineColor,
-                    },
-                    ticks: {
-                        color: textColor,
-                    },
-                },
-                x: {
-                    grid: {
-                        color: gridLineColor,
-                    },
-                    ticks: {
-                        color: textColor,
-                    },
-                },
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: `${localStorage.getItem('userName')}'s Weekly Summary`,
-                    font: {
-                        size: 20,
-                    },
-                    color: textColor,
-                },
-                legend: {
-                    labels: {
-                        color: textColor,
-                    },
-                },
-            },
-        },
-    })
-}
-
-// main()
-
 const waterlogsButton = document.getElementById('waterlogs-btn')
 waterlogsButton.addEventListener('click', () => {
     window.location.href = './waterlogs.html'
@@ -90,9 +18,9 @@ tapSlider.addEventListener('input', (e) => {
     const tapUseMinutes = Math.trunc(tapSlider.value / 60)
     const tapUseSeconds = tapSlider.value % 60
 
-    if (tapUseMinutes != 0 && tapUseSeconds != 0) {
+    if (tapUseMinutes !== 0 && tapUseSeconds !== 0) {
         tapSliderValDisplay.innerText = `${tapUseMinutes}m${tapUseSeconds}s`
-    } else if (tapUseSeconds == 0) {
+    } else if (tapUseSeconds === 0) {
         tapSliderValDisplay.innerText = `${tapUseMinutes}m`
     } else {
         tapSliderValDisplay.innerText = `${tapUseSeconds}s`
@@ -103,11 +31,6 @@ tapSlider.addEventListener('input', (e) => {
 function clearSessionStorage() {
     sessionStorage.clear()
     console.log('Session storage cleared')
-}
-
-// function to test eventListenerTriggers
-function testEventListener() {
-    console.log('You triggered the test event listener')
 }
 
 function addUseTypeToSessionStr(e) {
@@ -152,35 +75,31 @@ function getPriceFactor() {
     })
 }
 
-async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
+async function submitUseDetails(home, useType_id, calc_factor, machine_type) {
     try {
         const priceFactor = localStorage.getItem('costPerLitre') || await getPriceFactor()
-        const userId = localStorage.getItem('userId')
-        db.collection('useTypes').doc(useType).get().then((doc) => {
-            const calc_factor = storedCalcFactor
-            const createdAt = firebase.firestore.Timestamp.now().toDate()
-            const estVol = doc.data().waterVolFactor * calc_factor
-            const estCost = estVol * priceFactor
-            const home = homeBoolean
-            const machine_type = storedMachineType
-            const updatedAt = firebase.firestore.Timestamp.now().toDate()
-            const useType_id = useType
+        db.collection('useTypes')
+            .doc(useType_id)
+            .get()
+            .then((doc) => {
+                const now = firebase.firestore.Timestamp.now().toDate()
+                const estVol = doc.data().waterVolFactor * calc_factor
 
-            db.collection('waterLogs').add({
-                calc_factor: parseInt(calc_factor),
-                createdAt: createdAt,
-                estCost: estCost,
-                estVol: estVol,
-                home: home,
-                machine_type: machine_type,
-                updatedAt: updatedAt,
-                useType_id: useType_id,
-                userId: userId,
+                db.collection('waterLogs').add({
+                    calc_factor: parseInt(calc_factor),
+                    createdAt: now,
+                    estCost: estVol * priceFactor,
+                    estVol: estVol,
+                    home: home,
+                    machine_type: machine_type,
+                    updatedAt: now,
+                    useType_id: doc.id,
+                    userId: localStorage.getItem('userId'),
+                })
+                console.log('Use recorded!')
+                displaySuccessNotif()
+                main()
             })
-            console.log('Use recorded!')
-            displaySuccessNotif()
-            main()
-        })
     } catch (error) {
         console.log(error)
         console.log('Submission encountered an error')
@@ -411,4 +330,77 @@ async function populateMonthCosts() {
     }
 }
 
-// populateMonthCosts()
+let chart
+const main = async () => {
+    const [weeklyData, monthCost] = await Promise.all([
+        getWaterUsage('week', getSum),
+        getCosts('month'),
+    ])
+    const mainPageCanvas = document.getElementById('main-page-chart')
+    const userTheme = localStorage.getItem('theme')
+    let gridLineColor = 'rgba(0, 0, 0, 0.1)'
+    let textColor = '#666'
+
+    if (userTheme === 'true') {
+        gridLineColor = 'rgba(239, 239, 239, 0.2)'
+        textColor = 'rgba(232,230,226, 1.0)'
+    }
+
+    if (chart) {
+        chart.destroy()
+    }
+
+    chart = new Chart(mainPageCanvas, {
+        type: 'bar',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: `${getSystemString()} of water`,
+                data: weeklyData,
+                borderWidth: 1,
+            }],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: gridLineColor,
+                    },
+                    ticks: {
+                        color: textColor,
+                    },
+                },
+                x: {
+                    grid: {
+                        color: gridLineColor,
+                    },
+                    ticks: {
+                        color: textColor,
+                    },
+                },
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: `${localStorage.getItem('userName')}'s Weekly Summary`,
+                    font: {
+                        size: 20,
+                    },
+                    color: textColor,
+                },
+                legend: {
+                    labels: {
+                        color: textColor,
+                    },
+                },
+            },
+        },
+    })
+    // Replacing html content with new value
+    document.getElementById('summary-stat').innerHTML = `This Month's Water Bill Estimate: $${parseFloat(monthCost).toFixed(2)}`
+}
+
+main()
