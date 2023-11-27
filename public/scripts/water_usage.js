@@ -44,7 +44,7 @@ const getChartConfig = (data, labels) => {
     }
 }
 
-const makeCharts = ({ weeklyData, monthlyData, yearlyData }) => {
+const main = async () => {
     const weekly = document.getElementById('water-usage-chart-weekly')
     const monthly = document.getElementById('water-usage-chart-monthly')
     const yearly = document.getElementById('water-usage-chart-yearly')
@@ -59,33 +59,27 @@ const makeCharts = ({ weeklyData, monthlyData, yearlyData }) => {
         yearly.style.display = 'none'
     })
 
-    monthlyToggle.addEventListener('click', (e) => {
+    monthlyToggle.addEventListener('click', async (e) => {
         weekly.style.display = 'none'
         monthly.style.display = 'block'
         yearly.style.display = 'none'
+        const monthlyData = await getWaterUsage('month', getSum)
+        // console.log(monthlyData)
+        new Chart(monthly, getChartConfig(monthlyData, Array.from({ length: daysInMonth(new Date()) }, (v, i) => i + 1)))
     })
 
-    yearlyToggle.addEventListener('click', (e) => {
+    yearlyToggle.addEventListener('click', async (e) => {
         weekly.style.display = 'none'
         monthly.style.display = 'none'
         yearly.style.display = 'block'
+        const yearlyData = await getWaterUsage('year', getSum)
+        // console.log(yearlyData)
+        new Chart(yearly, getChartConfig(yearlyData, ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']))
     })
 
-    new Chart(weekly, getChartConfig(weeklyData, ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']))
-    new Chart(monthly, getChartConfig(monthlyData, Array.from({ length: daysInMonth(new Date()) }, (v, i) => i + 1)))
-    new Chart(yearly, getChartConfig(yearlyData, ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']))
-}
-
-const main = async () => {
-    const [weeklyData, monthlyData, yearlyData] = await Promise.all([
-        getWaterUsage('week', getSum),
-        getWaterUsage('month', getSum),
-        getWaterUsage('year', getSum),
-    ])
+    const weeklyData = await getWaterUsage('week', getSum)
     // console.log(weeklyData)
-    // console.log(monthlyData)
-    // console.log(yearlyData)
-    makeCharts({ weeklyData, monthlyData, yearlyData })
+    new Chart(weekly, getChartConfig(weeklyData, ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']))
 }
 
 main()
