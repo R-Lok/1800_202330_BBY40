@@ -31,7 +31,7 @@ const getChartConfig = (data, labels) => {
                         color: gridLineColor,
                     },
                     ticks: {
-                        color: 'rgba(232,230,226, 1.0)'
+                        color: textColor
                     }
                 },
                 x: {
