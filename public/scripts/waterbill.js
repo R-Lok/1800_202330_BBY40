@@ -5,9 +5,9 @@ const main = async () => {
     // Get display name of current logged in user to populate greeting message
     document.getElementById('name-goes-here').innerText = localStorage.getItem('userName')
     const [weekCost, monthCost, yearCost] = await Promise.all([
-        getCosts('week'),
-        getCosts('month'),
-        getCosts('year'),
+        localStorage.getItem('weekCost') || getCosts('week'),
+        localStorage.getItem('monthCost') || getCosts('month'),
+        localStorage.getItem('yearCost') || getCosts('year'),
     ])
     populateCosts('weekCost', weekCost)
     populateCosts('monthCost', monthCost)

@@ -180,6 +180,9 @@ const deleteById = (table, id) => {
             .delete()
             .then(() => {
                 console.log('Document successfully deleted!')
+                localStorage.removeItem('weekCost')
+                localStorage.removeItem('monthCost')
+                localStorage.removeItem('yearCost')
                 return resolve()
             })
             .catch((error) => {

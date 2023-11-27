@@ -97,6 +97,9 @@ async function submitUseDetails(home, useType_id, calc_factor, machine_type) {
                     userId: localStorage.getItem('userId'),
                 })
                 console.log('Use recorded!')
+                localStorage.removeItem('weekCost')
+                localStorage.removeItem('monthCost')
+                localStorage.removeItem('yearCost')
                 displaySuccessNotif()
                 main()
             })
@@ -146,8 +149,6 @@ const addWaterUseBtn = document.getElementById('add-water-usage-btn')
 const flushBtn = document.getElementById('flush-btn')
 const tapBtn = document.getElementById('sink-btn')
 const showerBtn = document.getElementById('shower-btn')
-const laundryBtn = document.getElementById('laundry-btn')
-const dishwasherBtn = document.getElementById('dishwasher-btn')
 const cancelBtns = document.querySelectorAll('.form-close-btn')
 
 addWaterUseBtn.addEventListener('click', (e) => clearSessionStorage())
@@ -283,58 +284,11 @@ function hideNotif() {
     }, 3000)
 }
 
-// function to calculate and output estimated monthly water bill value
-async function populateMonthCosts() {
-    try {
-        const userId = localStorage.getItem('userId')
-
-        let monthCost = 0
-        const today = new Date()
-
-        // Creating the date variable for the start of the month
-        const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-        const month = months[today.getMonth()]
-        const year = today.getFullYear()
-        const date = year + '-' + month + '-' + 1
-        const monthStart = new Date(date)
-
-        // Querying database for waterLog documents that were created within
-        // the first day of the month to now, by the user at home
-        db.collection('waterLogs').where('home', '==', true)
-            .where('userId', '==', userId)
-            .where('createdAt', '>=', monthStart)
-            .where('createdAt', '<=', today)
-            .onSnapshot((querySnapshot) => {
-                const costs = []
-                querySnapshot.forEach((doc) => {
-                    costs.push(doc.data().estCost)
-                })
-
-                // Summing all estCosts from each retrieved document
-                console.log(costs)
-                costs.forEach(sumAll)
-
-                function sumAll(num) {
-                    monthCost += num
-                }
-
-                // Changing summed cost value into money format
-                monthCost = 'This Month\'s Water Bill Estimate: ' + '$' + parseFloat(monthCost).toFixed(2)
-
-                // Replacing html content with new value
-                document.getElementById('summary-stat').innerHTML = monthCost
-            })
-    } catch (error) {
-        console.log('Monthly Cost can\'t be found')
-        alert('Monthly Cost can\'t be found')
-    }
-}
-
 let chart
 const main = async () => {
     const [weeklyData, monthCost] = await Promise.all([
         getWaterUsage('week', getSum),
-        getCosts('month'),
+        localStorage.getItem('monthCost') || getCosts('month'),
     ])
     const mainPageCanvas = document.getElementById('main-page-chart')
     const userTheme = localStorage.getItem('theme')

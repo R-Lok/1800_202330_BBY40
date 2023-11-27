@@ -49,7 +49,6 @@ const main = async () => {
 
     const waterUsages = await getWaterUsage('day', getList)
     const data = waterUsages.map((waterUsage) => {
-        waterUsage.updatedAt = waterUsage.updatedAt.toDate()
         waterUsage.createdAt = waterUsage.createdAt.toDate()
         waterUsage.useType = useTypeDict[waterUsage.useType_id]
         return waterUsage

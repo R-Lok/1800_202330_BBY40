@@ -15,6 +15,7 @@ const getCosts = (type) => {
                 querySnapshot.forEach((doc) => {
                     cost += doc.data().estCost
                 })
+                localStorage.setItem(`${type}Cost`, cost)
                 return resolve(cost)
             })
             .catch((error) => {
