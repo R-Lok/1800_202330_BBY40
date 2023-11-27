@@ -1,5 +1,5 @@
 const insertHTML = (docs) => {
-    const parent = document.getElementById('water-usage-container')
+    const parent = document.getElementById('edit-water-usage-container')
     const temp = document.getElementById('template-waterlogs')
 
     for (const doc of docs) {
@@ -8,7 +8,7 @@ const insertHTML = (docs) => {
         div.id = doc.id
         for (const key of Object.keys(doc)) {
             const span = clone.querySelector(`.${key}`)
-            if (!doc[key]) {
+            if (span && !doc[key]) {
                 span.style.display = 'none'
             }
 
@@ -27,6 +27,13 @@ const insertHTML = (docs) => {
     }
 }
 
+const selectDate = () => {
+    localStorage.setItem('date', document.getElementById('Selected_date').value)
+    window.location.href = './edit_usage.html'
+}
+
+const showSelectedDate = () => document.getElementById('Selected_date').value = localStorage.getItem('date') || new Date().toLocaleDateString('en-CA')
+
 const main = async () => {
     const useTypes = await getAll('useTypes')
     const useTypeDict = useTypes.reduce((map, useType) => {
@@ -43,6 +50,7 @@ const main = async () => {
     })
 
     insertHTML(data)
+    showSelectedDate()
 }
 
 main()

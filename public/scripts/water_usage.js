@@ -4,7 +4,7 @@ const getChartConfig = (data, labels) => {
 
     if (userTheme === 'true') {
         gridLineColor = 'rgba(239, 239, 239, 0.2)'
-    } 
+    }
 
     return {
         type: 'bar',
@@ -25,8 +25,8 @@ const getChartConfig = (data, labels) => {
                         display: true,
                     },
                     grid: {
-                        color: gridLineColor
-                    }
+                        color: gridLineColor,
+                    },
                 },
                 x: {
                     title: {
@@ -34,8 +34,8 @@ const getChartConfig = (data, labels) => {
                         text: `Vol of Water Used (${getSystemString()})`,
                     },
                     grid: {
-                        color: gridLineColor
-                    }
+                        color: gridLineColor,
+                    },
                 },
             },
             indexAxis: 'y',
