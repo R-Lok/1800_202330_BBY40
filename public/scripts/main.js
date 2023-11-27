@@ -205,6 +205,7 @@ function getPriceFactor() {
             })
             .catch((error) => {
                 console.log('Could not reach firestore')
+                displayFailNotif()
             })
     })
 }
