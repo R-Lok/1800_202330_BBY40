@@ -1,20 +1,3 @@
-//Function for getting current userId
-function getUserId() {
-    return new Promise((resolve, reject) => {
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                // User logged in already or has just logged in.
-                let userId = user.uid
-                resolve(userId)
-            } else {
-                reject("Not logged in")
-            }
-        })
-    })
-        
-}
-
-
 //Function for populating current week's water bill cost
 async function populateWeeklyCosts() {
 
@@ -23,7 +6,7 @@ async function populateWeeklyCosts() {
 
 
         //get current logged in user's userId
-        let userId = await getUserId();
+        let userId = localStorage.getItem('userId')
 
         var weekCost = 0;
         var d = new Date();
@@ -105,7 +88,7 @@ async function populateWeeklyCosts() {
 }
 
 // Call function
-populateWeeklyCosts();
+// populateWeeklyCosts();
 
 
 
@@ -116,7 +99,7 @@ async function populateMonthCosts() {
     try{
 
         //get current logged in user's userId
-        let userId = await getUserId();
+        let userId = localStorage.getItem('userId')
 
         var monthCost = 0;
         var today = new Date();
@@ -162,7 +145,7 @@ async function populateMonthCosts() {
 } 
 
 //Call function
-populateMonthCosts();
+// populateMonthCosts();
 
 
 //Calculating and populating current year's waterbill cost
@@ -172,7 +155,7 @@ async function populateYearCosts() {
     try{
 
         //get current logged in user's userId
-        let userId = await getUserId();
+        let userId = localStorage.getItem('userId')
 
         var yearCost = 0;
         var today = new Date();
@@ -216,23 +199,8 @@ async function populateYearCosts() {
 } 
 
 //Call function
-populateYearCosts()
+// populateYearCosts()
 
 
 //Get display name of current logged in user to populate greeting message
-function getNameFromAuth() {
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            userName=user.displayName;
-
-            document.getElementById("name-goes-here").innerText = userName;
-
-        } else {
-
-        }
-    })
-}
-
-getNameFromAuth();
-
-
+document.getElementById("name-goes-here").innerText = localStorage.getItem('userName');
