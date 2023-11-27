@@ -11,12 +11,15 @@ const insertHTML = (docs) => {
             if (!doc[key]) {
                 span.style.display = 'none'
             }
-            if (span) {
+
+            if (span && span.className === 'createdAt') {
+                span.textContent = `${doc[key]}`
+            } else if (span) {
                 span.textContent = `${key}: ${doc[key]}`
             }
         }
 
-        const deleteBtn = clone.getElementById('delete-btn')
+        const deleteBtn = clone.querySelector('.delete-btn')
         deleteBtn.addEventListener('click', (event) => {
             confirm('Are you sure you want to delete this waterlog?') ? deleteWaterUsage(doc.id) : event.preventDefault()
         }, false)

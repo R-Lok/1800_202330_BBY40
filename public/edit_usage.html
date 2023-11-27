@@ -33,18 +33,18 @@
   </head>
   <body>
       <nav id="navplaceholder"></nav>
-      <h1 class="display-5 fw-bold text-center">Water Usages</h1>
+      <h1 id="logs-header" class="display-5 fw-bold text-center m-2">Water Logs</h1>
       <div id="water-usage-container" class="container-fluid" style="margin-bottom: 15vh;"></div>
 
       <template id="template-waterlogs">
-        <div class="d-flex flex-column">
+        <div class="usage-log p-4 mb-2 d-flex flex-column">
           <span class="createdAt"></span>
           <span class="useType"></span>
           <span class="machine_type"></span>
           <span class="home"></span>
           <span class="estVol"></span>
           <span class="estCost"></span>
-          <button id="delete-btn" type="button" class="btn btn-secondary">Delete</button>
+          <button type="button" class="delete-btn btn btn-secondary mt-4">Delete</button>
         </div>
       </template>
 
