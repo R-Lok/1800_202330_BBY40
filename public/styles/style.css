@@ -12,6 +12,7 @@
 body {
     background-color: var(--main-color4);
     color: var(--main-color5);
+    height: 100vh;
 }
 
 .bg-primary, .btn-primary {
@@ -149,6 +150,7 @@ label {
     }
 }
 
+/*Usage stats page */
 
 .usage-timescale-option {
     position: fixed;
@@ -164,6 +166,27 @@ label {
 .usage-timescale-option-label.active {
     background-color: var(--main-color2) !important;
 }
+
+#usage-container {
+    height: 70vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: "chart"
+                         "tabs";
+}
+
+#water-usage-container {
+    grid-area: chart;
+}
+
+#time-tabs {
+    width: 50vw;
+    justify-self: center;
+}
+
+
 
 /* Media queries */
 @media screen and (max-width: 575px) {
