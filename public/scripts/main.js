@@ -5,7 +5,7 @@ const main = async () => {
     const mainPageCanvas = document.getElementById('main-page-chart')
     const userTheme = localStorage.getItem('theme')
     let gridLineColor = 'rgba(0, 0, 0, 0.1)'
-    let axesLabelsColor = '#666'
+    const axesLabelsColor = '#666'
     let textColor = '#666'
 
     if (userTheme === 'true') {
@@ -36,7 +36,7 @@ const main = async () => {
                     },
                     ticks: {
                         color: textColor,
-                    }
+                    },
                 },
                 x: {
                     grid: {
@@ -44,7 +44,7 @@ const main = async () => {
                     },
                     ticks: {
                         color: textColor,
-                    }
+                    },
                 },
             },
             responsive: true,
@@ -56,13 +56,13 @@ const main = async () => {
                     font: {
                         size: 20,
                     },
-                    color: textColor
+                    color: textColor,
                 },
                 legend: {
                     labels: {
-                        color: textColor
-                    }
-                }
+                        color: textColor,
+                    },
+                },
             },
         },
     })
