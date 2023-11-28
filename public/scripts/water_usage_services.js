@@ -172,22 +172,6 @@ const getByIdAndOwner = (table, id) => {
     })
 }
 
-const updateById = (table, id, doc) => {
-    return new Promise((resolve, reject) => {
-        db.collection(table)
-            .doc(id)
-            .set(doc)
-            .then(() => {
-                console.log('Document successfully written!')
-                resolve(doc)
-            })
-            .catch((error) => {
-                console.error('Error writing document: ', error)
-                reject(error)
-            })
-    })
-}
-
 const deleteById = (table, id) => {
     return new Promise((resolve, reject) => {
         console.log(`deleting...${id}`)
@@ -203,11 +187,6 @@ const deleteById = (table, id) => {
                 return reject(error)
             })
     })
-}
-
-const updateWaterUsage = async (id, doc) => {
-    const waterLogId = await getByIdAndOwner('waterLogs', id)
-    await updateById('waterLogs', waterLogId, doc)
 }
 
 const removeElementById = (id) => {
