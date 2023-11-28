@@ -14,180 +14,58 @@ function getUserId() {
         
 }
 
+//Function for getting start date for week, month, or year
+function getStartDate(type){
 
-//Function for populating current week's water bill cost
-async function populateWeeklyCosts() {
+    const currentDate = new Date();
+    var start;
 
-    //try catch blocks to catch and alert of errors
-    try{
+    //Set start date to previous Monday at time of 00:00:00
+    if (type === "week") {
 
-
-        //get current logged in user's userId
-        let userId = await getUserId();
-
-        var weekCost = 0;
-        var d = new Date();
-
-        //Change today's date to string
-        var totalWords = d.toString();
-
-        //Remove all words except the first string representing the weekday
-        var firstWord = totalWords.replace(/ .*/,"");
-
-        //Creating a new date variable to store previous Monday's date.
-        var lastMonday = new Date();
+        const dayOfWeek = currentDate.getDay();
+        const difference = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+        const timeFromMonday = (difference * 86400 * 1000);
+        start = new Date((Date.now() - timeFromMonday));
+        start.setHours(0,0,0,0);
+        return start;
         
-        //Using today's weekday string and date to determine previous monday's date.
-        switch (firstWord) {
-
-        case "Mon": 
-            break;
-        case "Tue":
-            lastMonday.setDate(d.getDate() - 1)
-            break;
-        case "Wed":
-            lastMonday.setDate(d.getDate() - 2)
-            break;
-        case "Thu":
-            lastMonday.setDate(d.getDate() - 3)
-            break;
-        case "Fri":
-            lastMonday.setDate(d.getDate() - 4)
-            break;
-        case "Sat":
-            lastMonday.setDate(d.getDate() - 5)
-            break;
-        case "Sun":
-            lastMonday.setDate(d.getDate() - 6)
+    //Set start date to first day of current month at time of 00:00:00
+    } else if (type === "month") {
         
-        }
+        const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+        const month = months[currentDate.getMonth()];
+        const year = currentDate.getFullYear();
+        const date = year + "-" + month + "-" + 1;
+        start = new Date(date);
+        return start;
 
-        //Converting lastMonday's date to year-month-day format to set time to 00:00:00.
-        var months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-        var year = lastMonday.getFullYear();
-        var month = months[lastMonday.getMonth()];
-        var day = lastMonday.getDate();
-        var date = year + "-" + month + "-" + day;
-        var start = new Date (date);
-
-
-        //Querying database for waterLog documents that were created within 
-        //last monday to now, by the user at home
-        db.collection("waterLogs").where("home", "==", true)
-        .where("userId", "==", userId)
-        .where("createdAt", ">=", start)
-        .where("createdAt", "<=", d)
-        .onSnapshot((querySnapshot) => {
-            var costs = [];
-            querySnapshot.forEach((doc) => {
-
-                costs.push(doc.data().estCost);
-            }); 
-            
-            //Summing all estCost values from each document
-            costs.forEach(sumAll);
-
-            function sumAll(num) {
-            weekCost += num;
-        }
-        
-        //Changing summed cost value into money format
-        weekCost = "$" + parseFloat(weekCost).toFixed(2);
-        
-        //Replacing Weekly Waterbill's html content with new value
-        document.getElementById("weekCost").innerHTML = weekCost;
-    });
-
-} catch (error) {
-  console.log("Weekly Cost can't be found");
-  alert("Weekly Cost can't be found");
-}
-}
-
-// Call function
-populateWeeklyCosts();
-
-
-
-//Calculating and populating current month's water bill cost
-async function populateMonthCosts() {
-
-    //try catch blocks to catch and alert of errors
-    try{
-
-        //get current logged in user's userId
-        let userId = await getUserId();
-
-        var monthCost = 0;
-        var today = new Date();
-
-        //Creating the date variable for the start of the month
-        var months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-        var month = months[today.getMonth()];
-        var year = today.getFullYear();
-        var date = year + "-" + month + "-" + 1;
-        var monthStart = new Date(date);
-
-        //Querying database for waterLog documents that were created within 
-        //the first day of the month to now, by the user at home
-        db.collection("waterLogs").where("home", "==", true)
-        .where("userId", "==", userId)
-        .where("createdAt", ">=", monthStart)
-        .where("createdAt", "<=", today)
-        .onSnapshot((querySnapshot) => {
-            var costs = [];
-            querySnapshot.forEach((doc) => {
-
-                costs.push(doc.data().estCost);
-            }); 
-            
-            //Summing all estCost values from each document
-            costs.forEach(sumAll);
-
-            function sumAll(num) {
-            monthCost += num;
-        }
-        
-        //Changing summed estCost value into money format
-        monthCost = "$" + parseFloat(monthCost).toFixed(2);
-        
-        //Replacing Monthly WaterBill's html content with new value
-        document.getElementById("monthCost").innerHTML = monthCost;
-    });
-
-    } catch (error){
-        console.log("Monthly Cost can't be found");
-        alert("Monthly Cost can't be found");
-    }
-} 
-
-//Call function
-populateMonthCosts();
-
-
-//Calculating and populating current year's waterbill cost
-async function populateYearCosts() {
-
-     //try catch blocks to catch and alert of errors
-    try{
-
-        //get current logged in user's userId
-        let userId = await getUserId();
-
-        var yearCost = 0;
-        var today = new Date();
-
-        //Created variable for first day of the year
-        var year = today.getFullYear();
+    //Set start dat to first day of current year at time of 00:00:00
+    } else {
+        var year = currentDate.getFullYear();
         var date = year + "-" + 1 + "-" + 1;
-        var yearStart = new Date(date);
+        start = new Date(date);
+        return start;
+    }
+}
 
+//Function for populating water bill of parameter type
+async function populateCosts(type) {
+
+    try{
+        let userId = await getUserId();
+        var billCost = 0;
+        
+        //Declaring end date for all water bill types to be tomorrow at 00:00:00
+        const end = new Date((Date.now() + 86400 * 1000));
+        end.setHours(0,0,0,0);
+
+        
         //Querying database for waterLog documents that were created within 
-        //the first day of the year to now, by the user at home
-        db.collection("waterLogs").where("home", "==", true)
-        .where("userId", "==", userId)
-        .where("createdAt", ">=", yearStart)
-        .where("createdAt", "<=", today)
+        //start and end date from user at home
+        db.collection("waterLogs").where("home", "==", true).where("userId", "==", userId)
+        .where("createdAt", ">=", getStartDate(type))
+        .where("createdAt", "<", end)
         .onSnapshot((querySnapshot) => {
             var costs = [];
             querySnapshot.forEach((doc) => {
@@ -199,40 +77,35 @@ async function populateYearCosts() {
             costs.forEach(sumAll);
 
             function sumAll(num) {
-                yearCost += num;
+            billCost += num;
         }
         
         //Changing summed cost value into money format
-        yearCost = "$" + parseFloat(yearCost).toFixed(2);
+        billCost = "$" + parseFloat(billCost).toFixed(2);
         
-        //Replacing Yearly Waterbill's html content with new value
-        document.getElementById("yearCost").innerHTML = yearCost;
+        //Replacing html content of parameter type waterbill with final summed value
+        document.getElementById(type).innerHTML = billCost;
     });
-
+    
     } catch (error){
-        console.log("Yearly Cost can't be found");
-        alert("Yearly Cost can't be found");
-    }
-} 
+    console.log("Cost can't be found");
+    alert("Cost can't be found");
+}
+}
 
-//Call function
-populateYearCosts()
-
+populateCosts("week");
+populateCosts("month");
+populateCosts("year");
 
 //Get display name of current logged in user to populate greeting message
 function getNameFromAuth() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             userName=user.displayName;
-
             document.getElementById("name-goes-here").innerText = userName;
-
         } else {
-
         }
     })
 }
 
 getNameFromAuth();
-
-

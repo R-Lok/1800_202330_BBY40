@@ -363,3 +363,7 @@ nav a:hover {
 .settingsIcon {
     filter: invert(86%) sepia(94%) saturate(7220%) hue-rotate(179deg) brightness(106%) contrast(105%);
 }
+
+.about-font {
+    color:var(--main-color4);
+}
