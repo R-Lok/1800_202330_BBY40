@@ -366,4 +366,9 @@ nav a:hover {
 
 .about-font {
     color:var(--main-color4);
+
+}
+
+.modal-content {
+    background-color: var(--main-color2);
 }
