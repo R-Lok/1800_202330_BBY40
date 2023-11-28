@@ -270,7 +270,7 @@ nav a:hover {
 
 .billGrid{
     display:grid;
-    grid-template-rows: 22vh 1vh 20vh 20vh 20vh;
+    grid-template-rows: 1fr 0.25fr 0.8fr 0.8fr 0.8fr;
 }
 
 .billHeader {
@@ -278,7 +278,7 @@ nav a:hover {
     height:100%;
     width:100%;
     padding:30px;
-    padding-top:40px;
+    padding-top:20px;
     background-image: url(../images/banner2.jpg);
 }
 
@@ -313,9 +313,8 @@ nav a:hover {
 .textBlockCenter { 
     margin: 0px auto; 
     width: 90%; 
-    background: #aabbcc;
     text-align:center;
-    background-color:var(--main-color4);
+    background-color:var(--main-color5);
  }
 
  .border {
@@ -325,10 +324,12 @@ nav a:hover {
  .billText{
     font-style:bold;
     font-size:large;
+    
  }
 
  div h2{
     font-size:large;
+    padding-top:40px;
  }
 
  .dark {
@@ -345,15 +346,14 @@ nav a:hover {
 
     .billGrid{
         display:grid;
-        grid-template-rows: 25vh 1vh 18vh 18vh 18vh;
+        grid-template-rows: 1fr 0.25fr 0.8fr 0.8fr 0.8fr;
     }
 
     .textBlockCenter { 
         margin: 0px auto; 
         width: 60%; 
-        background: #aabbcc;
+        background: var(--main-color5);
         text-align:center;
-        background-color:var(--main-color4);
      }
     
 }
