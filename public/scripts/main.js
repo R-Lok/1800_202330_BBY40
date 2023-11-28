@@ -22,77 +22,7 @@ function getNameFromAuth() {
         }
     })
 }
-let chart
 
-const main = async () => {
-    const weeklyData = await getWaterUsage('week', getSum)
-    const mainPageCanvas = document.getElementById('main-page-chart')
-    const userTheme = localStorage.getItem('theme')
-    let gridLineColor = 'rgba(0, 0, 0, 0.1)'
-    let axesLabelsColor = '#666'
-    let textColor = '#666'
-
-    if (userTheme === 'true') {
-        gridLineColor = 'rgba(239, 239, 239, 0.2)'
-        textColor = 'rgba(232,230,226, 1.0)'
-    }
-
-    if (chart) {
-        chart.destroy()
-    }
-
-    chart = new Chart(mainPageCanvas, {
-        type: 'bar',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: `${getSystemString()} of water`,
-                data: weeklyData,
-                borderWidth: 1,
-            }],
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: gridLineColor,
-                    },
-                    ticks: {
-                        color: textColor,
-                    }
-                },
-                x: {
-                    grid: {
-                        color: gridLineColor,
-                    },
-                    ticks: {
-                        color: textColor,
-                    }
-                },
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: `${localStorage.getItem('userName')}'s Weekly Summary`,
-                    font: {
-                        size: 20,
-                    },
-                    color: textColor
-                },
-                legend: {
-                    labels: {
-                        color: textColor
-                    }
-                }
-            },
-        },
-    })
-}
-
-main()
 
 const waterlogsButton = document.getElementById('waterlogs-btn')
 waterlogsButton.addEventListener('click', () => {
@@ -237,7 +167,7 @@ async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMa
             })
             console.log('Use recorded!')
             displaySuccessNotif()
-            main()
+            populateMainPageData()
         })
     } catch (error) {
         console.log('Submission encountered an error')
@@ -423,10 +353,9 @@ function hideNotif() {
 
 // function to calculate and output estimated monthly water bill value
 async function populateMonthCosts() {
-    try {
-        const userId = await getUserId()
+        return new Promise((resolve, reject) => {
+        const userId = localStorage.getItem('userId')
 
-        let monthCost = 0
         const today = new Date()
 
         // Creating the date variable for the start of the month
@@ -442,30 +371,94 @@ async function populateMonthCosts() {
             .where('userId', '==', userId)
             .where('createdAt', '>=', monthStart)
             .where('createdAt', '<=', today)
-            .onSnapshot((querySnapshot) => {
-                const costs = []
+            .get()
+            .then((querySnapshot) => {
+                let costs = 0
                 querySnapshot.forEach((doc) => {
-                    costs.push(doc.data().estCost)
+                    costs += doc.data().estCost
                 })
 
-                // Summing all estCosts from each retrieved document
-                console.log(costs)
-                costs.forEach(sumAll)
+                return resolve(costs)
 
-                function sumAll(num) {
-                    monthCost += num
-                }
-
-                // Changing summed cost value into money format
-                monthCost = 'This Month\'s Water Bill Estimate: ' + '$' + parseFloat(monthCost).toFixed(2)
-
-                // Replacing html content with new value
-                document.getElementById('summary-stat').innerHTML = monthCost
             })
-    } catch (error) {
-        console.log('Monthly Cost can\'t be found')
-        alert('Monthly Cost can\'t be found')
+            .catch((error) => {
+                console.log('Error getting documents', error)
+                return reject(error)
+            })
+        })
     }
+
+let chart
+
+const populateMainPageData = async () => {
+    const weeklyData = await getWaterUsage('week', getSum)
+    const mainPageCanvas = document.getElementById('main-page-chart')
+    const userTheme = localStorage.getItem('theme')
+    let gridLineColor = 'rgba(0, 0, 0, 0.1)'
+    let axesLabelsColor = '#666'
+    let textColor = '#666'
+
+    if (userTheme === 'true') {
+        gridLineColor = 'rgba(239, 239, 239, 0.2)'
+        textColor = 'rgba(232,230,226, 1.0)'
+    }
+
+    if (chart) {
+        chart.destroy()
+    }
+
+    chart = new Chart(mainPageCanvas, {
+        type: 'bar',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: `${getSystemString()} of water`,
+                data: weeklyData,
+                borderWidth: 1,
+            }],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: gridLineColor,
+                    },
+                    ticks: {
+                        color: textColor,
+                    }
+                },
+                x: {
+                    grid: {
+                        color: gridLineColor,
+                    },
+                    ticks: {
+                        color: textColor,
+                    }
+                },
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: `${localStorage.getItem('userName')}'s Weekly Summary`,
+                    font: {
+                        size: 20,
+                    },
+                    color: textColor
+                },
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            },
+        },
+    })
+    const monthCost = await populateMonthCosts()
+    // Replacing html content with new value
+    document.getElementById('summary-stat').innerHTML = `This Month's Water Bill Estimate: $${parseFloat(monthCost).toFixed(2)}`
 }
 
-populateMonthCosts()
+populateMainPageData()
