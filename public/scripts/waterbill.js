@@ -40,7 +40,7 @@ function getStartDate(type){
         start = new Date(date);
         return start;
 
-    //Set start dat to first day of current year at time of 00:00:00
+    //Set start date to first day of current year at time of 00:00:00
     } else {
         var year = currentDate.getFullYear();
         var date = year + "-" + 1 + "-" + 1;

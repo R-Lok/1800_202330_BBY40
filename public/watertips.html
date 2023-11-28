@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Water Tips</title>
     <meta name="comp1800 template" content="My 1800 App">
-
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Bootstrap Library CSS CDN go here -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Boostrap Library JS CDN  go here -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-   
     <!-- Other libraries go here -->
     <!-- Link to styles of your own -->
     <link id="main_css" rel="stylesheet" href="./styles/style.css">
-
     <!-------------------------------------------------------->
     <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
     <!-------------------------------------------------------->
@@ -28,129 +22,118 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-
-</head>
-
-<body>
+  </head>
+  <body>
     <!------------------------------>
     <!-- Your HTML Layout go here -->
     <!------------------------------>
     <!-- Stuff for body goes here -->
-      <nav id="navplaceholder"></nav>
+    <nav id="navplaceholder"></nav>
+    <div class="banner2">
+      <img class="banner-image2" src="./images/banner2.jpg" alt="background header image" />
+    </div>
+    <div class="px-4 py-5 text-center about-font-color">
+      <h1>Water Tips</h1>
+      <br/>
 
-      <div class= "banner2">
-      <img class="banner-image2" src="./images/banner2.jpg" alt="background header image"/>
-      </div>
-      <div class="px-4 py-5 text-center about-font-color">
-        <h1>Water Tips</h1>
-        <br/>
-        <div class="col-lg-6 mx-auto">
-          <div id="accordion">
-            <div class="card">
-              <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
-                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Only Run Full Loads
-                  </button>
-                </h5>
-              </div>
-          
-              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="card-body">
-                  When using your dishwasher and washing machine, make sure to run full loads to maximize water efficiency.  The water usage tracked will be the same regardless of how much you put in.
-                </div>
-              </div>
+      <div class="col-lg-6 mx-auto">
+        <div id="accordion">
+
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Only Run Full Loads </button>
+              </h5>
             </div>
-
-            <div class="card">
-              <div class="card-header" id="headingTwo">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Reuse Water
-                  </button>
-                </h5>
-              </div>
-              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                <div class="card-body">
-                  Collect and reuse water when possible. By reusing water, you won’t have to record another instance of water usage.                </div>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-header" id="headingThree">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Take Shorter Showers
-                  </button>
-                </h5>
-              </div>
-              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                <div class="card-body">
-                  Limit the time you spend in the shower to conserve water. A shorter shower can save a substantial amount of water, especially if you use a low-flow showerhead.  You can reduce the amount of time tracked on the shower form to reduce your overall water usage statistic.                </div>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-header" id="headingFour">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                    Turn off the Tap
-                  </button>
-                </h5>
-              </div>
-              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-                <div class="card-body">
-                  Turn off the Tap: When washing your hands or brushing your teeth, turn off the tap while you're not actively using the water. This small change can save a substantial amount of water over time.  You can record the reduced sink time when you record a sink usage.              </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body"> When using your dishwasher and washing machine, make sure to run full loads to maximize water efficiency. The water usage tracked will be the same regardless of how much you put in. </div>
             </div>
           </div>
 
-            <div class="card">
-              <div class="card-header" id="headingFive">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                    Re-use Towels
-                  </button>
-                </h5>
-              </div>
-              <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
-                <div class="card-body">
-                  Instead of using a fresh towel every day, consider reusing your bath towels a few times before washing them. This can significantly reduce laundry water usage and you won’t have to record an additional laundry use in the app.            </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> Reuse Water </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div class="card-body"> Collect and reuse water when possible. By reusing water, you won’t have to record another instance of water usage. </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> Take Shorter Showers </button>
+              </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+              <div class="card-body"> Limit the time you spend in the shower to conserve water. A shorter shower can save a substantial amount of water, especially if you use a low-flow showerhead. You can reduce the amount of time tracked on the shower form to reduce your overall water usage statistic. </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header" id="headingFour">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour"> Turn off the Tap </button>
+              </h5>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+              <div class="card-body"> Turn off the Tap: When washing your hands or brushing your teeth, turn off the tap while you're not actively using the water. This small change can save a substantial amount of water over time. You can record the reduced sink time when you record a sink usage. </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header" id="headingFive">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive"> Re-use Towels </button>
+              </h5>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+              <div class="card-body"> Instead of using a fresh towel every day, consider reusing your bath towels a few times before washing them. This can significantly reduce laundry water usage and you won’t have to record an additional laundry use in the app. </div>
             </div>
           </div>
 
           <div class="card">
             <div class="card-header" id="headingSix">
               <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                  Limit Water-Intensive Activities
-                </button>
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix"> Limit Water-Intensive Activities </button>
               </h5>
             </div>
             <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
-              <div class="card-body">
-                Be mindful of water-intensive activities, such as running a hot bath or using the laundry machine too often.  Use these sparingly so you won’t have to record uses anymore times than you need to.          </div>
-        </div>
-          </div>
-
+              <div class="card-body"> Be mindful of water-intensive activities, such as running a hot bath or using the laundry machine too often. Use these sparingly so you won’t have to record uses anymore times than you need to. </div>
+            </div>
           </div>
         </div>
 
-        <br/>
-        <section>
-          <p>For more information regarding water-conservation, here are some useful websites</p>
-          <nav class="tip-links">
-            <ul>
-              <li><a target="_blank" href="https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/drought-flooding-dikes-dams/drought-information/water-conservation-tips">BC Government Conservation Tips</a></li>
-              <li><a target="_blank" href="https://www.epa.gov/watersense">WaterSense</a></li>
-              <li><a target="_blank" href="https://eartheasy.com/yard-garden/water-conservation/">EasyEarth</a></li>
-              <li><a target="_blank" href="https://www.allianceforwaterefficiency.org/water-saving-tips">Alliance For Water Efficiency</a></li>
-          </ul>
-          </nav>
-        </section>
       </div>
-      <footer id="footerplaceholder"></footer>
+      <br/>
+
+      <section>
+        <p>For more information regarding water-conservation, here are some useful websites</p>
+        <nav class="tip-links">
+          <ul>
+            <li>
+              <a target="_blank" href="https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/drought-flooding-dikes-dams/drought-information/water-conservation-tips">BC Government Conservation Tips</a>
+            </li>
+            <li>
+              <a target="_blank" href="https://www.epa.gov/watersense">WaterSense</a>
+            </li>
+            <li>
+              <a target="_blank" href="https://eartheasy.com/yard-garden/water-conservation/">EasyEarth</a>
+            </li>
+            <li>
+              <a target="_blank" href="https://www.allianceforwaterefficiency.org/water-saving-tips">Alliance For Water Efficiency</a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+
+    </div>
+    
+    <footer id="footerplaceholder"></footer>
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
     <!---------------------------------------------->
@@ -159,6 +142,5 @@
     <script src="./scripts/firebaseAPI_BBY40.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/apply_theme.js"></script>
-</body>
-
+  </body>
 </html>
