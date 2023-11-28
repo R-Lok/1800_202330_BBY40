@@ -372,3 +372,11 @@ nav a:hover {
 .modal-content {
     background-color: var(--main-color2);
 }
+
+.modal-header {
+    border-bottom: var(--main-color1) solid;
+}
+
+.modal-footer {
+    border-top: var(--main-color1) solid;
+}
