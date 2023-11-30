@@ -294,7 +294,7 @@ function hideNotif() {
 
 // function to calculate and output estimated monthly water bill value
 async function populateMonthCosts() {
-        return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         const userId = localStorage.getItem('userId')
 
         const today = new Date()
@@ -320,14 +320,13 @@ async function populateMonthCosts() {
                 })
 
                 return resolve(costs)
-
             })
             .catch((error) => {
                 console.log('Error getting documents', error)
                 return reject(error)
             })
-        })
-    }
+    })
+}
 
 let chart
 
@@ -336,7 +335,7 @@ const populateMainPageData = async () => {
     const mainPageCanvas = document.getElementById('main-page-chart')
     const userTheme = localStorage.getItem('theme')
     let gridLineColor = 'rgba(0, 0, 0, 0.1)'
-    let axesLabelsColor = '#666'
+    const axesLabelsColor = '#666'
     let textColor = '#666'
 
     if (userTheme === 'true') {
@@ -367,7 +366,7 @@ const populateMainPageData = async () => {
                     },
                     ticks: {
                         color: textColor,
-                    }
+                    },
                 },
                 x: {
                     grid: {
@@ -375,7 +374,7 @@ const populateMainPageData = async () => {
                     },
                     ticks: {
                         color: textColor,
-                    }
+                    },
                 },
             },
             responsive: true,
@@ -387,13 +386,13 @@ const populateMainPageData = async () => {
                     font: {
                         size: 20,
                     },
-                    color: textColor
+                    color: textColor,
                 },
                 legend: {
                     labels: {
-                        color: textColor
-                    }
-                }
+                        color: textColor,
+                    },
+                },
             },
         },
     })

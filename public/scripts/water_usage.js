@@ -25,35 +25,35 @@ const getChartConfig = (data, labels) => {
                     title: {
                         text: 'Day/Date/Month',
                         display: true,
-                        color: textColor
+                        color: textColor,
                     },
                     grid: {
                         color: gridLineColor,
                     },
                     ticks: {
-                        color: textColor
-                    }
+                        color: textColor,
+                    },
                 },
                 x: {
                     title: {
                         display: true,
                         text: `Vol of Water Used (${getSystemString()})`,
-                        color: textColor
+                        color: textColor,
                     },
                     grid: {
                         color: gridLineColor,
                     },
                     ticks: {
-                        color: textColor
-                    }
+                        color: textColor,
+                    },
                 },
             },
             plugins: {
                 legend: {
                     labels: {
-                        color: textColor
-                    }
-                }
+                        color: textColor,
+                    },
+                },
             },
             indexAxis: 'y',
             maintainAspectRatio: false,
