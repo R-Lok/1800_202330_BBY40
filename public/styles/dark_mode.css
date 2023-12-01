@@ -34,7 +34,7 @@ body {
 }
 
 /*Logo Icon Styling*/
-.logoIcon {
+.logo-icon {
     width:50px;
     height:50px;
 
@@ -268,12 +268,12 @@ nav a:hover {
 
 /*Water Bill*/
 
-.billGrid{
+.bill-grid{
     display:grid;
     grid-template-rows: 1fr 0.25fr 0.8fr 0.8fr 0.8fr;
 }
 
-.billHeader {
+.bill-header {
     grid-row: 1 / span 1;
     height:100%;
     width:100%;
@@ -282,35 +282,35 @@ nav a:hover {
     background-image: url(../images/banner2.jpg);
 }
 
-.weekCost {
+.week-cost {
     grid-row: 3 / span 1;
     height:90%;
     align-self:center;
 }
 
-.monthCost {
+.month-cost {
     grid-row: 4 / span 1;
     height:90%;
     align-self:center;
 }
 
-.yearCost {
+.year-cost {
     grid-row: 5 / span 1;
     height:90%;
     align-self:center;
 }
 
-.billTitle{
+.bill-title{
     font-weight:bold;
 }
 
-.billGreeting{
+.bill-greeting{
     font-weight:bolder;
     font-size:large;
     margin:0;
 }
 
-.textBlockCenter { 
+.textblock-center { 
     margin: 0px auto; 
     width: 90%; 
     text-align:center;
@@ -321,7 +321,7 @@ nav a:hover {
     border-radius:25px;
  }
 
- .billText{
+ .bill-text{
     font-style:bold;
     font-size:large;
     
@@ -344,12 +344,12 @@ nav a:hover {
 
  @media screen and (min-width: 500px) {
 
-    .billGrid{
+    .bill-grid{
         display:grid;
         grid-template-rows: 1fr 0.25fr 0.8fr 0.8fr 0.8fr;
     }
 
-    .textBlockCenter { 
+    .textblock-center { 
         margin: 0px auto; 
         width: 60%; 
         background: var(--main-color5);
@@ -360,7 +360,7 @@ nav a:hover {
 
 /* Dark mode specific styling */
 
-.settingsIcon {
+.settings-icon {
     filter: invert(86%) sepia(94%) saturate(7220%) hue-rotate(179deg) brightness(106%) contrast(105%);
 }
 
