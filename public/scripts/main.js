@@ -18,9 +18,9 @@ tapSlider.addEventListener('input', (e) => {
     const tapUseMinutes = Math.trunc(tapSlider.value / 60)
     const tapUseSeconds = tapSlider.value % 60
 
-    if (tapUseMinutes != 0 && tapUseSeconds != 0) {
+    if (tapUseMinutes !== 0 && tapUseSeconds !== 0) {
         tapSliderValDisplay.innerText = `${tapUseMinutes}m${tapUseSeconds}s`
-    } else if (tapUseSeconds == 0) {
+    } else if (tapUseSeconds === 0) {
         tapSliderValDisplay.innerText = `${tapUseMinutes}m`
     } else {
         tapSliderValDisplay.innerText = `${tapUseSeconds}s`
