@@ -45,28 +45,21 @@ Content of the project folder:
 ```
  Top level of project folder: 
 ├── .gitignore               # Git ignore file
-├── index.html               # landing HTML file, this is what users see when you come to url
+├── .eslintignore            # Eslint ignore file
+├── .eslintrc.js             # Eslint config file
 └── README.md
+
 
 It has the following subfolders and files:
 ├── .git                     # Folder for git repo
-├── images                   # Folder for images
-	├── icons 	     # Folder for icons from material design icons
-    /blah.jpg                # Acknowledge source
-├── scripts                  # Folder for scripts
-    /blah.js                 # 
-├── styles                   # Folder for styles
-    /blah.css                # 
-
-
+├── pubic                    # Folder for all static files
+    ├── images               # Folder for images
+	    ├── icons 	         # Folder for icons from material design icons
+        /blah.jpg            # images
+    ├── scripts              # Folder for script
+    ├── styles               # Folder for css
+    ├── text                 # Folder for footer & navbar html
+    *.html                   # html
+├── .vscode                  # Folder for vscode config
 
 ```
-
-## Install node package
-npm install
-
-## Install nodemon globally
-npm install -g nodemon
-
-## Launch backend
-npm run local
