@@ -34,6 +34,7 @@ const selectDate = () => {
 
 const showSelectedDate = () => document.getElementById('Selected_date').value = localStorage.getItem('date') || new Date().toLocaleDateString('en-CA')
 
+// make a dictionary for join
 const getUseTypeDict = async () => {
     const useTypes = await getAll('useTypes')
     const useTypeDict = useTypes.reduce((map, useType) => {
@@ -51,6 +52,7 @@ const main = async () => {
     const data = waterUsages.map((waterUsage) => {
         waterUsage.updatedAt = waterUsage.updatedAt.toDate()
         waterUsage.createdAt = waterUsage.createdAt.toDate()
+        // join useTypes and waterLogs
         waterUsage.useType = useTypeDict[waterUsage.useType_id]
         return waterUsage
     })

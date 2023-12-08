@@ -6,6 +6,7 @@ const pickDate = (date) => {
     return new Date()
 }
 
+// return 0 to 6, Monday to Sunday
 const adjustDay = (time) => time.getDay() === 0 ? 7 - 1 : time.getDay() - 1
 
 const getDay = () => {
@@ -98,6 +99,7 @@ const convert = (item) => localStorage.getItem('system') === 'true' ? item / 3.7
 
 const getSystemString = () => localStorage.getItem('system') === 'true' ? 'Gallons' : 'Litres'
 
+// callback to calculate sum
 const getSum = ({ querySnapshot, type, start, resolve }) => {
     const sum = sumArray(type, start)
     console.log(querySnapshot.size)
@@ -107,6 +109,7 @@ const getSum = ({ querySnapshot, type, start, resolve }) => {
     return resolve(sum)
 }
 
+// callback to format estVol
 const getList = ({ querySnapshot, resolve }) => {
     console.log(querySnapshot.size)
     const results = []
@@ -122,6 +125,7 @@ const getList = ({ querySnapshot, resolve }) => {
     return resolve(results)
 }
 
+// this read waterLogs from firestore
 const getWaterUsage = (type, callback, orderBy = 'createdAt', order = 'desc') => {
     return new Promise((resolve, reject) => {
         const userId = localStorage.getItem('userId')
@@ -143,6 +147,7 @@ const getWaterUsage = (type, callback, orderBy = 'createdAt', order = 'desc') =>
     })
 }
 
+// for getting all doc of a table
 const getAll = (table) => {
     return new Promise((resolve, reject) => {
         db.collection(table)
@@ -155,6 +160,7 @@ const getAll = (table) => {
     })
 }
 
+// used from checking if is owner
 const getByIdAndOwner = (table, id) => {
     return new Promise((resolve, reject) => {
         const userId = localStorage.getItem('userId')
@@ -172,6 +178,7 @@ const getByIdAndOwner = (table, id) => {
     })
 }
 
+// this delete a waterlog from firestore
 const deleteById = (table, id) => {
     return new Promise((resolve, reject) => {
         console.log(`deleting...${id}`)
