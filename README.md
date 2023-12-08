@@ -22,19 +22,19 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 ## 4. Complete setup/installion/usage
 State what a user needs to do when they come to your project.  How do others start using your code or application?
 Here are the steps ...
-* cp public/scripts/firebaseAPI_BBY40_example.js public/scripts/firebaseAPI_BBY40.js
+* cp public/scripts/firebaseAPI_BBY40_example.js public/scripts/firebaseAPI_BBY40.js in terminal/powershell
 * Copy firebase credentials from firebase console and paste into firebaseConfig.
 * Launch with live server
 
 ## 5. Known Bugs and Limitations
 Here are some known bugs:
 * Does not support Safari
-* User cannot add water logs for not current day.
+* User cannot add water logs for not current day
 * Does not reset selected date to current day after leaving view water log page
 
 ## 6. Features for Future
 What we'd like to build in the future:
-* Flesh out dark mode - currently very basic
+* Implement feature allowing users to compare their usage to the average use per week/month/year
 * Allow the user to add water logs to a specific day
 * Convert into a real backend server
 	
