@@ -18,26 +18,25 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * Firebase 8.0 (BAAS - Backend as a Service)
 * Chart.js 
 * Material design icons
-* 
 
 ## 4. Complete setup/installion/usage
 State what a user needs to do when they come to your project.  How do others start using your code or application?
 Here are the steps ...
-* ...
-* ...
-* ...
+* cp public/scripts/firebaseAPI_BBY40_example.js public/scripts/firebaseAPI_BBY40.js
+* Copy firebase credentials from firebase console and paste into firebaseConfig.
+* Launch with live server
 
 ## 5. Known Bugs and Limitations
 Here are some known bugs:
-* ...
-* ...
-* ...
+* Does not support Safari
+* User cannot add water logs for not current day.
+* Does not reset selected date to current day after leaving view water log page
 
 ## 6. Features for Future
 What we'd like to build in the future:
 * Flesh out dark mode - currently very basic
-* ...
-* ...
+* Allow the user to add water logs to a specific day
+* Convert into a real backend server
 	
 ## 7. Contents of Folder
 Content of the project folder:
@@ -55,7 +54,7 @@ It has the following subfolders and files:
 ├── pubic                    # Folder for all static files
     ├── images               # Folder for images
 	    ├── icons 	         # Folder for icons from material design icons
-        /blah.jpg            # images
+        *.jpg                # images
     ├── scripts              # Folder for script
     ├── styles               # Folder for css
     ├── text                 # Folder for footer & navbar html
