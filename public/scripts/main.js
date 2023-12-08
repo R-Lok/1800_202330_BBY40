@@ -3,7 +3,6 @@ waterlogsButton.addEventListener('click', () => {
     window.location.href = './waterlogs.html'
 })
 
-// We will need to write functions to post form data to firestore in future
 const showerSlider = document.getElementById('showerSlider')
 const showerSliderValDisplay = document.getElementById('shower-duration')
 
@@ -14,6 +13,8 @@ showerSlider.addEventListener('input', (e) => {
 const tapSlider = document.getElementById('tapUseSlider')
 const tapSliderValDisplay = document.getElementById('tap-use-duration')
 
+//Function that updates the tap duration indicator as the user
+//drags the slider
 tapSlider.addEventListener('input', (e) => {
     const tapUseMinutes = Math.trunc(tapSlider.value / 60)
     const tapUseSeconds = tapSlider.value % 60
@@ -38,6 +39,9 @@ function testEventListener() {
     console.log('You triggered the test event listener')
 }
 
+//Next few functions are setters and getters for storing
+//and retrieving information needed for water use submissions
+//as the user progresses through the submission form
 function addUseTypeToSessionStr(e) {
     const useType = e.target.getAttribute('value')
     sessionStorage.setItem('useType', useType)
@@ -66,6 +70,7 @@ function getCalcFactorFromSessionStr() {
     return sessionStorage.getItem('calc_factor')
 }
 
+//This function reads the price factor from firestore 
 function getPriceFactor() {
     return new Promise((resolve, reject) => {
         db.collection('priceFactors')
@@ -80,6 +85,7 @@ function getPriceFactor() {
     })
 }
 
+//This function writes the use details to firestore
 async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
     try {
         const priceFactor = localStorage.getItem('costPerLitre') || await getPriceFactor()
@@ -116,39 +122,7 @@ async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMa
     }
 }
 
-// test function below which doesnt actually use read/writes
-// async function submitUseDetails(homeBoolean, useType, storedCalcFactor, storedMachineType) {
-//     try {
-//         let calc_factor = storedCalcFactor
-//         let createdAt = Date.now()
-//         let estVol = 5
-//         let estCost = estVol * calc_factor
-//         let home = homeBoolean
-//         let machine_type = storedMachineType
-//         let updatedAt = Date.now()
-//         let useType_id = useType
-//         let uid = localStorage.getItem('userId')
-
-//         let submission = {
-//             calc_factor: parseInt(calc_factor),
-//             createdAt: createdAt,
-//             estCost: estCost,
-//             estVol: estVol,
-//             home: home,
-//             machine_type: machine_type,
-//             updatedAt: updatedAt,
-//             useType_id: useType_id,
-//             userId: uid
-//         }
-//         console.log(submission)
-
-//     } catch (error) {
-//         console.log("Could not fetch userId")
-//     }
-// }
-
-
-// -----------------------------eventlisteners for form
+// -eventlisteners for forms-
 
 // usage-select form buttons
 const addWaterUseBtn = document.getElementById('add-water-usage-btn')
@@ -199,7 +173,7 @@ function storeShowerUseDetails() {
     addCalcFactorToSessionStr(showerDurationSlider.value)
 }
 
-// laundry machine usage listeners & helper functions,  can be further optimised using html classes
+// laundry machine usage listeners & helper functions
 const laundryStandardBtn = document.getElementById('laundry-standard-btn')
 const laundryEfficientBtn = document.getElementById('laundry-energystar-btn')
 const laundryOldBtn = document.getElementById('laundry-old-btn')
@@ -215,7 +189,7 @@ function storeLaundryOrDishwasherUseDetails(e) {
     addCalcFactorToSessionStr(calc_factor)
 }
 
-// dishwasher machine usage listeners & helper functions, can be further optimised using html classes
+// dishwasher machine usage listeners & helper functions
 const dishwasherStandardBtn = document.getElementById('dishwasher-standard-btn')
 const dishwasherEfficientBtn = document.getElementById('dishwasher-energystar-btn')
 const dishwasherBtns = [dishwasherStandardBtn, dishwasherEfficientBtn]
@@ -330,6 +304,7 @@ async function populateMonthCosts() {
 
 let chart
 
+//Function for populating the bar chart on the main page
 const populateMainPageData = async () => {
     const weeklyData = await getWaterUsage('week', getSum)
     const mainPageCanvas = document.getElementById('main-page-chart')
